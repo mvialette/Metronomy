@@ -5,17 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:untitled/MusicStructure.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MetronomyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MetronomyApp extends StatelessWidget {
+  const MetronomyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Metronomy App',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -35,13 +35,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.black12),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Metronomy'),
+      home: const MetronomyHomePage(title: 'Metronomy'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class MetronomyHomePage extends StatefulWidget {
+  const MetronomyHomePage({super.key, required this.title});
 
   // This widget is the home page of your application. It is stateful, meaning
   // that it has a State object (defined below) that contains fields that affect
@@ -55,10 +55,10 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MetronomyHomePage> createState() => _MetronomyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MetronomyHomePageState extends State<MetronomyHomePage> {
   int _counterDebug = 0;
 
   // music section details
@@ -78,36 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _barsCountdown = 16;
 
   final int _bpm = 220;
-
-  void _incrementCounter(Duration duration) {
-
-    Timer _timer;
-    _musicStructureCurrent = list[_sectionCurrentIndex];
-
-    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 80 (le nb de baptement par minutes ==> 750
-    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
-    // en mode plus rapide
-    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
+  Timer? _timer;
 
 
-
-    _timer = new Timer.periodic(
-      duration, (Timer timer) {
-        if (_sectionCurrentIndex == list.length) {
-          setState(() {
-            timer.cancel();
-            _sectionCurrentIndex = 0;
-            _beatCounter = 0;
-            _barsCountdown = 16;
-          });
-        } else {
-          setState(() {
-            _runMusicCountdown();
-          });
-        }
-      }
-    );
-  }
 
   void _runMusicCountdown() {
     _counterDebug++;
@@ -273,21 +246,21 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
-            onPressed: () => _incrementCounter(beatPerMillisecondsDuration),
+            onPressed: () => _play(beatPerMillisecondsDuration),
             tooltip: 'Play',
             backgroundColor: Colors.orangeAccent,
             child: Icon(Icons.play_arrow),
           ),
           SizedBox(width: 8.0),
           FloatingActionButton(
-            onPressed: () => _showToast(context),
+            onPressed: () => _pause(),
             tooltip: 'Pause',
             backgroundColor: Colors.orangeAccent,
             child: Icon(Icons.pause),
           ),
           SizedBox(width: 8.0),
           FloatingActionButton(
-            onPressed: () => _showToast(context),
+            onPressed: () => _stop(),
             tooltip: 'Stop',
             backgroundColor: Colors.orangeAccent,
             child: Icon(Icons.stop),
@@ -310,5 +283,44 @@ class _MyHomePageState extends State<MyHomePage> {
         action: SnackBarAction(label: 'UNDO', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
+  }
+
+  void _play(Duration duration) {
+
+    _musicStructureCurrent = list[_sectionCurrentIndex];
+
+    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 80 (le nb de baptement par minutes ==> 750
+    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
+    // en mode plus rapide
+    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
+
+    _timer = new Timer.periodic(
+        duration, (Timer timer) {
+      if (_sectionCurrentIndex == list.length) {
+        setState(() {
+          _stop();
+        });
+      } else {
+        setState(() {
+          _runMusicCountdown();
+        });
+      }
+    }
+    );
+  }
+
+  void _pause() {
+    _timer?.cancel();
+  }
+
+  void _stop() {
+    setState(() {
+      _sectionCurrentIndex = 0;
+      _musicStructureCurrent = list[_sectionCurrentIndex];
+      _beatCounter = 0;
+      _barsCountdown = 16;
+
+      _pause();
+    });
   }
 }

@@ -79,26 +79,27 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
 
   final int _bpm = 220;
   Timer? _timer;
+  bool _countdownActive = false;
 
+  void _play() {
+    setState(() {
+      _counterDebug++;
+      _beatCounter++;
 
+      if(_beatCounter > _musicStructureCurrent.maximumBeatMesure){
+        _beatCounter = 1;
+        _barsCountdown--;
 
-  void _runMusicCountdown() {
-    _counterDebug++;
-    _beatCounter++;
+        if(_barsCountdown == 0){
+          _sectionCurrentIndex++;
 
-    if(_beatCounter > _musicStructureCurrent.maximumBeatMesure){
-      _beatCounter = 1;
-      _barsCountdown--;
-
-      if(_barsCountdown == 0){
-        _sectionCurrentIndex++;
-
-        if(_sectionCurrentIndex < list.length) {
-          _musicStructureCurrent = list[_sectionCurrentIndex];
-          _barsCountdown = _musicStructureCurrent.barsRemaining;
+          if(_sectionCurrentIndex < list.length) {
+            _musicStructureCurrent = list[_sectionCurrentIndex];
+            _barsCountdown = _musicStructureCurrent.barsRemaining;
+          }
         }
       }
-    }
+    });
   }
 
   @override
@@ -246,17 +247,10 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           FloatingActionButton(
-            onPressed: () => _play(beatPerMillisecondsDuration),
+            onPressed: () => _playOrPause(beatPerMillisecondsDuration),
             tooltip: 'Play',
             backgroundColor: Colors.orangeAccent,
-            child: Icon(Icons.play_arrow),
-          ),
-          SizedBox(width: 8.0),
-          FloatingActionButton(
-            onPressed: () => _pause(),
-            tooltip: 'Pause',
-            backgroundColor: Colors.orangeAccent,
-            child: Icon(Icons.pause),
+            child: Icon(_countdownActive ? Icons.pause : Icons.play_arrow),
           ),
           SizedBox(width: 8.0),
           FloatingActionButton(
@@ -285,32 +279,35 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
     );
   }
 
-  void _play(Duration duration) {
+  void _playOrPause(Duration duration) {
 
-    _musicStructureCurrent = list[_sectionCurrentIndex];
+    if(_countdownActive){
+      _pause();
+    }else{
+      _musicStructureCurrent = list[_sectionCurrentIndex];
 
-    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 80 (le nb de baptement par minutes ==> 750
-    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
-    // en mode plus rapide
-    // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
+      // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 80 (le nb de baptement par minutes ==> 750
+      // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
+      // en mode plus rapide
+      // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
 
-    _timer = new Timer.periodic(
-        duration, (Timer timer) {
-      if (_sectionCurrentIndex == list.length) {
-        setState(() {
+      _timer = new Timer.periodic(
+          duration, (Timer timer) {
+        if (_sectionCurrentIndex == list.length) {
           _stop();
-        });
-      } else {
-        setState(() {
-          _runMusicCountdown();
-        });
-      }
+        } else {
+          _play();
+        }
+      });
     }
-    );
+
+    _countdownActive = _timer!.isActive;
   }
 
   void _pause() {
-    _timer?.cancel();
+    setState(() {
+      _timer!.cancel();
+    });
   }
 
   void _stop() {
@@ -319,8 +316,9 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
       _musicStructureCurrent = list[_sectionCurrentIndex];
       _beatCounter = 0;
       _barsCountdown = 16;
+      _countdownActive = false;
 
-      _pause();
+      _timer!.cancel();
     });
   }
 }

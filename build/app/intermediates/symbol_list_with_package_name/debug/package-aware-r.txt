@@ -1,4 +1,4 @@
-com.example.untitled
+com.example.Metronomy
 attr activityAction
 attr activityName
 attr alpha
@@ -17,6 +17,7 @@ attr fontProviderSystemFontFamily
 attr fontStyle
 attr fontVariationSettings
 attr fontWeight
+attr lStar
 attr nestedScrollViewStyle
 attr placeholderActivityName
 attr primaryActivityName
@@ -144,6 +145,7 @@ id text
 id text2
 id time
 id title
+id view_tree_lifecycle_owner
 integer status_bar_notification_info_maxnum
 layout custom_dialog
 layout notification_action
@@ -166,7 +168,7 @@ style Widget_Compat_NotificationActionText
 styleable ActivityFilter activityAction activityName
 styleable ActivityRule alwaysExpand
 styleable Capability queryPatterns shortcutMatchRequired
-styleable ColorStateListItem android_color android_alpha alpha
+styleable ColorStateListItem android_color android_alpha android_lStar alpha lStar
 styleable FontFamily fontProviderAuthority fontProviderCerts fontProviderFetchStrategy fontProviderFetchTimeout fontProviderPackage fontProviderQuery fontProviderSystemFontFamily
 styleable FontFamilyFont android_font android_fontWeight android_fontStyle android_ttcIndex android_fontVariationSettings font fontStyle fontVariationSettings fontWeight ttcIndex
 styleable GradientColor android_startColor android_endColor android_type android_centerX android_centerY android_gradientRadius android_tileMode android_centerColor android_startX android_startY android_endX android_endY

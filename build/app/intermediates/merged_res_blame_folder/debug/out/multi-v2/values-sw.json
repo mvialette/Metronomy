@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.untitled.app-mergeDebugResources-5:/values-sw/values-sw.xml",
+            "outputFile": "com.example.Metronomy.app-mergeDebugResources-5:/values-sw/values-sw.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Gibson\\.gradle\\caches\\transforms-3\\7e9df2ac2213a6bd3cef0f2f27870d79\\transformed\\core-1.6.0\\res\\values-sw\\values-sw.xml",
+                    "source": "C:\\Users\\Gibson\\.gradle\\caches\\transforms-3\\c2aff38445ebad8ddeaa989ecf50f56e\\transformed\\core-1.9.0\\res\\values-sw\\values-sw.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

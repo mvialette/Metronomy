@@ -1,8 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:untitled/MusicStructure.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+import 'package:Metronomy/Song.dart';
+import 'package:Metronomy/MusicStructure.dart';
 
 void main() {
   runApp(const MetronomyApp());
@@ -69,15 +71,30 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
   MusicStructure _musicStructureChorus = new MusicStructure("CHORUS", "C", 16, 4);
   MusicStructure _musicStructureOutro = new MusicStructure("OUTRO", "O", 22, 4);
 
+  Song? myCurrentSong;
+
   // the list (aka the sample)
   List<MusicStructure> list = [];
   MusicStructure _musicStructureCurrent = new MusicStructure("INTRO", "I", 16, 4);
 
   int _sectionCurrentIndex = 0;
   int _beatCounter = 0;
-  int _barsCountdown = 16;
+  int _barsCurrentCounter = 0;
 
+  // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 80 (le nb de baptement par minutes ==> 750
+  // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
+  // en mode plus rapide
+  // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 400 (le nb de baptement par minutes ==> 150
+
+  //final int _bpm = 80;
+  //final int _bpm = 220;
+  // pour le mode debug
+
+  //final int _bpm = 80;
+  //final int _bpm = 90;
   final int _bpm = 220;
+  //final int _bpm = 400;
+
   Timer? _timer;
   bool _countdownActive = false;
 
@@ -86,24 +103,31 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
       _counterDebug++;
       _beatCounter++;
 
-      if(_beatCounter > _musicStructureCurrent.maximumBeatMesure){
-        _beatCounter = 1;
-        _barsCountdown--;
-
-        if(_barsCountdown == 0){
-          _sectionCurrentIndex++;
-
-          if(_sectionCurrentIndex < list.length) {
+      if(_beatCounter > _musicStructureCurrent.maximumBeatSection){
+        if(_barsCurrentCounter >= _musicStructureCurrent.maximumBarsSection){
+          // on test pour vérifier qu'on ne soit pas à la fin du morceau
+          if(_sectionCurrentIndex < (list.length -1)) {
+            // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
+            _sectionCurrentIndex++;
             _musicStructureCurrent = list[_sectionCurrentIndex];
-            _barsCountdown = _musicStructureCurrent.barsRemaining;
+            _barsCurrentCounter = 0;
+            _beatCounter = 1;
           }
         }
+        _barsCurrentCounter++;
+        _beatCounter = 1;
       }
     });
+    _playSong();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    List<MusicStructure> aaaa =  <MusicStructure>[];
+    aaaa.add(_musicStructureIntro);
+    aaaa.add(_musicStructureChorus);
+    myCurrentSong = new Song("My Way", 222, aaaa);
 
     list = [_musicStructureIntro, _musicStructureVerse, _musicStructureBreakdown, _musicStructureBuildUp, _musicStructureChorus, _musicStructureOutro];
 
@@ -147,6 +171,27 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
           // wireframe for each widget.
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Titre : ',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      '${myCurrentSong?.title}',
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.orange
+                      ),
+                    ),
+                  ],
+                ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -172,7 +217,7 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
-                  '$_barsCountdown',
+                  '$_barsCurrentCounter / ${_musicStructureCurrent.maximumBarsSection}' ,
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -189,7 +234,7 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 Text(
-                  '$_beatCounter',
+                  '$_beatCounter / ${_musicStructureCurrent.maximumBeatSection}',
                   style: TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.bold,
@@ -217,28 +262,26 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
               ],
             ),
             */
-            Row(
-              children: [
-                SizedBox(
-                  height: 30, //<-- SEE HERE
+            Padding(
+              padding: EdgeInsets.all(20.0),
+              child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Tempo : ',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      '$_bpm',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.orange
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Tempo : ',
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                Text(
-                  '$_bpm',
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orange
-                  ),
-                ),
-              ],
             ),
           ],
         ),
@@ -258,12 +301,8 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
             tooltip: 'Stop',
             backgroundColor: Colors.orangeAccent,
             child: Icon(Icons.stop),
-          ),// This trailing comma makes auto-formatting nicer for build methods.
-          /*FloatingActionButton(
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: Icon(Icons.pause),
-          ),*/ // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+          // This trailing comma makes auto-formatting nicer for build methods.
         ],
       )
     );
@@ -286,14 +325,9 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
     }else{
       _musicStructureCurrent = list[_sectionCurrentIndex];
 
-      // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 80 (le nb de baptement par minutes ==> 750
-      // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
-      // en mode plus rapide
-      // exemple pour 60 secondes (aka 1 min) * 1000 (pour avoir le nb de millisecondes) / 220 (le nb de baptement par minutes ==> 272
-
       _timer = new Timer.periodic(
           duration, (Timer timer) {
-        if (_sectionCurrentIndex == list.length) {
+        if (_sectionCurrentIndex == (list.length - 1) && _barsCurrentCounter >= _musicStructureCurrent.maximumBarsSection && _beatCounter >= _musicStructureCurrent.maximumBeatSection) {
           _stop();
         } else {
           _play();
@@ -315,10 +349,15 @@ class _MetronomyHomePageState extends State<MetronomyHomePage> {
       _sectionCurrentIndex = 0;
       _musicStructureCurrent = list[_sectionCurrentIndex];
       _beatCounter = 0;
-      _barsCountdown = 16;
+      _barsCurrentCounter = 0;
       _countdownActive = false;
 
       _timer!.cancel();
     });
+  }
+
+  void _playSong() {
+    final player = AudioPlayer();
+    player.play(AssetSource('metronome-song.mp3'));
   }
 }

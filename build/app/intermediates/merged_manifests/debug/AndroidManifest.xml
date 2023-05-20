@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.untitled"
+    package="com.example.Metronomy"
     android:versionCode="1"
     android:versionName="1.0.0" >
 
@@ -14,14 +14,20 @@
     -->
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <permission
+        android:name="com.example.Metronomy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.Metronomy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+
     <application
         android:name="android.app.Application"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         android:debuggable="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="untitled" >
+        android:label="Metronomy" >
         <activity
-            android:name="com.example.untitled.MainActivity"
+            android:name="com.example.Metronomy.MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:exported="true"
             android:hardwareAccelerated="true"

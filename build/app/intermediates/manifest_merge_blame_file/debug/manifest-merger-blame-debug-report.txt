@@ -1,6 +1,6 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.untitled"
+3    package="com.example.Metronomy"
 4    android:versionCode="1"
 5    android:versionName="1.0.0" >
 6
@@ -16,58 +16,69 @@
 15-->C:\Gibson\dev\Android\workspaces\Metronomy\android\app\src\debug\AndroidManifest.xml:6:5-66
 15-->C:\Gibson\dev\Android\workspaces\Metronomy\android\app\src\debug\AndroidManifest.xml:6:22-64
 16
-17    <application
-18        android:name="android.app.Application"
-19        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-19-->[androidx.core:core:1.6.0] C:\Users\Gibson\.gradle\caches\transforms-3\7e9df2ac2213a6bd3cef0f2f27870d79\transformed\core-1.6.0\AndroidManifest.xml:24:18-86
-20        android:debuggable="true"
-21        android:icon="@mipmap/ic_launcher"
-22        android:label="untitled" >
-23        <activity
-24            android:name="com.example.untitled.MainActivity"
-25            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-26            android:exported="true"
-27            android:hardwareAccelerated="true"
-28            android:launchMode="singleTop"
-29            android:theme="@style/LaunchTheme"
-30            android:windowSoftInputMode="adjustResize" >
-31
-32            <!--
-33                 Specifies an Android theme to apply to this Activity as soon as
-34                 the Android process has started. This theme is visible to the user
-35                 while the Flutter UI initializes. After that, this theme continues
-36                 to determine the Window background behind the Flutter UI.
-37            -->
-38            <meta-data
-39                android:name="io.flutter.embedding.android.NormalTheme"
-40                android:resource="@style/NormalTheme" />
-41
-42            <intent-filter>
-43                <action android:name="android.intent.action.MAIN" />
-44
-45                <category android:name="android.intent.category.LAUNCHER" />
-46            </intent-filter>
-47        </activity>
-48        <!--
-49             Don't delete the meta-data below.
-50             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
-51        -->
-52        <meta-data
-53            android:name="flutterEmbedding"
-54            android:value="2" />
-55
-56        <uses-library
-56-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
-57            android:name="androidx.window.extensions"
-57-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
-58            android:required="false" />
-58-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
-59        <uses-library
-59-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
-60            android:name="androidx.window.sidecar"
-60-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
-61            android:required="false" />
-61-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
-62    </application>
-63
-64</manifest>
+17    <permission
+17-->[androidx.core:core:1.9.0] C:\Users\Gibson\.gradle\caches\transforms-3\c2aff38445ebad8ddeaa989ecf50f56e\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+18        android:name="com.example.Metronomy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+18-->[androidx.core:core:1.9.0] C:\Users\Gibson\.gradle\caches\transforms-3\c2aff38445ebad8ddeaa989ecf50f56e\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+19        android:protectionLevel="signature" />
+19-->[androidx.core:core:1.9.0] C:\Users\Gibson\.gradle\caches\transforms-3\c2aff38445ebad8ddeaa989ecf50f56e\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+20
+21    <uses-permission android:name="com.example.Metronomy.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+21-->[androidx.core:core:1.9.0] C:\Users\Gibson\.gradle\caches\transforms-3\c2aff38445ebad8ddeaa989ecf50f56e\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+21-->[androidx.core:core:1.9.0] C:\Users\Gibson\.gradle\caches\transforms-3\c2aff38445ebad8ddeaa989ecf50f56e\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+22
+23    <application
+24        android:name="android.app.Application"
+25        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+25-->[androidx.core:core:1.9.0] C:\Users\Gibson\.gradle\caches\transforms-3\c2aff38445ebad8ddeaa989ecf50f56e\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+26        android:debuggable="true"
+27        android:icon="@mipmap/ic_launcher"
+28        android:label="Metronomy" >
+29        <activity
+30            android:name="com.example.Metronomy.MainActivity"
+31            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+32            android:exported="true"
+33            android:hardwareAccelerated="true"
+34            android:launchMode="singleTop"
+35            android:theme="@style/LaunchTheme"
+36            android:windowSoftInputMode="adjustResize" >
+37
+38            <!--
+39                 Specifies an Android theme to apply to this Activity as soon as
+40                 the Android process has started. This theme is visible to the user
+41                 while the Flutter UI initializes. After that, this theme continues
+42                 to determine the Window background behind the Flutter UI.
+43            -->
+44            <meta-data
+45                android:name="io.flutter.embedding.android.NormalTheme"
+46                android:resource="@style/NormalTheme" />
+47
+48            <intent-filter>
+49                <action android:name="android.intent.action.MAIN" />
+50
+51                <category android:name="android.intent.category.LAUNCHER" />
+52            </intent-filter>
+53        </activity>
+54        <!--
+55             Don't delete the meta-data below.
+56             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+57        -->
+58        <meta-data
+59            android:name="flutterEmbedding"
+60            android:value="2" />
+61
+62        <uses-library
+62-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:25:9-27:40
+63            android:name="androidx.window.extensions"
+63-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:26:13-54
+64            android:required="false" />
+64-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:27:13-37
+65        <uses-library
+65-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:28:9-30:40
+66            android:name="androidx.window.sidecar"
+66-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:29:13-51
+67            android:required="false" />
+67-->[androidx.window:window:1.0.0-beta04] C:\Users\Gibson\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\AndroidManifest.xml:30:13-37
+68    </application>
+69
+70</manifest>

@@ -2,12 +2,12 @@
 class MusicStructure {
 
   late String sectionName, sectionShortcut;
-  late int barsRemaining, maximumBeatMesure;
+  late int maximumBarsSection, maximumBeatSection;
 
-  MusicStructure(String _sectionName, String _sectionShorcut, int _barsRemainingCounter, int _beatCounter){
+  MusicStructure(String _sectionName, String _sectionShorcut, int _maximumBarsSection, int _maximumBeatSection){
     this.sectionName = _sectionName;
     this.sectionShortcut = _sectionShorcut;
-    this.barsRemaining = _barsRemainingCounter;
-    this.maximumBeatMesure = _beatCounter;
+    this.maximumBarsSection = _maximumBarsSection;
+    this.maximumBeatSection = _maximumBeatSection;
   }
 }

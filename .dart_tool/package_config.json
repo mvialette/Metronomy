@@ -128,6 +128,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "google_fonts",
+      "rootUri": "file:///C:/Users/Gibson/AppData/Local/Pub/Cache/hosted/pub.dev/google_fonts-4.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "http",
       "rootUri": "file:///C:/Users/Gibson/AppData/Local/Pub/Cache/hosted/pub.dev/http-0.13.6",
       "packageUri": "lib/",
@@ -314,7 +320,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-05-20T15:42:54.367730Z",
+  "generated": "2023-07-11T16:26:48.944775Z",
   "generator": "pub",
-  "generatorVersion": "3.0.0"
+  "generatorVersion": "3.0.5"
 }

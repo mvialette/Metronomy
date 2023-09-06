@@ -2,34 +2,24 @@ import 'dart:async';
 
 import 'package:Metronomy/model/music_structure.dart';
 import 'package:Metronomy/model/song.dart';
+import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MusicPlayerScreen extends StatefulWidget{
+class MusicPlayerScreen extends ConsumerStatefulWidget {
 
   const MusicPlayerScreen({super.key});
 
   @override
-  State<MusicPlayerScreen> createState() => _MusicPlayerScreenState();
+  ConsumerState<MusicPlayerScreen> createState() => _MusicPlayerScreenState();
 }
 
-class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
+class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   int _counterDebug = 0;
 
-  // music section details
-  MusicStructure _musicStructureIntro = new MusicStructure("INTRO", "I", 16, 4);
-  MusicStructure _musicStructureVerse = new MusicStructure("VERSE", "V", 16, 4);
-  MusicStructure _musicStructureBreakdown = new MusicStructure("BREAKDOWN", "BD", 8, 4);
-  MusicStructure _musicStructureBuildUp = new MusicStructure("BUILD UP", "BU", 8, 4);
-  MusicStructure _musicStructureChorus = new MusicStructure("CHORUS", "C", 16, 4);
-  MusicStructure _musicStructureOutro = new MusicStructure("OUTRO", "O", 22, 4);
-
   Song? myCurrentSong;
-
-  // the list (aka the sample)
-  List<MusicStructure> list = [];
-  MusicStructure _musicStructureCurrent = new MusicStructure("INTRO", "I", 16, 4);
 
   int _sectionCurrentIndex = 0;
   int _beatCounter = 0;
@@ -43,7 +33,16 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
   int _tickInterval = 0;
   Timer? _tickTimer;
 
-  void _play() {
+
+  late Future<void> _songsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _songsFuture = ref.read(songsProvider.notifier).loadSongs();
+  }
+
+  /*void _play() {
 
     int tempsDAction = DateTime.now().millisecondsSinceEpoch;
     if(debugTempsDActionNmoinsUn == null) {
@@ -83,17 +82,14 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     }
     //});
     _playSong();
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
 
-    List<MusicStructure> aaaa =  <MusicStructure>[];
-    aaaa.add(_musicStructureIntro);
-    aaaa.add(_musicStructureChorus);
-    myCurrentSong = new Song("My Way", 222, aaaa);
-
-    list = [_musicStructureIntro, _musicStructureVerse, _musicStructureBreakdown, _musicStructureBuildUp, _musicStructureChorus, _musicStructureOutro];
+    final songsAvailable = ref.watch(songsProvider);
+    //myCurrentSong = _songsFuture[0];
+    //list = myCurrentSong.musiquePart;
 
     int beatPerMilliseconds = (60 * 1000 / _bpm.toInt()).round();
     Duration beatPerMillisecondsDuration = Duration(milliseconds: beatPerMilliseconds);
@@ -117,25 +113,33 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
               Padding(
                 padding: EdgeInsets.all(20.0),
                 child:
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Titre : ',
-                      style: Theme.of(context).textTheme.headlineMedium,
-                    ),
-                    Text(
-                      '${myCurrentSong?.title}',
-                      style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.normal,
-                          color: Colors.orange
+                  FutureBuilder(
+                    future: _songsFuture,
+                    builder: (context, snapshot) =>
+                      snapshot.connectionState == ConnectionState.waiting ?
+                      const Center(
+                        child: CircularProgressIndicator()
+                      ) :
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Titre : ',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          Text(
+                            '${songsAvailable[0].title}',
+                            style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.orange
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
+                  )
               ),
-              SizedBox(height: 15,),
+              /*SizedBox(height: 15,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -252,7 +256,7 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
                     ),
                   ],
                 ),
-              ),
+              ),*/
             ],
           ),
         ),
@@ -260,14 +264,16 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             FloatingActionButton(
-              onPressed: () => _playOrPause(beatPerMillisecondsDuration),
+              onPressed: () => {},
+              //onPressed: () => _playOrPause(beatPerMillisecondsDuration),
               tooltip: 'Play',
               backgroundColor: Colors.orangeAccent,
               child: Icon(_tickTimer != null && _tickTimer!.isActive ? Icons.pause : Icons.play_arrow),
             ),
             const SizedBox(width: 8.0),
             FloatingActionButton(
-              onPressed: () => _stop(),
+              onPressed: () => {},
+              //onPressed: () => _stop(),
               tooltip: 'Stop',
               backgroundColor: Colors.orangeAccent,
               child: Icon(Icons.stop),
@@ -278,7 +284,7 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     );
   }
 
-  void _onTick(Timer t) {
+  /*void _onTick(Timer t) {
     _musicStructureCurrent = list[_sectionCurrentIndex];
 
     if (_sectionCurrentIndex == (list.length - 1) && _barsCurrentCounter >= _musicStructureCurrent.maximumBarsSection && _beatCounter >= _musicStructureCurrent.maximumBeatSection) {
@@ -288,9 +294,9 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
     }
 
     if (mounted) setState(() {});
-  }
+  }*/
 
-  void _playOrPause(Duration duration) {
+  /*void _playOrPause(Duration duration) {
 
     if(_tickTimer != null && _tickTimer!.isActive){
       _pause();
@@ -301,15 +307,15 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
       _tickInterval = 1000~/bps;
       _tickTimer = Timer.periodic(new Duration(milliseconds: _tickInterval), _onTick);
     }
-  }
+  }*/
 
-  void _pause() {
+  /*void _pause() {
     setState(() {
       _tickTimer!.cancel();
     });
-  }
+  }*/
 
-  void _stop() {
+  /*void _stop() {
     // call by the end of playlist, or onPressed over stop widget
     setState(() {
       _sectionCurrentIndex = 0;
@@ -319,10 +325,10 @@ class _MusicPlayerScreenState extends State<MusicPlayerScreen> {
 
       _tickTimer!.cancel();
     });
-  }
+  }*/
 
-  void _playSong() {
+  /*void _playSong() {
     final player = AudioPlayer();
     player.play(AssetSource('metronome-song.mp3'));
-  }
+  }*/
 }

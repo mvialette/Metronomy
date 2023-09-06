@@ -1,12 +1,14 @@
+import 'package:Metronomy/model/music_structure.dart';
+
 class Song {
 
-  late String title;
-  late int tempo;
-  late List musiquePart;
+  final String title;
+  final int tempo;
+  final List<MusicStructure> musiquePart;
 
-  Song(String _title, int _tempo, List _musiquePart){
-    this.title = _title;
-    this.tempo = _tempo;
-    this.musiquePart = _musiquePart;
-  }
+  const Song({
+    required this.title,
+    required this.tempo,
+    required this.musiquePart
+  });
 }

@@ -88,6 +88,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   Widget build(BuildContext context) {
 
     final songsAvailable = ref.watch(songsProvider);
+
     //myCurrentSong = _songsFuture[0];
     //list = myCurrentSong.musiquePart;
 
@@ -120,7 +121,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       const Center(
                         child: CircularProgressIndicator()
                       ) :
-                      Row(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -139,8 +140,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       ),
                   )
               ),
-              /*SizedBox(height: 15,),
-              Row(
+                SizedBox(height: 15,),
+              Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
@@ -148,7 +149,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '${_musicStructureCurrent.sectionName}',
+                    '${songsAvailable[0].musiquePart[0].sectionName}',
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
@@ -164,7 +165,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '$_barsCurrentCounter / ${_musicStructureCurrent.maximumBarsSection}' ,
+                    '$_barsCurrentCounter / ${songsAvailable[0].musiquePart[2].maximumBarsSection}' ,
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -182,7 +183,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '$_beatCounter / ${_musicStructureCurrent.maximumBeatSection}',
+                    '$_beatCounter / ${songsAvailable[0].musiquePart[3].maximumBeatSection}',
                     style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
@@ -214,7 +215,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '${_bpm.toInt()}',
+                          '${songsAvailable[0].tempo}',
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.normal,
@@ -223,7 +224,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                         ),
                       ],
                     ),
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Slider(
@@ -253,10 +254,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           },
                         )
                       ],
-                    ),
+                   ), */
                   ],
                 ),
-              ),*/
+              ),
             ],
           ),
         ),

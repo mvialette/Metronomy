@@ -1,4 +1,4 @@
-#Thu Jul 27 15:11:51 CEST 2023
-base.0=C\:\\Gibson\\dev\\Android\\workspaces\\Metronomy\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+#Sat Sep 16 00:30:15 CEST 2023
+base.0=/home/brinda/projects/Metronomy-1/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

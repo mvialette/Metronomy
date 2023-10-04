@@ -91,6 +91,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
     //myCurrentSong = _songsFuture[0];
     //list = myCurrentSong.musiquePart;
+    int indexCurrentMusicSection = 0;
 
     int beatPerMilliseconds = (60 * 1000 / _bpm.toInt()).round();
     Duration beatPerMillisecondsDuration = Duration(milliseconds: beatPerMilliseconds);

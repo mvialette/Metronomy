@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:Metronomy/model/music_structure.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
+import 'package:Metronomy/widgets/song_title_widget.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,7 +122,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       const Center(
                         child: CircularProgressIndicator()
                       ) :
-                      Column(
+                          SongTitleWidget(songName: songsAvailable[0].title),
+                      /*Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
@@ -137,7 +139,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                             ),
                           ),
                         ],
-                      ),
+                      ),*/
                   )
               ),
                 SizedBox(height: 15,),

@@ -54,3 +54,5 @@ app.*.map.json
 /android/app/release
 /build/
 /.dart_tool/
+/.dart_tool/
+/build/

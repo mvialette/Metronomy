@@ -245,7 +245,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Countdown : ',
+                    'Starting countdown : ',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
@@ -262,7 +262,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Debug : ',
+                    'Debug hit count : ',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
@@ -305,14 +305,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   void setCountDown(double time1microsecond) {
 
-    //_musicStructureCurrent = list[_sectionCurrentIndex];
-
-    //if (_sectionCurrentIndex == (list.length - 1) && _barsCurrentCounter >= _musicStructureCurrent.maximumBarsSection && _beatCounter >= _musicStructureCurrent.maximumBeatSection) {
-    //_stop();
-    //} else {
-    //  _play();
-    //}
-
     setState(() {
 
       if(_startingCountdown > 0){
@@ -350,7 +342,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
             if(_sectionCurrentIndex < (myCurrentSong!.musiquePart.length -1)) {
               // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
               _sectionCurrentIndex++;
-              //_musicStructureCurrent = myCurrentSong!.musiquePart[_sectionCurrentIndex];
               _barsCurrentCounter = 0;
               _beatCounter = 1;
             }else{
@@ -394,34 +385,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   }
 
   void startTimer(){
-    /*
-    int tempsDAction = DateTime.now().millisecondsSinceEpoch;
-    if(debugTempsDActionNmoinsUn == null) {
-      debugTempsDActionNmoinsUn = tempsDAction;
-    }
-
-    int debugTempsAvgCurrent = tempsDAction - debugTempsDActionNmoinsUn;
-
-    if(debugTempsAvgMin > debugTempsAvgCurrent || debugTempsAvgMin ==0) {
-      debugTempsAvgMin = debugTempsAvgCurrent;
-    }
-    if(debugTempsAvgMax < debugTempsAvgCurrent && debugTempsAvgCurrent < 20000) {
-      debugTempsAvgMax = debugTempsAvgCurrent;
-    }else if(debugTempsAvgMax < debugTempsAvgCurrent && debugTempsAvgCurrent > 20000) {
-      debugTempsAvgMax = 0;
-    }
-
-    //print('run: now : $tempsDAction / n-1 : $debugTempsDActionNmoinsUn / diff = $debugTempsAvgCurrent / min = $debugTempsAvgMin / max = $debugTempsAvgMax');
-    debugTempsDActionNmoinsUn = tempsDAction;
-
-
-    */
-    //});
-
-    MusicStructure _musicStructureCurrent = myCurrentSong!.musiquePart[_sectionCurrentIndex];
-
-
-
     int mouvementParMinute = songsAvailable[0].tempo;
     double time1microsecond = 60 * 1000000 / mouvementParMinute;
     print("Debug (60 * 1 000 000 microseconds / ${mouvementParMinute} mvt par min) = ${time1microsecond.toInt()} microseconds");
@@ -455,7 +418,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
     // gestion current
     _sectionCurrentIndex = 0;
-    //_musicStructureCurrent = list[_sectionCurrentIndex];
     _beatCounter = 0;
     _barsCurrentCounter = 0;
   }

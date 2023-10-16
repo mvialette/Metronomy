@@ -1,14 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-import 'package:Metronomy/model/music_structure.dart';
 import 'package:Metronomy/screen/music_player_screen.dart';
-import 'package:audioplayers/audioplayers.dart';
-
-import 'package:Metronomy/model/song.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final colorScheme = ColorScheme.fromSeed(

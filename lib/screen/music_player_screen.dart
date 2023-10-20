@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:Metronomy/design/color_schemes.g.dart';
+import 'package:Metronomy/design/theme.dart';
 import 'package:Metronomy/model/music_structure.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
@@ -66,18 +68,41 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
 
 
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
+    return Scaffold( 
+        
+        /*appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Row(children: [
+          title: const Row(children: [
             Icon(Icons.music_note),
             SizedBox(width: 15),
-            Text('Metronomy')
+            Text('Metronomy',
+            style: TextStyle(
+            color: Color(0xFFFFC601),
+            fontFamily: 'StarsAndLoveBottomHeavy',
+
+            )
+              
+
+            )
           ]),
-        ),
-        body: Center(
-          child: Column(
+        ),*/
+        body : SafeArea(
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Image.asset(
+                Theme.of(context).brightness == Brightness.light ?
+              'assets/images/MotifsBlancs.png' : 'assets/images/MotifsNoirs.png',
+              color: Theme.of(context).brightness == Brightness.light?
+              Colors.black.withOpacity(1): Colors.white.withOpacity(1),
+              colorBlendMode: BlendMode.srcIn,
+              fit: BoxFit.cover,
+              ),
+              
+            
+          
+          ListView(
+          
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.all(20.0),
@@ -89,12 +114,17 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       const Center(
                         child: CircularProgressIndicator()
                       ) :
-                      Column(
+                      Flex(
+                        direction: 
+                        MediaQuery.of(context).orientation == Orientation.landscape ?
+                        Axis.horizontal : Axis.vertical,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             'Titre : ',
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: TextStyle(
+                              color: Colors.black
+                            )
                           ),
                           Text(
                             '${songsAvailable[0].title}',
@@ -109,16 +139,21 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   )
               ),
               SizedBox(height: 15,),
-              Column(
+              Flex(
+                direction: 
+                MediaQuery.of(context).orientation == Orientation.landscape ?
+                Axis.horizontal: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Partie : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: TextStyle(
+                              color: Colors.black
+                            )
                   ),
                   Text(
                     '${songsAvailable[0].musiquePart[_sectionCurrentIndex].sectionName}',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
@@ -136,9 +171,11 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Mesure : ',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: TextStyle(
+                              color: Colors.black
+                            )
                         ),
                         Text(
                           '$_barsCurrentCounter / ${songsAvailable[0].musiquePart[_sectionCurrentIndex].maximumBarsSection}' ,
@@ -155,9 +192,11 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           'Temps: ',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: TextStyle(
+                              color: Colors.black
+                            )
                         ),
                         Text(
                           '$_beatCounter / ${songsAvailable[0].musiquePart[_sectionCurrentIndex].maximumBeatSection}',
@@ -188,9 +227,11 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 'Tempo : ',
-                                style: Theme.of(context).textTheme.headlineMedium,
+                                style: TextStyle(
+                              color: Colors.black
+                            )
                               ),
                               Text(
                                 '${songsAvailable[0].tempo}',
@@ -240,13 +281,17 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 ),
               ),
 
-
+             Column( 
+              mainAxisAlignment : MainAxisAlignment.center,
+              children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Starting countdown : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: TextStyle(
+                              color: Colors.black
+                            )
                   ),
                   Text(
                     '$_startingCountdown',
@@ -261,9 +306,11 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Debug hit count : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: TextStyle(
+                              color: Colors.black
+                            )
                   ),
                   Text(
                     '$_debugHitCount',
@@ -275,11 +322,22 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   ),
                 ],
               )
+              ],
+             )
             ],
           ),
+          ],
+        
         ),
-        floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        ),
+       
+        
+        floatingActionButton: Flex(
+          direction: 
+          MediaQuery.of(context).orientation == Orientation.landscape ? 
+          Axis.horizontal : Axis.horizontal,
+          mainAxisAlignment: MediaQuery.of(context).orientation == Orientation.landscape ? 
+          MainAxisAlignment.end : MainAxisAlignment.center,        
           children: [
             FloatingActionButton(
               enableFeedback: false,

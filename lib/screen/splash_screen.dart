@@ -1,0 +1,69 @@
+import 'package:Metronomy/screen/loader_screen.dart';
+import 'package:Metronomy/screen/music_player_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../design/theme.dart';
+
+class SplashScreen extends StatefulWidget {
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds: 2), () {
+      
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoaderScreen()),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/bkg2.JPG',
+            fit: BoxFit.cover,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/logo1.png',
+                width: 100.0, 
+                height: 100.0, 
+              ),
+              
+             const SizedBox(height: 10.0), 
+              Text(
+                'Metronomy',
+                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                 color: Color(0xFFFFC601),
+            
+                ),
+              ),
+            ],
+          ),
+         const Positioned(
+            bottom: 20.0,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFFC601)),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

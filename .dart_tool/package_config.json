@@ -9,51 +9,57 @@
     },
     {
       "name": "audioplayers",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers-4.1.0",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers-5.2.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_android",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_android-3.0.2",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_android-4.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_darwin",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_darwin-4.1.0",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_darwin-5.0.2",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_linux",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_linux-2.1.0",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_linux-3.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_platform_interface",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_platform_interface-5.0.1",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_platform_interface-6.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_web",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_web-3.1.0",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_web-4.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "audioplayers_windows",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_windows-2.0.2",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/audioplayers_windows-3.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.18"
+      "languageVersion": "3.0"
     },
     {
       "name": "boolean_selector",
       "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+    },
+    {
+      "name": "carousel_slider",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/carousel_slider-4.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "characters",
@@ -99,9 +105,9 @@
     },
     {
       "name": "file",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/file-6.1.4",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/file-7.0.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "flutter",
@@ -117,7 +123,7 @@
     },
     {
       "name": "flutter_riverpod",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/flutter_riverpod-2.4.0",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/flutter_riverpod-2.4.4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -135,15 +141,15 @@
     },
     {
       "name": "google_fonts",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/google_fonts-4.0.4",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/google_fonts-6.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.14"
     },
     {
       "name": "http",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/http-0.13.6",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/http-1.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.19"
+      "languageVersion": "3.0"
     },
     {
       "name": "http_parser",
@@ -225,7 +231,7 @@
     },
     {
       "name": "platform",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/platform-3.1.2",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/platform-3.1.3",
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -237,7 +243,7 @@
     },
     {
       "name": "riverpod",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/riverpod-2.4.0",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/riverpod-2.4.4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -252,6 +258,12 @@
       "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/source_span-1.10.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "sprintf",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/sprintf-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "stack_trace",
@@ -303,9 +315,9 @@
     },
     {
       "name": "uuid",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/uuid-3.0.7",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/uuid-4.1.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "2.14"
     },
     {
       "name": "vector_math",
@@ -321,7 +333,7 @@
     },
     {
       "name": "win32",
-      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/win32-5.0.7",
+      "rootUri": "file:///home/brinda/.pub-cache/hosted/pub.dev/win32-5.0.9",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -338,7 +350,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-09-15T07:31:52.316724Z",
+  "generated": "2023-10-20T20:30:45.349235Z",
   "generator": "pub",
   "generatorVersion": "3.1.2"
 }

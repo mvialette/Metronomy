@@ -36,6 +36,7 @@ dependencies:
   audioplayers: ^5.1.0
   google_fonts: ^6.1.0
   flutter_riverpod: ^2.4.0
+  carousel_slider: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -63,8 +64,12 @@ flutter:
     - assets/
   # To add assets to your application, add an assets section, like this:
   # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+    - assets/images/MotifsBlancs.png
+    - assets/images/MotifsNoirs.png
+    - assets/images/logo1.png
+    - assets/images/logo2.png
+    - assets/images/bkg1.JPG
+    - assets/images/bkg2.JPG
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -77,10 +82,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+     - family: StarsAndLoveBottomHeavy
+       fonts:
+         - asset: assets/fonts/StarsAndLoveBottomHeavy-mL2pv.ttf
+           
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

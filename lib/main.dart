@@ -1,10 +1,38 @@
+
+import 'package:Metronomy/design/theme.dart';
+import 'package:Metronomy/screen/music_player_screen.dart';
+import 'package:Metronomy/screen/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
-import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final colorScheme = ColorScheme.fromSeed(
+
+
+void main() {
+  runApp(
+    const ProviderScope(child: MetronomyApp()),
+  );
+}
+
+class MetronomyApp extends StatelessWidget {
+
+  const MetronomyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Metronomy App',
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      home:   SplashScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+/*final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   primary: const Color.fromARGB(255, 226, 126, 20),
   seedColor: const Color.fromARGB(255, 226, 126, 20),
@@ -29,25 +57,4 @@ final theme = ThemeData().copyWith(
       fontSize: 35,
     ),
   ),
-);
-
-void main() {
-  runApp(
-    const ProviderScope(child: MetronomyApp()),
-  );
-}
-
-class MetronomyApp extends StatelessWidget {
-
-  const MetronomyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Metronomy App',
-      theme: theme,
-      home: const MusicPlayerScreen(),
-    );
-  }
-}
+);*/

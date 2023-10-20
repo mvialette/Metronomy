@@ -4,7 +4,7 @@
             "outputFile": "com.example.Metronomy.app-mergeDebugResources-11:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/home/brinda/projects/Metronomy-1/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/home/brinda/projects/metronomy/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

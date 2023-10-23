@@ -1,11 +1,15 @@
 import 'dart:async';
+import 'dart:isolate';
 
-import 'package:Metronomy/model/music_structure.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+const millisecondsPerMinute = 60000;
+const microsecondsPerMinute = 60000000;
+
 
 class MusicPlayerScreen extends ConsumerStatefulWidget {
 
@@ -17,7 +21,10 @@ class MusicPlayerScreen extends ConsumerStatefulWidget {
 
 class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
-  final player = AudioPlayer();
+  final playerSongFirst = AudioPlayer();
+  final playerSongNext = AudioPlayer();
+  final AssetSource songFirst = AssetSource('metronomy-song-first.mp3');
+  final AssetSource songNext = AssetSource('metronome-song.mp3');
 
   bool printDebug = false;
 
@@ -38,7 +45,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   Duration? bpmDuration;
 
   int valueCountdown = 0;
-  int oldValue = 0;
+  int oldValuePrint = 0;
+  int oldValueCount = 0;
   var allValue = [];
   int _startingCountdown = 10;
   int _debugHitCount = 0;
@@ -51,9 +59,31 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   bool _timeThree = false;
   bool _timeFour = false;
 
+  /////////////
+  var sampleSize = 25;
+
+  static const _defaultBpm = 115;
+
+  var bpm = _defaultBpm;
+  //var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;
+  var intervalInMicrosecond = microsecondsPerMinute / _defaultBpm;
+
+  Timer? timer;
+  Isolate? isolate;
+  int millisLastTick = 0;
+
+  double overallDeviation = 0;
+  var inAccurateTicks = 0;
+  // defaults to -1, since there is natural delay between starting the timer or isolate and it's first tick
+  var ticksOverall = -1;
+  var timeenmicrosecsinceepochprevioustick = -1;
+
+  List<String> deviationInfo = [];
+
   @override
   void initState() {
     _songsFuture = ref.read(songsProvider.notifier).loadSongs();
+
     super.initState();
   }
 
@@ -61,10 +91,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   Widget build(BuildContext context) {
 
     songsAvailable = ref.watch(songsProvider);
-
     myCurrentSong = songsAvailable[0];
-
-
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -158,14 +185,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                         Text(
                           'Temps: ',
                           style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        Text(
-                          '$_beatCounter / ${songsAvailable[0].musiquePart[_sectionCurrentIndex].maximumBeatSection}',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange
-                          ),
                         ),
                       ],
                     ),
@@ -303,7 +322,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
 
 
-  void setCountDown(double time1microsecond) {
+  void setCountDown() {
 
     setState(() {
 
@@ -313,27 +332,9 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         _debugHitCount++;
       }
 
-      DateTime now = DateTime.now();
-
-      int minute = now.minute;
-      int second = now.second;
-      int millisecond = now.millisecond;
-      int microsecond = now.microsecond;
-
-      int sumInMicrosecond = (minute * 60 * 1000000) + second * 1000000 + millisecond * 1000 + microsecond;
-
-      String stringMinute = '${minute}';
-      String stringsecond = '${second}';
-      String stringmillisecond = '${millisecond}';
-      String stringmicrosecond = '${microsecond}';
-
-      int gradian = sumInMicrosecond - oldValue;
-      allValue.add(gradian);
-
-      print('${now} // ${stringMinute.padLeft(2,'0')}:${stringsecond.padLeft(2,'0')}.${stringmillisecond.padLeft(3,'0')}${stringmicrosecond.padLeft(3,'0')} soit > : ${sumInMicrosecond} - ${oldValue} = ${gradian} // soit ${((gradian / time1microsecond.toInt()) -1)} %');
-
+      bool first = false;
       // play the tick song
-      if(_debugHitCount > 0) {
+      if(_debugHitCount > 0 && _startingCountdown == 0) {
         _beatCounter++;
         if(_beatCounter > myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection){
 
@@ -355,6 +356,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
         if (!_timeOne) {
           _timeOne = !_timeOne;
+          first = true;
+
         } else if (!_timeTwo) {
           _timeTwo = !_timeTwo;
         } else if (!_timeThree) {
@@ -362,21 +365,25 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         } else if (!_timeFour) {
           _timeFour = !_timeFour;
         } else {
+          first = true;
           _timeOne = true;
           _timeTwo = false;
           _timeThree = false;
           _timeFour = false;
         }
+
+        if(first){
+          playerSongFirst.play(songFirst);
+          //print('1');
+        }else{
+          //print('2/3/4');
+          playerSongNext.play(songNext);
+        }
       }
-
-      player.play(AssetSource('metronome-song.mp3'));
-
-      oldValue = sumInMicrosecond;
     });
   }
 
   void _playOrPause() {
-
     if(_timerBPM != null && _timerBPM!.isActive){
       pauseTimer();
     }else{
@@ -384,13 +391,171 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     }
   }
 
+
   void startTimer(){
     int mouvementParMinute = songsAvailable[0].tempo;
-    double time1microsecond = 60 * 1000000 / mouvementParMinute;
-    print("Debug (60 * 1 000 000 microseconds / ${mouvementParMinute} mvt par min) = ${time1microsecond.toInt()} microseconds");
-    bpmDuration = Duration(microseconds: time1microsecond.toInt());
+    //double time1microsecond = 60 * 1000000 / mouvementParMinute;
+    // double time1microsecond = 52000;
+    //print("Debug (60 * 1 000 000 microseconds / environ ${mouvementParMinute} mvt par min) = ${time1microsecond.toInt()} microseconds");
+    //print("Debug (60 * 1 000 000 microseconds / ${mouvementParMinute} mvt par min) = ${time1microsecond.toInt()} microseconds");
+    //bpmDuration = Duration(microseconds: time1microsecond.toInt());
 
-    _timerBPM = Timer.periodic(bpmDuration!, (_) => setCountDown(time1microsecond));
+    /*int counter = 40;
+    //Timer.periodic(const Duration(microseconds: 1000000), (timer) {
+
+    int millisLastTick = 0;
+    var now = DateTime.now().millisecondsSinceEpoch;
+    var duration = now - millisLastTick;
+
+    const millisecondsPerMinute = 60000;
+    const _defaultBpm = 240;
+    var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;*/
+
+
+/*    _timerBPM = Timer.periodic(new Duration(milliseconds: 100), (testTimer) => {
+    //_timerBPM = Timer.periodic(new Duration(milliseconds: 521739), (testTimer) => {
+      _printMaintenant()
+    });*/
+
+
+    /*Timer.periodic( Duration(seconds: 2), (timer) {
+      print(timer.tick);
+      counter--;
+      if (counter == 0) {
+        print('Cancel timer');
+        timer.cancel();
+      }
+    });*/
+
+
+    _timerBPM = Timer.periodic(
+      const Duration(microseconds: 200),
+          (timer) {
+        var now = DateTime.now().microsecondsSinceEpoch;
+        var duration = now - timeenmicrosecsinceepochprevioustick;
+        //print('debug : tick = ${timer.tick} // now = ${now}');
+        if (duration >= intervalInMicrosecond) {
+          _onTimerTick();
+          //if (ticksOverall >= sampleSize) return;
+          //print('debug : tick = ${timer.tick} // now = ${now} // timeenmicrosecsinceepochprevioustick = ${timeenmicrosecsinceepochprevioustick} // diff = ${duration}');
+          timeenmicrosecsinceepochprevioustick = now;
+        }
+
+        //print('debug : tick = ${timer.tick} // now = ${now} // ticksOverall = ${ticksOverall} // sampleSize = ${sampleSize}');
+
+
+        //_printMaintenant();
+
+        /*if (ticksOverall >= sampleSize) return;
+
+
+        var duration = now - millisLastTick;
+
+        if (duration >= intervalInMilliseconds) {
+          _onTimerTick();
+
+          millisLastTick = now;
+        }*/
+      },
+    );
+
+    //_timerBPM = Timer.periodic(bpmDuration!, (_) => setCountDown(time1microsecond));
+
+
+    /*Timer.periodic( Duration(seconds: 2), (timer) {
+      print(timer.tick);
+      counter--;
+      if (counter == 0) {
+        print('Cancel timer');
+        timer.cancel();
+      }
+    });*/
+
+
+  }
+
+  void _onTimerTick() {
+    _printMaintenant();
+    setCountDown();
+
+    /*if (ticksOverall >= sampleSize) return;
+
+    ticksOverall++;
+
+    var now = DateTime.now().microsecondsSinceEpoch;
+    var duration = now - millisLastTick;*/
+
+    /*// ignore the very first tick since there is natural delay between setting up the timer and the first tick
+    if (duration != intervalInMicrosecond && ticksOverall > 0) {
+      //var deviation = (duration - intervalInMicrosecond).abs();
+      //deviationInfo.add('Deviation in tick #$ticksOverall - $deviation ms');
+      _printMaintenant();
+
+      inAccurateTicks++;
+      overallDeviation += deviation;
+    }
+
+    millisLastTick = now;
+
+    if (ticksOverall >= sampleSize) {
+      onSamplingComplete();
+    }*/
+  }
+
+  void _printMaintenant() {
+    var nowDT = DateTime.now();
+    var nowMicrosecondsSinceEpoch = nowDT.microsecondsSinceEpoch;
+    int gradian = nowMicrosecondsSinceEpoch - oldValuePrint;
+    print('${nowDT} // ${gradian /1000} microsec - ${intervalInMicrosecond /1000}  microsec = ${(gradian - intervalInMicrosecond) / 1000}  millisecondes ');
+
+    if(_startingCountdown > 0){
+      playerSongNext.play(songNext);
+    }
+    oldValuePrint = nowMicrosecondsSinceEpoch;
+  }
+
+  /*void _onTimerTick() {
+
+
+
+    if (ticksOverall >= sampleSize) return;
+
+    ticksOverall++;
+
+    var now = DateTime.now().millisecondsSinceEpoch;
+    var duration = now - millisLastTick;
+
+    // ignore the very first tick since there is natural delay between setting up the timer and the first tick
+    if (duration != intervalInMilliseconds && ticksOverall > 0) {
+      var deviation = (duration - intervalInMilliseconds).abs();
+      deviationInfo.add('Deviation in tick #$ticksOverall - $deviation ms');
+
+      inAccurateTicks++;
+      overallDeviation += deviation;
+    }
+
+    millisLastTick = now;
+
+    if (ticksOverall >= sampleSize) {
+      onSamplingComplete();
+    }
+  }*/
+
+  void onSamplingComplete() {
+    timer?.cancel();
+    timer = null;
+
+    isolate?.kill();
+    isolate = null;
+
+    var averageDeviation = overallDeviation / inAccurateTicks;
+
+    for (var message in deviationInfo) print(message);
+
+    print('Ticks $ticksOverall');
+    print('Inaccurate ticks $inAccurateTicks');
+    print('${((inAccurateTicks / ticksOverall) * 100).toStringAsFixed(2)}% in-accuracy');
+    print('Average deviation ${averageDeviation.toStringAsFixed(5)} ms');
   }
 
   void pauseTimer() {

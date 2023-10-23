@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:Metronomy/model/music_structure.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -187,14 +186,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           'Temps: ',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
-                        /*Text(
-                          '$_beatCounter / ${songsAvailable[0].musiquePart[_sectionCurrentIndex].maximumBeatSection}',
-                          style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.orange
-                          ),
-                        ),*/
                       ],
                     ),
                     Row(
@@ -341,25 +332,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         _debugHitCount++;
       }
 
-      /*DateTime now = DateTime.now();
-
-      int minute = now.minute;
-      int second = now.second;
-      int millisecond = now.millisecond;
-      int microsecond = now.microsecond;
-
-      int sumInMicrosecond = (minute * 60 * 1000000) + second * 1000000 + millisecond * 1000 + microsecond;
-
-      String stringMinute = '${minute}';
-      String stringsecond = '${second}';
-      String stringmillisecond = '${millisecond}';
-      String stringmicrosecond = '${microsecond}';
-
-      int gradian = sumInMicrosecond - oldValueCount;
-      allValue.add(gradian);
-
-      print('${now} // ${stringMinute.padLeft(2,'0')}:${stringsecond.padLeft(2,'0')}.${stringmillisecond.padLeft(3,'0')}${stringmicrosecond.padLeft(3,'0')} soit > : ${sumInMicrosecond} - ${oldValueCount} = ${gradian}');*/
-
       bool first = false;
       // play the tick song
       if(_debugHitCount > 0 && _startingCountdown == 0) {
@@ -402,13 +374,12 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
         if(first){
           playerSongFirst.play(songFirst);
-          print('1');
+          //print('1');
         }else{
-          print('2/3/4');
+          //print('2/3/4');
           playerSongNext.play(songNext);
         }
       }
-      //oldValueCount = sumInMicrosecond;
     });
   }
 
@@ -533,26 +504,12 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   void _printMaintenant() {
     var nowDT = DateTime.now();
-
-    /*int minute = nowDT.minute;
-    int second = nowDT.second;
-    int millisecond = nowDT.millisecond;
-    int microsecond = nowDT.microsecond;
-
-    */
-    /*int sumInMicrosecond = (minute * 60 * 1000000) + second * 1000000 + millisecond * 1000 + microsecond;
-
-    String stringMinute = '${minute}';
-    String stringsecond = '${second}';
-    String stringmillisecond = '${millisecond}';
-    String stringmicrosecond = '${microsecond}';*/
-
     var nowMicrosecondsSinceEpoch = nowDT.microsecondsSinceEpoch;
     int gradian = nowMicrosecondsSinceEpoch - oldValuePrint;
-    //print('${nowDT} // ${stringMinute.padLeft(2,'0')}:${stringsecond.padLeft(2,'0')}.${stringmillisecond.padLeft(3,'0')}${stringmicrosecond.padLeft(3,'0')} soit > : ${nowMicrosecondsSinceEpoch} - ${oldValue} = ${gradian}');
     print('${nowDT} // ${gradian /1000} microsec - ${intervalInMicrosecond /1000}  microsec = ${(gradian - intervalInMicrosecond) / 1000}  millisecondes ');
+
     if(_startingCountdown > 0){
-      playerSongFirst.play(songFirst);
+      playerSongNext.play(songNext);
     }
     oldValuePrint = nowMicrosecondsSinceEpoch;
   }

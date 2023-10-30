@@ -1,15 +1,20 @@
 import 'dart:async';
 import 'dart:isolate';
+import 'dart:typed_data';
 
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:Metronomy/store/rhythm_store.dart';
+import 'package:Metronomy/ui/rhythm_label.dart';
+import 'package:Metronomy/ui/rhythm_slider.dart';
+import 'package:Metronomy/ui/sound_toggle_button.dart';
+import 'package:Metronomy/ui/stop_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const millisecondsPerMinute = 60000;
 const microsecondsPerMinute = 60000000;
-
 
 class MusicPlayerScreen extends ConsumerStatefulWidget {
 
@@ -20,11 +25,6 @@ class MusicPlayerScreen extends ConsumerStatefulWidget {
 }
 
 class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
-
-  final playerSongFirst = AudioPlayer();
-  final playerSongNext = AudioPlayer();
-  final AssetSource songFirst = AssetSource('metronomy-song-first.mp3');
-  final AssetSource songNext = AssetSource('metronome-song.mp3');
 
   bool printDebug = false;
 
@@ -41,7 +41,19 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   double _bpm = 60;
   int _tickInterval = 0;
 
-  Timer? _timerBPM;
+  /*(timer) {
+  var now = DateTime.now().microsecondsSinceEpoch;
+  var duration = now - timeenmicrosecsinceepochprevioustick;
+  //print('debug : tick = ${timer.tick} // now = ${now}');
+  if (duration >= intervalInMicrosecond) {
+  _onTimerTick();
+  //if (ticksOverall >= sampleSize) return;
+  //print('debug : tick = ${timer.tick} // now = ${now} // timeenmicrosecsinceepochprevioustick = ${timeenmicrosecsinceepochprevioustick} // diff = ${duration}');
+  timeenmicrosecsinceepochprevioustick = now;
+  }
+  },
+  );*/
+
   Duration? bpmDuration;
 
   int valueCountdown = 0;
@@ -62,7 +74,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   /////////////
   var sampleSize = 25;
 
-  static const _defaultBpm = 115;
+  static const _defaultBpm = 60;
 
   var bpm = _defaultBpm;
   //var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;
@@ -155,7 +167,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               AnimatedOpacity(
                 // If the widget is visible, animate to 0.0 (invisible).
                 // If the widget is hidden, animate to 1.0 (fully visible).
-                opacity: _startingCountdown ==0 ? 1.0 : 0.0,
+                opacity: RhythmStore.of(context).startingCountdown == 0 ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 200),
                 // The green box must be a child of the AnimatedOpacity widget.
                 child: Column(
@@ -268,7 +280,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '$_startingCountdown',
+                    '${RhythmStore.of(context).startingCountdown}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
@@ -293,36 +305,29 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
+              RhythmLabel(),
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: RhythmSlider(),
+              ),
+
             ],
           ),
         ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              enableFeedback: false,
-              onPressed: _playOrPause,
-              tooltip: 'Play',
-              backgroundColor: Colors.orangeAccent,
-              child: Icon(_timerBPM != null && _timerBPM!.isActive ? Icons.pause : Icons.play_arrow),
-            ),
+            SoundToggleButton(),
             const SizedBox(width: 8.0),
-            FloatingActionButton(
-              onPressed: stopTimer,
-              tooltip: 'Stop',
-              backgroundColor: Colors.orangeAccent,
-              child: Icon(Icons.stop),
-            ),
+            StopButton(),
             // This trailing comma makes auto-formatting nicer for build methods.
           ],
         )
     );
   }
 
-
-
-  void setCountDown() {
+  void setCountDown() async {
 
     setState(() {
 
@@ -373,24 +378,17 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         }
 
         if(first){
-          playerSongFirst.play(songFirst);
-          //print('1');
+          //playerSongFirst.play(songFirst);
+          print('1');
+          //int streamId = await pool.play(soundId);
         }else{
-          //print('2/3/4');
-          playerSongNext.play(songNext);
+          print('2/3/4');
+          //int streamId = await pool.play(soundId);
+          //playerSongNext.play(songNext);
         }
       }
     });
   }
-
-  void _playOrPause() {
-    if(_timerBPM != null && _timerBPM!.isActive){
-      pauseTimer();
-    }else{
-      startTimer();
-    }
-  }
-
 
   void startTimer(){
     int mouvementParMinute = songsAvailable[0].tempo;
@@ -428,7 +426,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     });*/
 
 
-    _timerBPM = Timer.periodic(
+    /*_timerBPM = Timer.periodic(
       const Duration(microseconds: 200),
           (timer) {
         var now = DateTime.now().microsecondsSinceEpoch;
@@ -446,7 +444,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
         //_printMaintenant();
 
-        /*if (ticksOverall >= sampleSize) return;
+        *//*if (ticksOverall >= sampleSize) return;
 
 
         var duration = now - millisLastTick;
@@ -455,21 +453,9 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           _onTimerTick();
 
           millisLastTick = now;
-        }*/
+        }*//*
       },
-    );
-
-    //_timerBPM = Timer.periodic(bpmDuration!, (_) => setCountDown(time1microsecond));
-
-
-    /*Timer.periodic( Duration(seconds: 2), (timer) {
-      print(timer.tick);
-      counter--;
-      if (counter == 0) {
-        print('Cancel timer');
-        timer.cancel();
-      }
-    });*/
+    );*/
 
 
   }
@@ -509,37 +495,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     print('${nowDT} // ${gradian /1000} microsec - ${intervalInMicrosecond /1000}  microsec = ${(gradian - intervalInMicrosecond) / 1000}  millisecondes ');
 
     if(_startingCountdown > 0){
-      playerSongNext.play(songNext);
+     // playerSongNext.play(songNext);
     }
     oldValuePrint = nowMicrosecondsSinceEpoch;
   }
-
-  /*void _onTimerTick() {
-
-
-
-    if (ticksOverall >= sampleSize) return;
-
-    ticksOverall++;
-
-    var now = DateTime.now().millisecondsSinceEpoch;
-    var duration = now - millisLastTick;
-
-    // ignore the very first tick since there is natural delay between setting up the timer and the first tick
-    if (duration != intervalInMilliseconds && ticksOverall > 0) {
-      var deviation = (duration - intervalInMilliseconds).abs();
-      deviationInfo.add('Deviation in tick #$ticksOverall - $deviation ms');
-
-      inAccurateTicks++;
-      overallDeviation += deviation;
-    }
-
-    millisLastTick = now;
-
-    if (ticksOverall >= sampleSize) {
-      onSamplingComplete();
-    }
-  }*/
 
   void onSamplingComplete() {
     timer?.cancel();
@@ -558,19 +517,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     print('Average deviation ${averageDeviation.toStringAsFixed(5)} ms');
   }
 
-  void pauseTimer() {
-    setState(() {
-      _timerBPM!.cancel();
-    });
-  }
-
-  void stopTimer() {
-
-    setState(() {
-      stopTimerState();
-    });
-  }
-
   void stopTimerState() {
     _startingCountdown = 10;
     _debugHitCount = 0;
@@ -579,7 +525,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     _timeTwo = false;
     _timeThree = false;
     _timeFour = false;
-    _timerBPM!.cancel();
 
     // gestion current
     _sectionCurrentIndex = 0;

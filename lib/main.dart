@@ -1,3 +1,5 @@
+import 'package:Metronomy/providers/audio_player_provider.dart';
+import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -31,9 +33,22 @@ final theme = ThemeData().copyWith(
   ),
 );
 
-void main() {
+/*void main() {
   runApp(
     const ProviderScope(child: MetronomyApp()),
+  );
+}*/
+// le point d'entrée de l'application devient asynchone afin que audioplayers charge correctement le son
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(
+    ProviderScope(child: AudioPlayerProvider(
+        audioPlayer: await AudioPlayerProvider.createAudioPlayer(),
+        child: const RhythmProvider(
+          child: MetronomyApp(),
+        ),
+      ),
+    ),
   );
 }
 

@@ -33,11 +33,6 @@ final theme = ThemeData().copyWith(
   ),
 );
 
-/*void main() {
-  runApp(
-    const ProviderScope(child: MetronomyApp()),
-  );
-}*/
 // le point d'entrée de l'application devient asynchone afin que audioplayers charge correctement le son
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

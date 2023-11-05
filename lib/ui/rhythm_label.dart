@@ -10,9 +10,10 @@ class RhythmLabel extends StatelessWidget {
     return Text(
       // permet d'accéder à la valeur actualisée du rythme
       RhythmStore.of(context).rhythm.toString(),
-      style: Theme.of(context).textTheme.displayLarge?.copyWith(
-        fontSize: 80,
-        fontWeight: FontWeight.bold,
+      style: TextStyle(
+          fontSize: 40,
+          fontWeight: FontWeight.normal,
+          color: Colors.orange
       ),
     );
   }

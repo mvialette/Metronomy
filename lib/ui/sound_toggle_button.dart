@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:Metronomy/providers/audio_player_provider.dart';
@@ -11,7 +12,7 @@ class SoundToggleButton extends StatefulWidget {
   const SoundToggleButton({super.key});
 
   static Duration getRhythmInterval(int rhythm) =>
-      Duration(milliseconds: ((60 / rhythm) * 1000).toInt());
+      Duration(microseconds: (((60 / rhythm) * 1000)* 1000).toInt());
 
   @override
   State<SoundToggleButton> createState() => _SoundToggleButtonState();
@@ -20,11 +21,6 @@ class SoundToggleButton extends StatefulWidget {
 class _SoundToggleButtonState extends State<SoundToggleButton> {
   Timer? periodicTimer;
   int oldValuePrint = 0;
-
-  bool a = false;
-  bool b = false;
-  bool c = false;
-  bool d = false;
 
   @override
   void didChangeDependencies() {
@@ -36,30 +32,27 @@ class _SoundToggleButtonState extends State<SoundToggleButton> {
           (_) {
         _printMaintenant();
         if (RhythmStore.of(context).enable) {
-          RhythmProvider.of(context).updateDowngradeCountdown();
+          RhythmProvider.of(context).updateMakeCountdown();
 
           audioPlayer.pause();
           audioPlayer.seek(Duration.zero);
 
-          if (!a) {
-            a = !a;
-          } else if (!b) {
-            b = !b;
-          } else if (!c) {
-            c = !c;
-          } else if (!d) {
-            d = !d;
-          } else {
-            a = true;
-            b = false;
-            c = false;
-            d = false;
-          }
-
-          if(a == true && b == false && c == false && d == false){
-            audioPlayer.play(songA);
-          }else{
-            audioPlayer.play(songB);
+          if (RhythmStore.of(context).debugTickCount > 0) {
+            if(RhythmStore.of(context).timeOne && RhythmStore.of(context).timeTwo && RhythmStore.of(context).timeThree && RhythmStore.of(context).timeFour){
+              // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 5, 9, 13, ...)
+              audioPlayer.play(songA);
+            }else{
+              // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, ...)
+              audioPlayer.play(songB);
+            }
+          }else {
+            if(RhythmStore.of(context).startingCountdown == 0) {
+              // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)
+              audioPlayer.play(songA);
+            } else {
+              // case occures when startingCountdown > 0, debugTickCount = 0 (time -9, -8, -7, -6, -5, -4, -3, -2, -1, 0)
+              audioPlayer.play(songB);
+            }
           }
         }
       },
@@ -68,11 +61,21 @@ class _SoundToggleButtonState extends State<SoundToggleButton> {
   }
 
   void _printMaintenant() {
+    /*songsAvailable = ref.watch(songsProvider);
+    //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
+    myCurrentSong = songsAvailable[0];
+    //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
+    myCurrentSong = songsAvailable[0];
+    print('b${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection}');
+    print('bb${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection}');*/
+
     var nowDT = DateTime.now();
     var nowMicrosecondsSinceEpoch = nowDT.microsecondsSinceEpoch;
     int gradian = nowMicrosecondsSinceEpoch - oldValuePrint;
 
     print('${nowDT} // ${gradian /1000} microsec');
+    // print('${nowDT} // ${gradian /1000} microsec - ${intervalInMicrosecond /1000}  microsec = ${(gradian - intervalInMicrosecond) / 1000}  millisecondes ');
+
     oldValuePrint = nowMicrosecondsSinceEpoch;
   }
 
@@ -91,6 +94,7 @@ class _SoundToggleButtonState extends State<SoundToggleButton> {
       enableFeedback: false,
       onPressed: () {
         setState(() {
+          //RhythmProvider.of(context).updateMusicInformations(0, maximumBeatSection, maximumBarsSection)
           RhythmProvider.of(context).updateEnableTimer(!RhythmStore.of(context).enable);
         });
       },

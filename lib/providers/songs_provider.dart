@@ -8,7 +8,7 @@ class SongsNotifier extends StateNotifier<List<Song>> {
 
   Future<void> loadSongs() async {
 
-    //List<Song> allSongs = <Song>[];
+    //List<Song> allSongs = <Song>[getMyWay()];
     List<Song> allSongs = <Song>[getHereComesTheRainAgain()];
 
     state = allSongs;
@@ -37,7 +37,7 @@ class SongsNotifier extends StateNotifier<List<Song>> {
   // Here Comes The Rain Again
   Song getHereComesTheRainAgain(){
 
-/*    Couplet : 8 mesures x2
+/*  Couplet : 8 mesures x2
     Refrain 16 mesures
     Couplet
     Refrain
@@ -51,7 +51,7 @@ class SongsNotifier extends StateNotifier<List<Song>> {
     MusicStructure _musicStructureIntro = new MusicStructure(sectionName: "INTRO", sectionShortcut: "I", maximumBarsSection: 8, maximumBeatSection: 4);
     MusicStructure _musicStructureCouplet = new MusicStructure(sectionName: "COUPLET", sectionShortcut: "C", maximumBarsSection: 8, maximumBeatSection: 4);
     MusicStructure _musicStructureRefrain = new MusicStructure(sectionName: "REFRAIN", sectionShortcut: "R", maximumBarsSection: 16, maximumBeatSection: 4);
-    MusicStructure _musicStructurePont = new MusicStructure(sectionName: "PONT", sectionShortcut: "P", maximumBarsSection: 8, maximumBeatSection: 4);
+    MusicStructure _musicStructurePont = new MusicStructure(sectionName: "PONT", sectionShortcut: "P", maximumBarsSection: 4, maximumBeatSection: 4);
 
     List<MusicStructure> musicSteps =  <MusicStructure>[];
     musicSteps.add(_musicStructureIntro);

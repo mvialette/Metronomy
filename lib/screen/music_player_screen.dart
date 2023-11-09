@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:isolate';
-import 'dart:typed_data';
 
 import 'package:Metronomy/model/song.dart';
+import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
-import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
@@ -104,10 +103,14 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     super.initState();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
 
     songsAvailable = ref.watch(songsProvider);
+    final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
+
     //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
     _currentSongs = songsAvailable[_songIndex];
     /*print('b${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection}');
@@ -115,6 +118,39 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
+        drawer: Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                ),
+                child: Text('Settings'),
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    const Text('First song Different'),
+                    Switch(
+                        value: firstSongDifferent,
+                        onChanged: (check) {
+                          ref.read(allSettingsProvider.notifier).updateFirstSongDifferent(check);
+                          Navigator.pop(context);
+                        }),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Row(children: [

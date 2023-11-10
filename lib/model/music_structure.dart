@@ -1,7 +1,7 @@
 class MusicStructure {
 
   final String sectionName, sectionShortcut;
-  final num maximumBarsSection, maximumBeatSection;
+  final int maximumBarsSection, maximumBeatSection;
 
   const MusicStructure({
     required this.sectionName,

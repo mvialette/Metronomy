@@ -2,14 +2,19 @@ import 'dart:async';
 import 'dart:isolate';
 
 import 'package:Metronomy/model/song.dart';
+import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:Metronomy/store/rhythm_store.dart';
+import 'package:Metronomy/ui/rhythm_label.dart';
+import 'package:Metronomy/ui/rhythm_slider.dart';
+import 'package:Metronomy/ui/sound_toggle_button.dart';
+import 'package:Metronomy/ui/stop_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const millisecondsPerMinute = 60000;
 const microsecondsPerMinute = 60000000;
-
 
 class MusicPlayerScreen extends ConsumerStatefulWidget {
 
@@ -21,15 +26,11 @@ class MusicPlayerScreen extends ConsumerStatefulWidget {
 
 class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
-  final playerSongFirst = AudioPlayer();
-  final playerSongNext = AudioPlayer();
-  final AssetSource songFirst = AssetSource('metronomy-song-first.mp3');
-  final AssetSource songNext = AssetSource('metronome-song.mp3');
-
   bool printDebug = false;
 
-  Song? myCurrentSong;
+  Song? _currentSongs;
 
+  int _songIndex = 0;
   int _sectionCurrentIndex = 0;
   int _beatCounter = 0;
   int _barsCurrentCounter = 0;
@@ -41,14 +42,12 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   double _bpm = 60;
   int _tickInterval = 0;
 
-  Timer? _timerBPM;
   Duration? bpmDuration;
 
   int valueCountdown = 0;
   int oldValuePrint = 0;
   int oldValueCount = 0;
   var allValue = [];
-  int _startingCountdown = 10;
   int _debugHitCount = 0;
 
   late Future<void> _songsFuture;
@@ -62,7 +61,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   /////////////
   var sampleSize = 25;
 
-  static const _defaultBpm = 115;
+  static const _defaultBpm = 60;
 
   var bpm = _defaultBpm;
   //var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;
@@ -80,21 +79,78 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   List<String> deviationInfo = [];
 
+  int _startingCountdown = 0;
+
   @override
   void initState() {
     _songsFuture = ref.read(songsProvider.notifier).loadSongs();
+    //songsAvailable = ref.read(songsProvider);
 
+    Timer.periodic(Duration(milliseconds: 200), (timer) {
+      setState(() {
+        _startingCountdown = RhythmStore.of(context).startingCountdown;
+        _debugHitCount = RhythmStore.of(context).debugTickCount;
+        _timeOne = RhythmStore.of(context).timeOne;
+        _timeTwo = RhythmStore.of(context).timeTwo;
+        _timeThree = RhythmStore.of(context).timeThree;
+        _timeFour = RhythmStore.of(context).timeFour;
+        _barsCurrentCounter = RhythmStore.of(context).barsCurrentCounter;
+        _sectionCurrentIndex = RhythmStore.of(context).sectionCurrentIndex;
+      });
+    });
+    //RhythmProvider.of(context).updateSong(songsAvailable[0]);
+    ref.read(songsProvider.notifier).loadSongs();
     super.initState();
   }
+
+
 
   @override
   Widget build(BuildContext context) {
 
     songsAvailable = ref.watch(songsProvider);
-    myCurrentSong = songsAvailable[0];
+    final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
+
+    //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
+    _currentSongs = songsAvailable[_songIndex];
+    /*print('b${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection}');
+    print('bb${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection}');*/
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
+        drawer: Drawer(
+          // Add a ListView to the drawer. This ensures the user can scroll
+          // through the options in the drawer if there isn't enough vertical
+          // space to fit everything.
+          child: ListView(
+            // Important: Remove any padding from the ListView.
+            padding: EdgeInsets.zero,
+            children: [
+              const DrawerHeader(
+                decoration: BoxDecoration(
+                  color: Colors.orange,
+                ),
+                child: Text('Settings'),
+              ),
+              ListTile(
+                title: Row(
+                  children: [
+                    const Text('First song Different'),
+                    Switch(
+                        value: firstSongDifferent,
+                        onChanged: (check) {
+                          ref.read(allSettingsProvider.notifier).updateFirstSongDifferent(check);
+                          Navigator.pop(context);
+                        }),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Row(children: [
@@ -136,26 +192,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   )
               ),
               SizedBox(height: 15,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Partie : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    '${songsAvailable[0].musiquePart[_sectionCurrentIndex].sectionName}',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15,),
               AnimatedOpacity(
                 // If the widget is visible, animate to 0.0 (invisible).
                 // If the widget is hidden, animate to 1.0 (fully visible).
-                opacity: _startingCountdown ==0 ? 1.0 : 0.0,
+                opacity: RhythmStore.of(context).startingCountdown == 0 ? 1.0 : 0.0,
                 duration: const Duration(milliseconds: 200),
                 // The green box must be a child of the AnimatedOpacity widget.
                 child: Column(
@@ -164,11 +204,26 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
+                          'Partie : ',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        Text(
+                          '${songsAvailable[_songIndex].musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
+                          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
                           'Mesure : ',
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '$_barsCurrentCounter / ${songsAvailable[0].musiquePart[_sectionCurrentIndex].maximumBarsSection}' ,
+                          '${_barsCurrentCounter} / ${songsAvailable[_songIndex].musiquePart[_sectionCurrentIndex].maximumBarsSection}' ,
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -191,75 +246,33 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(_timeOne?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
+                        Icon(
+                          _timeOne?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary,
+                          size: 30,
+                        ),
                         Icon(_timeTwo?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
                         Icon(_timeThree?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
                         Icon(_timeFour?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
                       ],
                     ),
-
-                    Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child:
-                      Column(
-
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Tempo : ',
-                                style: Theme.of(context).textTheme.headlineMedium,
-                              ),
-                              Text(
-                                '${songsAvailable[0].tempo}',
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.orange
-                                ),
-                              ),
-                            ],
-                          ),
-                          /*Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Slider(
-                          min: 1.0,
-                          max: 220.0,
-                          activeColor: Colors.orangeAccent,
-                          inactiveColor: Colors.orange.shade50,
-                          thumbColor: Colors.orange,
-                          value: _bpm,
-                          onChanged: (value) {
-                            setState(() {
-                              _bpm = value;
-
-                              if(_tickTimer != null && _tickTimer!.isActive) {
-                                double bps = _bpm.toInt() / 60;
-                                _tickInterval = 1000 ~/ bps;
-                                if(_tickTimer != null){
-                                  // clean the previous timer instance
-                                  _tickTimer!.cancel();
-                                }
-                                // start a new timer with the new _tickInterval
-                                _tickTimer = new Timer.periodic(
-                                    new Duration(milliseconds: _tickInterval),
-                                    _onTick);
-                              }
-                            });
-                          },
-                        )
+                        Text(
+                          'Tempo : ',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        // ${songsAvailable[0].tempo}
+                        RhythmLabel(),
                       ],
-                   ), */
-                        ],
-                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: RhythmSlider(),
                     ),
                   ],
                 ),
               ),
-
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -268,7 +281,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '$_startingCountdown',
+                    '${_startingCountdown}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
@@ -293,297 +306,19 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
             ],
           ),
         ),
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              enableFeedback: false,
-              onPressed: _playOrPause,
-              tooltip: 'Play',
-              backgroundColor: Colors.orangeAccent,
-              child: Icon(_timerBPM != null && _timerBPM!.isActive ? Icons.pause : Icons.play_arrow),
-            ),
+            SoundToggleButton(),
             const SizedBox(width: 8.0),
-            FloatingActionButton(
-              onPressed: stopTimer,
-              tooltip: 'Stop',
-              backgroundColor: Colors.orangeAccent,
-              child: Icon(Icons.stop),
-            ),
+            StopButton(),
             // This trailing comma makes auto-formatting nicer for build methods.
           ],
         )
     );
-  }
-
-
-
-  void setCountDown() {
-
-    setState(() {
-
-      if(_startingCountdown > 0){
-        _startingCountdown--;
-      }else {
-        _debugHitCount++;
-      }
-
-      bool first = false;
-      // play the tick song
-      if(_debugHitCount > 0 && _startingCountdown == 0) {
-        _beatCounter++;
-        if(_beatCounter > myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection){
-
-          if(_barsCurrentCounter >=  myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection){
-            // on test pour vérifier qu'on ne soit pas à la fin du morceau
-            if(_sectionCurrentIndex < (myCurrentSong!.musiquePart.length -1)) {
-              // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
-              _sectionCurrentIndex++;
-              _barsCurrentCounter = 0;
-              _beatCounter = 1;
-            }else{
-              stopTimerState();
-            }
-          }
-
-          _beatCounter = 1;
-          _barsCurrentCounter++;
-        }
-
-        if (!_timeOne) {
-          _timeOne = !_timeOne;
-          first = true;
-
-        } else if (!_timeTwo) {
-          _timeTwo = !_timeTwo;
-        } else if (!_timeThree) {
-          _timeThree = !_timeThree;
-        } else if (!_timeFour) {
-          _timeFour = !_timeFour;
-        } else {
-          first = true;
-          _timeOne = true;
-          _timeTwo = false;
-          _timeThree = false;
-          _timeFour = false;
-        }
-
-        if(first){
-          playerSongFirst.play(songFirst);
-          //print('1');
-        }else{
-          //print('2/3/4');
-          playerSongNext.play(songNext);
-        }
-      }
-    });
-  }
-
-  void _playOrPause() {
-    if(_timerBPM != null && _timerBPM!.isActive){
-      pauseTimer();
-    }else{
-      startTimer();
-    }
-  }
-
-
-  void startTimer(){
-    int mouvementParMinute = songsAvailable[0].tempo;
-    //double time1microsecond = 60 * 1000000 / mouvementParMinute;
-    // double time1microsecond = 52000;
-    //print("Debug (60 * 1 000 000 microseconds / environ ${mouvementParMinute} mvt par min) = ${time1microsecond.toInt()} microseconds");
-    //print("Debug (60 * 1 000 000 microseconds / ${mouvementParMinute} mvt par min) = ${time1microsecond.toInt()} microseconds");
-    //bpmDuration = Duration(microseconds: time1microsecond.toInt());
-
-    /*int counter = 40;
-    //Timer.periodic(const Duration(microseconds: 1000000), (timer) {
-
-    int millisLastTick = 0;
-    var now = DateTime.now().millisecondsSinceEpoch;
-    var duration = now - millisLastTick;
-
-    const millisecondsPerMinute = 60000;
-    const _defaultBpm = 240;
-    var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;*/
-
-
-/*    _timerBPM = Timer.periodic(new Duration(milliseconds: 100), (testTimer) => {
-    //_timerBPM = Timer.periodic(new Duration(milliseconds: 521739), (testTimer) => {
-      _printMaintenant()
-    });*/
-
-
-    /*Timer.periodic( Duration(seconds: 2), (timer) {
-      print(timer.tick);
-      counter--;
-      if (counter == 0) {
-        print('Cancel timer');
-        timer.cancel();
-      }
-    });*/
-
-
-    _timerBPM = Timer.periodic(
-      const Duration(microseconds: 200),
-          (timer) {
-        var now = DateTime.now().microsecondsSinceEpoch;
-        var duration = now - timeenmicrosecsinceepochprevioustick;
-        //print('debug : tick = ${timer.tick} // now = ${now}');
-        if (duration >= intervalInMicrosecond) {
-          _onTimerTick();
-          //if (ticksOverall >= sampleSize) return;
-          //print('debug : tick = ${timer.tick} // now = ${now} // timeenmicrosecsinceepochprevioustick = ${timeenmicrosecsinceepochprevioustick} // diff = ${duration}');
-          timeenmicrosecsinceepochprevioustick = now;
-        }
-
-        //print('debug : tick = ${timer.tick} // now = ${now} // ticksOverall = ${ticksOverall} // sampleSize = ${sampleSize}');
-
-
-        //_printMaintenant();
-
-        /*if (ticksOverall >= sampleSize) return;
-
-
-        var duration = now - millisLastTick;
-
-        if (duration >= intervalInMilliseconds) {
-          _onTimerTick();
-
-          millisLastTick = now;
-        }*/
-      },
-    );
-
-    //_timerBPM = Timer.periodic(bpmDuration!, (_) => setCountDown(time1microsecond));
-
-
-    /*Timer.periodic( Duration(seconds: 2), (timer) {
-      print(timer.tick);
-      counter--;
-      if (counter == 0) {
-        print('Cancel timer');
-        timer.cancel();
-      }
-    });*/
-
-
-  }
-
-  void _onTimerTick() {
-    _printMaintenant();
-    setCountDown();
-
-    /*if (ticksOverall >= sampleSize) return;
-
-    ticksOverall++;
-
-    var now = DateTime.now().microsecondsSinceEpoch;
-    var duration = now - millisLastTick;*/
-
-    /*// ignore the very first tick since there is natural delay between setting up the timer and the first tick
-    if (duration != intervalInMicrosecond && ticksOverall > 0) {
-      //var deviation = (duration - intervalInMicrosecond).abs();
-      //deviationInfo.add('Deviation in tick #$ticksOverall - $deviation ms');
-      _printMaintenant();
-
-      inAccurateTicks++;
-      overallDeviation += deviation;
-    }
-
-    millisLastTick = now;
-
-    if (ticksOverall >= sampleSize) {
-      onSamplingComplete();
-    }*/
-  }
-
-  void _printMaintenant() {
-    var nowDT = DateTime.now();
-    var nowMicrosecondsSinceEpoch = nowDT.microsecondsSinceEpoch;
-    int gradian = nowMicrosecondsSinceEpoch - oldValuePrint;
-    print('${nowDT} // ${gradian /1000} microsec - ${intervalInMicrosecond /1000}  microsec = ${(gradian - intervalInMicrosecond) / 1000}  millisecondes ');
-
-    if(_startingCountdown > 0){
-      playerSongNext.play(songNext);
-    }
-    oldValuePrint = nowMicrosecondsSinceEpoch;
-  }
-
-  /*void _onTimerTick() {
-
-
-
-    if (ticksOverall >= sampleSize) return;
-
-    ticksOverall++;
-
-    var now = DateTime.now().millisecondsSinceEpoch;
-    var duration = now - millisLastTick;
-
-    // ignore the very first tick since there is natural delay between setting up the timer and the first tick
-    if (duration != intervalInMilliseconds && ticksOverall > 0) {
-      var deviation = (duration - intervalInMilliseconds).abs();
-      deviationInfo.add('Deviation in tick #$ticksOverall - $deviation ms');
-
-      inAccurateTicks++;
-      overallDeviation += deviation;
-    }
-
-    millisLastTick = now;
-
-    if (ticksOverall >= sampleSize) {
-      onSamplingComplete();
-    }
-  }*/
-
-  void onSamplingComplete() {
-    timer?.cancel();
-    timer = null;
-
-    isolate?.kill();
-    isolate = null;
-
-    var averageDeviation = overallDeviation / inAccurateTicks;
-
-    for (var message in deviationInfo) print(message);
-
-    print('Ticks $ticksOverall');
-    print('Inaccurate ticks $inAccurateTicks');
-    print('${((inAccurateTicks / ticksOverall) * 100).toStringAsFixed(2)}% in-accuracy');
-    print('Average deviation ${averageDeviation.toStringAsFixed(5)} ms');
-  }
-
-  void pauseTimer() {
-    setState(() {
-      _timerBPM!.cancel();
-    });
-  }
-
-  void stopTimer() {
-
-    setState(() {
-      stopTimerState();
-    });
-  }
-
-  void stopTimerState() {
-    _startingCountdown = 10;
-    _debugHitCount = 0;
-
-    _timeOne = false;
-    _timeTwo = false;
-    _timeThree = false;
-    _timeFour = false;
-    _timerBPM!.cancel();
-
-    // gestion current
-    _sectionCurrentIndex = 0;
-    _beatCounter = 0;
-    _barsCurrentCounter = 0;
   }
 }

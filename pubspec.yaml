@@ -60,7 +60,13 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/
+    #- assets/
+    - assets/metronome-sound.mp3
+    - assets/metronome-song.mp3
+    - assets/metronome-electro (mp3cut.net).wav
+    - assets/metronomy-song-first.mp3
+    - assets/start-13691.mp3
+    - assets/metronome-85688.mp3
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

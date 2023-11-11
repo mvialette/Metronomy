@@ -74,7 +74,6 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       _barsCurrentCounter = 0;
     });
   }
-
   void updateMakeCountdown() {
     setState(() {
 
@@ -119,6 +118,69 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
         }
       }
     });
+
+  }
+
+  void updateMakeCountdown2() {
+    setState(() {
+
+      if(_startingCountdown > 0){
+        _startingCountdown--;
+      }else {
+        _debugTickCount++;
+      }
+
+      if(_debugTickCount == 0 && _timeOne){
+        _barsCurrentCounter++;
+      }
+
+      if(_timeOne){
+        _timeOne = false;
+        _timeTwo = true;
+      }else if(_timeTwo){
+        _timeTwo = false;
+        _timeThree = true;
+      } else if(_timeThree){
+        _timeThree = false;
+        _timeFour = true;
+      } else {
+        _timeFour = false;
+        _timeOne = true;
+      }
+/*
+        if (!_timeOne) {
+
+          _barsCurrentCounter++;
+        } else if (!_timeTwo) {
+          _timeTwo = !_timeTwo;
+        } else if (!_timeThree) {
+          _timeThree = !_timeThree;
+        } else if (!_timeFour) {
+          _timeFour = !_timeFour;
+        } else {
+          // mesure suivante (bar), premier temps (beat)
+          _barsCurrentCounter++;
+          _timeOne = true;
+          _timeTwo = false;
+          _timeThree = false;
+          _timeFour = false;
+        }
+
+        if(_barsCurrentCounter >  songsAvailable[_songIndex].musiquePart[_sectionCurrentIndex].maximumBarsSection) {
+          if(_sectionCurrentIndex < (songsAvailable[_songIndex].musiquePart.length -1)) {
+            // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
+            _barsCurrentCounter = 1;
+            _sectionCurrentIndex++;
+          }else{
+            // this is the end of sections
+            updateStopTimer();
+          }
+        }
+      }
+      */
+
+    });
+
   }
 
   @override

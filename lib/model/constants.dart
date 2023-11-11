@@ -27,5 +27,8 @@ final songFirst = AssetSource('metronomy-song-first.mp3');
 final songNext = AssetSource('metronome-song.mp3');
 //
 //final songA = AssetSource('start-13691.mp3');
-final songA = AssetSource('metronome-song.mp3');
-final songB = AssetSource('metronome-85688.mp3');
+/*final songA = AssetSource('metronome-song.mp3');
+final songB = AssetSource('metronome-85688.mp3');*/
+
+final songA = AssetSource('song-a.mpeg');
+final songB = AssetSource('song-b.mpeg');

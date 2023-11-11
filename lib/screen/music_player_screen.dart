@@ -86,7 +86,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     _songsFuture = ref.read(songsProvider.notifier).loadSongs();
     //songsAvailable = ref.read(songsProvider);
 
-    Timer.periodic(Duration(milliseconds: 200), (timer) {
+    /*Timer.periodic(Duration(milliseconds: 200), (timer) {
       setState(() {
         _startingCountdown = RhythmStore.of(context).startingCountdown;
         _debugHitCount = RhythmStore.of(context).debugTickCount;
@@ -97,7 +97,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         _barsCurrentCounter = RhythmStore.of(context).barsCurrentCounter;
         _sectionCurrentIndex = RhythmStore.of(context).sectionCurrentIndex;
       });
-    });
+    });*/
     //RhythmProvider.of(context).updateSong(songsAvailable[0]);
     ref.read(songsProvider.notifier).loadSongs();
     super.initState();

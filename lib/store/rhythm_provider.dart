@@ -88,7 +88,22 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       }else{
         _debugTickCount++;
 
-        if (!_timeOne) {
+        if (_timeOne) {
+          _timeOne = false;
+          _timeTwo = true;
+        } else if (_timeTwo) {
+          _timeTwo = false;
+          _timeThree = true;
+        } else if (_timeThree) {
+          _timeThree = false;
+          _timeFour = true;
+        } else {
+          _timeFour = false;
+          _timeOne = true;
+          _barsCurrentCounter++;
+        }
+
+        /*if (!_timeOne) {
           // premiere mesure (bar), premier temps (beat)
           _timeOne = !_timeOne;
           _barsCurrentCounter++;
@@ -106,6 +121,8 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           _timeThree = false;
           _timeFour = false;
         }
+
+        */
 
         if(_barsCurrentCounter >  songsAvailable[_songIndex].musiquePart[_sectionCurrentIndex].maximumBarsSection) {
           if(_sectionCurrentIndex < (songsAvailable[_songIndex].musiquePart.length -1)) {

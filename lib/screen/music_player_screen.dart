@@ -8,6 +8,7 @@ import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
 import 'package:Metronomy/ui/stop_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -96,6 +97,15 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
 
     //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
+    String titleFromFirestore = "empty";
+    final docRef = FirebaseFirestore.instance.collection("songs").doc("here_comes_the_rain_again");
+    docRef.get().then(
+          (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        titleFromFirestore = data['title'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
@@ -156,6 +166,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Text('Firestore'),
+                          Text(titleFromFirestore),
                           Text(
                             'Titre : ',
                             style: Theme.of(context).textTheme.headlineMedium,

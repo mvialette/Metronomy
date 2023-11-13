@@ -3,6 +3,9 @@ import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
 import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,6 +39,11 @@ final theme = ThemeData().copyWith(
 // le point d'entrée de l'application devient asynchone afin que audioplayers charge correctement le son
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(
     ProviderScope(child: AudioPlayerProvider(
         audioPlayer: await AudioPlayerProvider.createAudioPlayer(),

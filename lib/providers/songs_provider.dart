@@ -1,4 +1,5 @@
 import 'package:Metronomy/model/music_structure.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:Metronomy/model/song.dart';
@@ -7,6 +8,9 @@ class SongsNotifier extends StateNotifier<List<Song>> {
   SongsNotifier() : super(const []);
 
   Future<void> loadSongs() async {
+    
+
+    //FirebaseFirestore.instance.collection('songs').doc('my_way')
 
     //List<Song> allSongs = <Song>[getMyWay()];
     List<Song> allSongs = <Song>[getHereComesTheRainAgain()];
@@ -69,7 +73,19 @@ class SongsNotifier extends StateNotifier<List<Song>> {
     musicSteps.add(_musicStructureCouplet);
     musicSteps.add(_musicStructureCouplet);
 
-    return new Song(title: "Here comes the rain again", tempo: 115, musiquePart: musicSteps);
+    //FirebaseFirestore.instance.collection('songs').doc('').get('title');
+    String titleFromFirestore = "empty";
+    // TODO MAV Validate how to update ui
+    /*final docRef = FirebaseFirestore.instance.collection("songs").doc("here_comes_the_rain_again");
+    docRef.get().then(
+          (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        titleFromFirestore = data['title'];
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );*/
+
+    return new Song(title: titleFromFirestore, tempo: 115, musiquePart: musicSteps);
   }
 }
 

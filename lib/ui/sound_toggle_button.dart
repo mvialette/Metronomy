@@ -43,18 +43,13 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
           audioPlayer.seek(Duration.zero);
 
           if (RhythmStore.of(context).debugTickCount > 0) {
-            if(RhythmStore.of(context).timeOne && RhythmStore.of(context).timeTwo && RhythmStore.of(context).timeThree && RhythmStore.of(context).timeFour){
-              // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 5, 9, 13, ...)
-
-              if(firstSongDifferent){
+            if(firstSongDifferent && RhythmStore.of(context).timeFour){
+                // case occures when play tick 1, 5, 9, 13, ...
                 audioPlayer.play(songA);
               }else{
+                // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, ...)
                 audioPlayer.play(songB);
               }
-            }else{
-              // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, ...)
-              audioPlayer.play(songB);
-            }
           }else {
             if(RhythmStore.of(context).startingCountdown == 0) {
               // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)

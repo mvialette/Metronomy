@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
@@ -27,8 +26,6 @@ class MusicPlayerScreen extends ConsumerStatefulWidget {
 class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   bool printDebug = false;
-
-  Song? _currentSongs;
 
   int _songIndex = 0;
   int _sectionCurrentIndex = 0;
@@ -65,28 +62,15 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   var bpm = _defaultBpm;
   //var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;
-  var intervalInMicrosecond = microsecondsPerMinute / _defaultBpm;
 
-  Timer? timer;
-  Isolate? isolate;
-  int millisLastTick = 0;
-
-  double overallDeviation = 0;
-  var inAccurateTicks = 0;
-  // defaults to -1, since there is natural delay between starting the timer or isolate and it's first tick
-  var ticksOverall = -1;
-  var timeenmicrosecsinceepochprevioustick = -1;
-
-  List<String> deviationInfo = [];
 
   int _startingCountdown = 0;
 
   @override
   void initState() {
     _songsFuture = ref.read(songsProvider.notifier).loadSongs();
-    //songsAvailable = ref.read(songsProvider);
 
-    Timer.periodic(Duration(milliseconds: 200), (timer) {
+    Timer.periodic(Duration(microseconds: 100), (timer) {
       setState(() {
         _startingCountdown = RhythmStore.of(context).startingCountdown;
         _debugHitCount = RhythmStore.of(context).debugTickCount;
@@ -98,7 +82,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         _sectionCurrentIndex = RhythmStore.of(context).sectionCurrentIndex;
       });
     });
-    //RhythmProvider.of(context).updateSong(songsAvailable[0]);
+
     ref.read(songsProvider.notifier).loadSongs();
     super.initState();
   }
@@ -112,9 +96,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
 
     //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
-    _currentSongs = songsAvailable[_songIndex];
-    /*print('b${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection}');
-    print('bb${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection}');*/
 
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,

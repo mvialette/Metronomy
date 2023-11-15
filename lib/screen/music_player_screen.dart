@@ -29,9 +29,9 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   bool printDebug = false;
 
   int _songIndex = 0;
-  int _sectionCurrentIndex = 0;
+  //int _sectionCurrentIndex = 0;
   int _beatCounter = 0;
-  int _barsCurrentCounter = 0;
+  //int _barsCurrentCounter = 0;
 
   int debugTempsDActionNmoinsUn = 0;
   int debugTempsAvgMin = 0;
@@ -46,15 +46,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   int oldValuePrint = 0;
   int oldValueCount = 0;
   var allValue = [];
-  int _debugHitCount = 0;
+  //int _debugHitCount = 0;
 
   late Future<void> _songsFuture;
   var songsAvailable;
-
-  bool _timeOne = false;
-  bool _timeTwo = false;
-  bool _timeThree = false;
-  bool _timeFour = false;
 
   /////////////
   var sampleSize = 25;
@@ -64,27 +59,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   var bpm = _defaultBpm;
   //var intervalInMilliseconds = millisecondsPerMinute / _defaultBpm;
 
-
-  int _startingCountdown = 0;
-
   @override
   void initState() {
     _songsFuture = ref.read(songsProvider.notifier).loadSongs();
 
-    Timer.periodic(Duration(microseconds: 100), (timer) {
-      setState(() {
-        _startingCountdown = RhythmStore.of(context).startingCountdown;
-        _debugHitCount = RhythmStore.of(context).debugTickCount;
-        _timeOne = RhythmStore.of(context).timeOne;
-        _timeTwo = RhythmStore.of(context).timeTwo;
-        _timeThree = RhythmStore.of(context).timeThree;
-        _timeFour = RhythmStore.of(context).timeFour;
-        _barsCurrentCounter = RhythmStore.of(context).barsCurrentCounter;
-        _sectionCurrentIndex = RhythmStore.of(context).sectionCurrentIndex;
-      });
-    });
-
-    ref.read(songsProvider.notifier).loadSongs();
     super.initState();
   }
 
@@ -216,7 +194,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           style: Theme.of(context).textTheme.headlineMedium,
                         ),
                         Text(
-                          '${_barsCurrentCounter} / ${songsAvailable[_songIndex].musiquePart[_sectionCurrentIndex].maximumBarsSection}' ,
+                          '${RhythmStore.of(context).barsCurrentCounter} / ${songsAvailable[_songIndex].musiquePart[RhythmStore.of(context).sectionCurrentIndex].maximumBarsSection}' ,
                           style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.bold,
@@ -240,12 +218,12 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          _timeOne?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary,
+                          RhythmStore.of(context).timeOne?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary,
                           size: 30,
                         ),
-                        Icon(_timeTwo?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
-                        Icon(_timeThree?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
-                        Icon(_timeFour?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
+                        Icon(RhythmStore.of(context).timeTwo?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
+                        Icon(RhythmStore.of(context).timeThree?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
+                        Icon(RhythmStore.of(context).timeFour?Icons.radio_button_on_rounded:Icons.radio_button_off_rounded, color: Theme.of(context).colorScheme.primary),
                       ],
                     ),
                     Row(
@@ -274,7 +252,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '${_startingCountdown}',
+                    '${RhythmStore.of(context).startingCountdown}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
@@ -291,7 +269,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '$_debugHitCount',
+                    '${RhythmStore.of(context).debugTickCount}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.normal,
@@ -306,7 +284,11 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         floatingActionButton: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SoundToggleButton(),
+            SoundToggleButton(
+              setStateCallback: () {
+                setState(() {});
+              },
+            ),
             const SizedBox(width: 8.0),
             StopButton(),
             // This trailing comma makes auto-formatting nicer for build methods.

@@ -1,4 +1,4 @@
-import 'package:Metronomy/providers/songs_provider.dart';
+import 'package:Metronomy/model/song.dart';
 import 'package:flutter/material.dart';
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
@@ -27,7 +27,7 @@ class RhythmProvider extends ConsumerStatefulWidget {
 
 class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
-  var songsAvailable;
+  late Future<List<Song>> songsAvailable;
 
   int _rhythm = kDefaultRhythm;
   bool _enable = kDefaultEnable;
@@ -44,12 +44,9 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   int _sectionCurrentIndex = 0;
   int _beatCounter = 0;
   int _barsCurrentCounter = 0;
+  int _maximumBarsSection = 0;
+  int _sectionsLength = 0;
 
-  @override
-  void initState() {
-    ref.read(songsProvider.notifier).loadSongs();
-    super.initState();
-  }
   void updateRhythm(int val) {
     setState(() {
       _rhythm = val;
@@ -103,29 +100,8 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           _barsCurrentCounter++;
         }
 
-        /*if (!_timeOne) {
-          // premiere mesure (bar), premier temps (beat)
-          _timeOne = !_timeOne;
-          _barsCurrentCounter++;
-        } else if (!_timeTwo) {
-          _timeTwo = !_timeTwo;
-        } else if (!_timeThree) {
-          _timeThree = !_timeThree;
-        } else if (!_timeFour) {
-          _timeFour = !_timeFour;
-        } else {
-          // mesure suivante (bar), premier temps (beat)
-          _barsCurrentCounter++;
-          _timeOne = true;
-          _timeTwo = false;
-          _timeThree = false;
-          _timeFour = false;
-        }
-
-        */
-
-        if(_barsCurrentCounter >  songsAvailable[_songIndex].musiquePart[_sectionCurrentIndex].maximumBarsSection) {
-          if(_sectionCurrentIndex < (songsAvailable[_songIndex].musiquePart.length -1)) {
+        if(_barsCurrentCounter >  _maximumBarsSection) {
+          if(_sectionCurrentIndex < (_sectionsLength -1)) {
             // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
             _barsCurrentCounter = 1;
             _sectionCurrentIndex++;
@@ -140,7 +116,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
   @override
   Widget build(BuildContext context) {
-    songsAvailable = ref.watch(songsProvider);
+
     return RhythmStore(
       child: widget.child,
       rhythm: _rhythm,
@@ -154,16 +130,17 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       songIndex: _songIndex,
       sectionCurrentIndex: _sectionCurrentIndex,
       barsCurrentCounter: _barsCurrentCounter,
-      beatCounter: _beatCounter,
+      maximumBarsSection: _maximumBarsSection,
+      sectionsLength: _sectionsLength,
     );
   }
 
-  void updateMusicInformations(int songIndex, int maximumBeatSection, int maximumBarsSection) {
-    setState(() {
+  void updateMusicInformations(int songIndex, int maximumBarsSection, int sectionsLength) {
+   //setState(() {
       _songIndex = songIndex;
       _sectionCurrentIndex = 0;
-      _beatCounter = maximumBeatSection;
-      _barsCurrentCounter = maximumBarsSection;
-    });
+      _maximumBarsSection = maximumBarsSection;
+      _sectionsLength = sectionsLength;
+  //  });
   }
 }

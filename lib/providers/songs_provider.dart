@@ -7,85 +7,21 @@ import 'package:Metronomy/model/song.dart';
 class SongsNotifier extends StateNotifier<List<Song>> {
   SongsNotifier() : super(const []);
 
-  Future<void> loadSongs() async {
-    
-
-    //FirebaseFirestore.instance.collection('songs').doc('my_way')
-
-    //List<Song> allSongs = <Song>[getMyWay()];
-    List<Song> allSongs = <Song>[getHereComesTheRainAgain()];
-
-    state = allSongs;
+  CollectionReference loadSongs() {
+    return FirebaseFirestore.instance.collection("songs");
   }
 
-  Song getMyWay(){
-    // load one song
-    MusicStructure _musicStructureIntro = new MusicStructure(sectionName: "INTRO", sectionShortcut: "I", maximumBarsSection: 16, maximumBeatSection: 4);
-    MusicStructure _musicStructureVerse = new MusicStructure(sectionName: "VERSE", sectionShortcut: "V", maximumBarsSection: 16, maximumBeatSection: 4);
-    MusicStructure _musicStructureBreakdown = new MusicStructure(sectionName: "BREAKDOWN", sectionShortcut: "BD", maximumBarsSection: 8, maximumBeatSection: 4);
-    MusicStructure _musicStructureBuildUp = new MusicStructure(sectionName: "BUILD UP", sectionShortcut: "BU", maximumBarsSection: 8, maximumBeatSection: 4);
-    MusicStructure _musicStructureChorus = new MusicStructure(sectionName: "CHORUS", sectionShortcut: "C", maximumBarsSection: 16, maximumBeatSection: 4);
-    MusicStructure _musicStructureOutro = new MusicStructure(sectionName: "OUTRO", sectionShortcut: "O", maximumBarsSection: 22, maximumBeatSection: 4);
+  List<Song> loadSongsToList() {
 
-    List<MusicStructure> myWaySteps =  <MusicStructure>[];
-    myWaySteps.add(_musicStructureIntro);
-    myWaySteps.add(_musicStructureVerse);
-    myWaySteps.add(_musicStructureBreakdown);
-    myWaySteps.add(_musicStructureBuildUp);
-    myWaySteps.add(_musicStructureChorus);
-    myWaySteps.add(_musicStructureOutro);
-
-    return new Song(title: "My Way", tempo: 222, musiquePart: myWaySteps);
-  }
-
-  // Here Comes The Rain Again
-  Song getHereComesTheRainAgain(){
-
-/*  Couplet : 8 mesures x2
-    Refrain 16 mesures
-    Couplet
-    Refrain
-    Pont : 8 mesures x 2
-    Refrain
-    Intro
-    Couplet
-    Couplet*/
-
-    // load one song
-    MusicStructure _musicStructureIntro = new MusicStructure(sectionName: "INTRO", sectionShortcut: "I", maximumBarsSection: 8, maximumBeatSection: 4);
-    MusicStructure _musicStructureCouplet = new MusicStructure(sectionName: "COUPLET", sectionShortcut: "C", maximumBarsSection: 8, maximumBeatSection: 4);
-    MusicStructure _musicStructureRefrain = new MusicStructure(sectionName: "REFRAIN", sectionShortcut: "R", maximumBarsSection: 16, maximumBeatSection: 4);
-    MusicStructure _musicStructurePont = new MusicStructure(sectionName: "PONT", sectionShortcut: "P", maximumBarsSection: 4, maximumBeatSection: 4);
-
-    List<MusicStructure> musicSteps =  <MusicStructure>[];
-    musicSteps.add(_musicStructureIntro);
-    musicSteps.add(_musicStructureIntro);
-    musicSteps.add(_musicStructureCouplet);
-    musicSteps.add(_musicStructureCouplet);
-    musicSteps.add(_musicStructureRefrain);
-    musicSteps.add(_musicStructureCouplet);
-    musicSteps.add(_musicStructureRefrain);
-    musicSteps.add(_musicStructurePont);
-    musicSteps.add(_musicStructurePont);
-    musicSteps.add(_musicStructureRefrain);
-    musicSteps.add(_musicStructureIntro);
-    musicSteps.add(_musicStructureIntro);
-    musicSteps.add(_musicStructureCouplet);
-    musicSteps.add(_musicStructureCouplet);
-
-    //FirebaseFirestore.instance.collection('songs').doc('').get('title');
-    String titleFromFirestore = "empty";
-    // TODO MAV Validate how to update ui
-    /*final docRef = FirebaseFirestore.instance.collection("songs").doc("here_comes_the_rain_again");
-    docRef.get().then(
-          (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        titleFromFirestore = data['title'];
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );*/
-
-    return new Song(title: titleFromFirestore, tempo: 115, musiquePart: musicSteps);
+    FirebaseFirestore.instance.collection("songs").snapshots()
+        .map((event) {
+      List<Song> _songs = [];
+      event.docs.forEach((element) {
+        _songs.add(Song.fromMap(element.data()));
+      });
+      return _songs.reversed.toList();
+    });
+    return List.empty();
   }
 }
 

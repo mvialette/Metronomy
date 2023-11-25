@@ -16,7 +16,6 @@ final colorScheme = ColorScheme.fromSeed(
 );
 
 final theme = ThemeData().copyWith(
-  useMaterial3: true,
   scaffoldBackgroundColor: colorScheme.background,
   colorScheme: colorScheme,
   textTheme: GoogleFonts.acmeTextTheme().copyWith(
@@ -45,22 +44,12 @@ void main() async {
   );
 
   runApp(
-    const ProviderScope(
+    ProviderScope(
         child: const RhythmProvider(
             child: MetronomyApp()
         ),
     ),
   );
-
- /* runApp(
-    ProviderScope(child: AudioPlayerProvider(
-        audioPlayer: await AudioPlayerProvider.createAudioPlayer(),
-        child: const RhythmProvider(
-          child: MetronomyApp(),
-        ),
-      ),
-    ),
-  );*/
 }
 
 class MetronomyApp extends StatelessWidget {

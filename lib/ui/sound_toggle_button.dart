@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -64,8 +63,6 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
   @override
   void didChangeDependencies() {
-    //final audioPlayer = AudioPlayerProvider.of(context).audioPlayer;
-
 
     periodicTimer?.cancel();
     periodicTimer = Timer.periodic(
@@ -75,6 +72,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
           final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
         _printMaintenant();
         if (RhythmStore.of(context).enable) {
+
           RhythmProvider.of(context).updateMakeCountdown();
 
           if (RhythmStore.of(context).debugTickCount > 0) {
@@ -119,23 +117,13 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   }
 
   void _printMaintenant() {
-    /*songsAvailable = ref.watch(songsProvider);
-    //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
-    myCurrentSong = songsAvailable[0];
-    //RhythmProvider.of(context).updateMusicSection(myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection, myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection);
-    myCurrentSong = songsAvailable[0];
-    print('b${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBeatSection}');
-    print('bb${myCurrentSong!.musiquePart[_sectionCurrentIndex].maximumBarsSection}');*/
 
     var nowDT = DateTime.now();
     var nowMicrosecondsSinceEpoch = nowDT.microsecondsSinceEpoch;
     int gradian = nowMicrosecondsSinceEpoch - oldValuePrint;
 
     print('${nowDT} // ${gradian /1000} microsec');
-    // print('${nowDT} // ${gradian /1000} microsec - ${intervalInMicrosecond /1000}  microsec = ${(gradian - intervalInMicrosecond) / 1000}  millisecondes ');
 
     oldValuePrint = nowMicrosecondsSinceEpoch;
   }
-
-
 }

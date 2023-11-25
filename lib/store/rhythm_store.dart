@@ -25,8 +25,9 @@ class RhythmStore extends InheritedWidget {
 
   final int songIndex;
   final int sectionCurrentIndex;
-  final int beatCounter;
   final int barsCurrentCounter;
+  final int maximumBarsSection;
+  final int sectionsLength;
 
   const RhythmStore({
     super.key,
@@ -41,8 +42,9 @@ class RhythmStore extends InheritedWidget {
     required this.timeFour,
     required this.songIndex,
     required this.sectionCurrentIndex,
-    required this.beatCounter,
     required this.barsCurrentCounter,
+    required this.maximumBarsSection,
+    required this.sectionsLength,
   });
 
   @override

@@ -10,19 +10,6 @@ class SongsNotifier extends StateNotifier<List<Song>> {
   CollectionReference loadSongs() {
     return FirebaseFirestore.instance.collection("songs");
   }
-
-  List<Song> loadSongsToList() {
-
-    FirebaseFirestore.instance.collection("songs").snapshots()
-        .map((event) {
-      List<Song> _songs = [];
-      event.docs.forEach((element) {
-        _songs.add(Song.fromMap(element.data()));
-      });
-      return _songs.reversed.toList();
-    });
-    return List.empty();
-  }
 }
 
 final songsProvider = StateNotifierProvider<SongsNotifier, List<Song>>(

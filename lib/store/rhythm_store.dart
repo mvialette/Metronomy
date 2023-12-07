@@ -2,6 +2,7 @@ import 'package:Metronomy/model/song.dart';
 import 'package:flutter/material.dart';
 
 class RhythmStore extends InheritedWidget {
+
   static RhythmStore of(BuildContext context) {
     final RhythmStore? result =
     context.dependOnInheritedWidgetOfExactType<RhythmStore>();
@@ -15,13 +16,16 @@ class RhythmStore extends InheritedWidget {
 
   final int rhythm;
   final bool enable;
-  final int startingCountdown;
+  //final int startingCountdown;
   final int debugTickCount;
 
   final bool timeOne;
   final bool timeTwo;
   final bool timeThree;
   final bool timeFour;
+  final bool timeFive;
+  final bool timeSix;
+  final bool timeSeven;
 
   final int songIndex;
   final int sectionCurrentIndex;
@@ -34,12 +38,15 @@ class RhythmStore extends InheritedWidget {
     required super.child,
     required this.rhythm,
     required this.enable,
-    required this.startingCountdown,
+    //required this.startingCountdown,
     required this.debugTickCount,
     required this.timeOne,
     required this.timeTwo,
     required this.timeThree,
     required this.timeFour,
+    required this.timeFive,
+    required this.timeSix,
+    required this.timeSeven,
     required this.songIndex,
     required this.sectionCurrentIndex,
     required this.barsCurrentCounter,

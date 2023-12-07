@@ -120,8 +120,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 final loadedSong = snapshot.data!.docs;
                 final selectedSong = loadedSong[_songIndex].data() as Map<String, dynamic>;
                 Song song = Song.fromMap(selectedSong);
-                _printSong(song);
-                RhythmProvider.of(context).updateMusicInformations(_songIndex, song.musiquePart[RhythmStore.of(context).sectionCurrentIndex].maximumBarsSection, song.musiquePart.length);
+                //_printSong(song);
+                RhythmProvider.of(context).updateSong(song, _songIndex);
 
                 return Column(
                   children: <Widget>[
@@ -148,15 +148,65 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       ),
                     ),
                     AnimatedOpacity(
+                      // If the widget is visible, animate to 0.0 (invisible).
+                      // If the widget is hidden, animate to 1.0 (fully visible).
+                      opacity: (RhythmProvider.of(context).startingCountdown > 0)
+                          ? 1.0
+                          : 0.0,
+                      duration: const Duration(milliseconds: 200),
+                      // The green box must be a child of the AnimatedOpacity widget.
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Starting countdown : ',
+                                style: Theme.of(context).textTheme.headlineMedium,
+                              ),
+                              Text(
+                                '${RhythmProvider.of(context).startingCountdown}',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.orange
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    AnimatedOpacity(
                         // If the widget is visible, animate to 0.0 (invisible).
                         // If the widget is hidden, animate to 1.0 (fully visible).
-                        opacity: RhythmStore.of(context).startingCountdown == 0
+                        opacity: RhythmProvider.of(context).startingCountdown == 0
                             ? 1.0
                             : 0.0,
                         duration: const Duration(milliseconds: 200),
                         // The green box must be a child of the AnimatedOpacity widget.
                         child: Column(
                           children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Debug hit count : ',
+                                  style: Theme.of(context).textTheme.headlineMedium,
+                                ),
+                                Text(
+                                  '${RhythmStore.of(context).debugTickCount}',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.orange
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -261,40 +311,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           ],
                         ),
                       ),
-                      Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Starting countdown : ',
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        Text(
-                          '${RhythmStore.of(context).startingCountdown}',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.orange
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Debug hit count : ',
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                        Text(
-                          '${RhythmStore.of(context).debugTickCount}',
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.orange
-                          ),
-                        ),
-                      ],
-                    ),
                   ],
                 );
               })

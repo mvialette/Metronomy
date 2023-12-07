@@ -71,6 +71,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
           (_) {
           final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
         _printMaintenant();
+
         if (RhythmStore.of(context).enable) {
 
           RhythmProvider.of(context).updateMakeCountdown();
@@ -84,7 +85,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
                 playLowSound();
               }
           }else {
-            if(RhythmStore.of(context).startingCountdown == 0) {
+            if(RhythmProvider.of(context).startingCountdown == 0 && RhythmProvider.of(context).debugTickCount > 0) {
               // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)
               //audioPlayer.play(songA);
               if(firstSongDifferent){
@@ -97,8 +98,8 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
               playLowSound();
             }
           }
-          this.widget.setStateCallback();
         }
+        this.widget.setStateCallback();
       },
     );
     super.didChangeDependencies();

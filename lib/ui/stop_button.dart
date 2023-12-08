@@ -4,7 +4,10 @@ import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/material.dart';
 
 class StopButton extends StatelessWidget {
-  const StopButton({super.key});
+
+  final Function setStateCallback;
+
+  const StopButton({super.key, required this.setStateCallback});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +15,7 @@ class StopButton extends StatelessWidget {
       enableFeedback: false,
       onPressed: () {
         RhythmProvider.of(context).updateStopTimer();
+        setStateCallback();
       },
       tooltip: 'Stop',
       backgroundColor: Colors.orangeAccent,

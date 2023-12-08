@@ -1,4 +1,5 @@
-import 'package:Metronomy/providers/songs_provider.dart';
+import 'package:Metronomy/model/song.dart';
+import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
@@ -27,29 +28,40 @@ class RhythmProvider extends ConsumerStatefulWidget {
 
 class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
-  var songsAvailable;
+  late Future<List<Song>> songsAvailable;
 
-  int _rhythm = kDefaultRhythm;
+  //int _rhythm = kDefaultRhythm;
+  int _rhythm = 120;
   bool _enable = kDefaultEnable;
 
-  int _startingCountdown = kDefaultStartingCountdown;
-  int _debugTickCount = 0;
+  int _startingBarsNumber = kDefaultStartingBarsNumber;
+
+  int startingCountdown = kDefaultStartingCountdown;
+  int debugTickCount = 0;
 
   bool _timeOne = false;
   bool _timeTwo = false;
   bool _timeThree = false;
   bool _timeFour = false;
+  bool _timeFive = false;
+  bool _timeSix = false;
+  bool _timeSeven = false;
 
   int _songIndex = 0;
   int _sectionCurrentIndex = 0;
-  int _beatCounter = 0;
   int _barsCurrentCounter = 0;
+  int _maximumBarsSection = 0;
+  int _sectionsLength = 0;
+
+  late Song _song;
 
   @override
   void initState() {
-    ref.read(songsProvider.notifier).loadSongs();
+    _startingBarsNumber = ref.read(allSettingsProvider).startingBarsNumber;
+
     super.initState();
   }
+
   void updateRhythm(int val) {
     setState(() {
       _rhythm = val;
@@ -59,34 +71,45 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   void updateEnableTimer(bool value) {
     setState(() {
       _enable = value;
+      if(startingCountdown == kDefaultStartingCountdown){
+        resetStartingCountdown();
+      }
     });
   }
 
   void updateStopTimer() {
     setState(() {
       _enable = false;
-      _startingCountdown = kDefaultStartingCountdown;
-      _debugTickCount = 0;
+      resetStartingCountdown();
+      debugTickCount = 0;
       _timeOne = false;
       _timeTwo = false;
       _timeThree = false;
       _timeFour = false;
+      _timeFive = false;
+      _timeSix = false;
+      _timeSeven = false;
       _barsCurrentCounter = 0;
     });
   }
 
+  void resetStartingCountdown(){
+    startingCountdown = _song.beatsByBar * _startingBarsNumber;
+  }
+
   void updateMakeCountdown() {
+
     setState(() {
 
-      if(_startingCountdown > 0){
-        _startingCountdown--;
+      if(startingCountdown > 0){
+        startingCountdown--;
 
         _timeOne = false;
         _timeTwo = false;
         _timeThree = false;
         _timeFour = false;
       }else{
-        _debugTickCount++;
+        debugTickCount++;
 
         if (_timeOne) {
           _timeOne = false;
@@ -97,35 +120,41 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
         } else if (_timeThree) {
           _timeThree = false;
           _timeFour = true;
-        } else {
+        } else if (_timeFour) {
           _timeFour = false;
+          if(_song.beatsByBar == 4) {
+            _timeOne = true;
+            _barsCurrentCounter++;
+          } else {
+            _timeFive = true;
+          }
+        } else if (_timeFive) {
+          _timeFive = false;
+          if(_song.beatsByBar == 5) {
+            _timeOne = true;
+            _barsCurrentCounter++;
+          } else {
+            _timeSix = true;
+          }
+        } else if (_timeSix) {
+          _timeSix = false;
+          if(_song.beatsByBar == 5) {
+            _timeOne = true;
+            _barsCurrentCounter++;
+          } else {
+            _timeSeven = true;
+          }
+        } else if (_timeSeven) {
+          _timeSeven = false;
           _timeOne = true;
           _barsCurrentCounter++;
-        }
-
-        /*if (!_timeOne) {
-          // premiere mesure (bar), premier temps (beat)
-          _timeOne = !_timeOne;
-          _barsCurrentCounter++;
-        } else if (!_timeTwo) {
-          _timeTwo = !_timeTwo;
-        } else if (!_timeThree) {
-          _timeThree = !_timeThree;
-        } else if (!_timeFour) {
-          _timeFour = !_timeFour;
         } else {
-          // mesure suivante (bar), premier temps (beat)
-          _barsCurrentCounter++;
+          // All flags are set to false
           _timeOne = true;
-          _timeTwo = false;
-          _timeThree = false;
-          _timeFour = false;
         }
 
-        */
-
-        if(_barsCurrentCounter >  songsAvailable[_songIndex].musiquePart[_sectionCurrentIndex].maximumBarsSection) {
-          if(_sectionCurrentIndex < (songsAvailable[_songIndex].musiquePart.length -1)) {
+        if(_barsCurrentCounter >  _maximumBarsSection) {
+          if(_sectionCurrentIndex < (_sectionsLength -1)) {
             // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
             _barsCurrentCounter = 1;
             _sectionCurrentIndex++;
@@ -134,36 +163,46 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
             updateStopTimer();
           }
         }
+
+        updateMusicInformations(_songIndex, _song.musiquePart[_sectionCurrentIndex].maximumBarsSection, _song.musiquePart.length);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    songsAvailable = ref.watch(songsProvider);
+
     return RhythmStore(
       child: widget.child,
       rhythm: _rhythm,
       enable: _enable,
-      startingCountdown: _startingCountdown,
-      debugTickCount: _debugTickCount,
+      debugTickCount: debugTickCount,
       timeOne: _timeOne,
       timeTwo: _timeTwo,
       timeThree: _timeThree,
       timeFour: _timeFour,
+      timeFive: _timeFive,
+      timeSix: _timeSix,
+      timeSeven: _timeSeven,
       songIndex: _songIndex,
       sectionCurrentIndex: _sectionCurrentIndex,
       barsCurrentCounter: _barsCurrentCounter,
-      beatCounter: _beatCounter,
+      maximumBarsSection: _maximumBarsSection,
+      sectionsLength: _sectionsLength,
     );
   }
 
-  void updateMusicInformations(int songIndex, int maximumBeatSection, int maximumBarsSection) {
-    setState(() {
+  void updateMusicInformations(int songIndex, int maximumBarsSection, int sectionsLength) {
       _songIndex = songIndex;
-      _sectionCurrentIndex = 0;
-      _beatCounter = maximumBeatSection;
-      _barsCurrentCounter = maximumBarsSection;
-    });
+      _maximumBarsSection = maximumBarsSection;
+      _sectionsLength = sectionsLength;
+  }
+
+  void updateSong(Song song, int indexOfSong) {
+    _song = song;
+    if(startingCountdown == kDefaultStartingCountdown){
+      resetStartingCountdown();
+    }
+    updateMusicInformations(indexOfSong, _song.musiquePart[_sectionCurrentIndex].maximumBarsSection, _song.musiquePart.length);
   }
 }

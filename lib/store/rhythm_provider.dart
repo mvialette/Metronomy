@@ -53,7 +53,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   int _maximumBarsSection = 0;
   int _sectionsLength = 0;
 
-  late Song _song;
+  late Song selectedSong;
 
   @override
   void initState() {
@@ -94,7 +94,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   }
 
   void resetStartingCountdown(){
-    startingCountdown = _song.beatsByBar * _startingBarsNumber;
+    startingCountdown = selectedSong.beatsByBar * _startingBarsNumber;
   }
 
   void updateMakeCountdown() {
@@ -122,7 +122,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           _timeFour = true;
         } else if (_timeFour) {
           _timeFour = false;
-          if(_song.beatsByBar == 4) {
+          if(selectedSong.beatsByBar == 4) {
             _timeOne = true;
             _barsCurrentCounter++;
           } else {
@@ -130,7 +130,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           }
         } else if (_timeFive) {
           _timeFive = false;
-          if(_song.beatsByBar == 5) {
+          if(selectedSong.beatsByBar == 5) {
             _timeOne = true;
             _barsCurrentCounter++;
           } else {
@@ -138,7 +138,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           }
         } else if (_timeSix) {
           _timeSix = false;
-          if(_song.beatsByBar == 5) {
+          if(selectedSong.beatsByBar == 5) {
             _timeOne = true;
             _barsCurrentCounter++;
           } else {
@@ -164,7 +164,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           }
         }
 
-        updateMusicInformations(_songIndex, _song.musiquePart[_sectionCurrentIndex].maximumBarsSection, _song.musiquePart.length);
+        updateMusicInformations(_songIndex, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
       }
     });
   }
@@ -199,10 +199,10 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   }
 
   void updateSong(Song song, int indexOfSong) {
-    _song = song;
+    selectedSong = song;
     if(startingCountdown == kDefaultStartingCountdown){
       resetStartingCountdown();
     }
-    updateMusicInformations(indexOfSong, _song.musiquePart[_sectionCurrentIndex].maximumBarsSection, _song.musiquePart.length);
+    updateMusicInformations(indexOfSong, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
   }
 }

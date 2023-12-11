@@ -14,7 +14,7 @@ class RhythmStore extends InheritedWidget {
     return result;
   }
 
-  final int rhythm;
+  //final int rhythm;
   final bool enable;
   //final int startingCountdown;
   final int debugTickCount;
@@ -36,7 +36,7 @@ class RhythmStore extends InheritedWidget {
   const RhythmStore({
     super.key,
     required super.child,
-    required this.rhythm,
+    //required this.rhythm,
     required this.enable,
     //required this.startingCountdown,
     required this.debugTickCount,
@@ -55,7 +55,14 @@ class RhythmStore extends InheritedWidget {
   });
 
   @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return this == oldWidget;
+    // TODO: implement updateShouldNotify
+    //throw UnimplementedError();
+  }
+
+  /*@override
   bool updateShouldNotify(RhythmStore oldWidget) {
     return rhythm != oldWidget.rhythm;
-  }
+  }*/
 }

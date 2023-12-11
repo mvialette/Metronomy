@@ -30,8 +30,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
   late Future<List<Song>> songsAvailable;
 
-  //int _rhythm = kDefaultRhythm;
-  int _rhythm = 120;
+  int rhythm = kDefaultRhythm;
   bool _enable = kDefaultEnable;
 
   int _startingBarsNumber = kDefaultStartingBarsNumber;
@@ -64,7 +63,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
   void updateRhythm(int val) {
     setState(() {
-      _rhythm = val;
+      rhythm = val;
     });
   }
 
@@ -119,7 +118,12 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           _timeThree = true;
         } else if (_timeThree) {
           _timeThree = false;
-          _timeFour = true;
+          if(selectedSong.beatsByBar == 3) {
+            _timeOne = true;
+            _barsCurrentCounter++;
+          } else {
+            _timeFour = true;
+          }
         } else if (_timeFour) {
           _timeFour = false;
           if(selectedSong.beatsByBar == 4) {
@@ -174,7 +178,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
     return RhythmStore(
       child: widget.child,
-      rhythm: _rhythm,
+      //rhythm: _rhythm,
       enable: _enable,
       debugTickCount: debugTickCount,
       timeOne: _timeOne,
@@ -200,6 +204,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
   void updateSong(Song song, int indexOfSong) {
     selectedSong = song;
+    rhythm = song.tempo;
     if(startingCountdown == kDefaultStartingCountdown){
       resetStartingCountdown();
     }

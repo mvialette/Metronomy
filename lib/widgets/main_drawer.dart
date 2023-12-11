@@ -5,6 +5,11 @@ class MainDrawer extends StatelessWidget {
 
   final void Function(String identifier) onSelectScreen;
 
+  void onSelectScreenFromDrawer(BuildContext context, String pageIdentifier){
+    Navigator.of(context).pop();
+    onSelectScreen(pageIdentifier);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -56,7 +61,7 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('all-songs');
+              onSelectScreenFromDrawer(context, 'all-songs');
             },
           ),
           ListTile(
@@ -73,7 +78,7 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('play-a-song');
+              onSelectScreenFromDrawer(context, 'play-a-song');
             },
           ),
           ListTile(
@@ -90,7 +95,7 @@ class MainDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
-              onSelectScreen('settings');
+              onSelectScreenFromDrawer(context, 'settings');
             },
           ),
         ],

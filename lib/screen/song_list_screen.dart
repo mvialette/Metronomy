@@ -21,36 +21,23 @@ class SongListScreen extends StatelessWidget {
 
   const SongListScreen({
     super.key,
-    this.title,
-    //required this.songs,
+    required this.onSelectScreen
   });
 
-  final String? title;
-  //final List<Song> songs;
-
+  final void Function(String identifier) onSelectScreen;
 
   Future<List<Song>> getAllAvailableSongs() async {
-    //final allAvailableSongs = ref.watch(songsProvider);
+
     CollectionReference songs = FirebaseFirestore.instance.collection("songs");
 
     List<Song> allAvailableSongs = <Song>[];
     await songs.get().then((QuerySnapshot snapshot) {
       snapshot.docs.forEach((doc) {
-        print('${doc.id} => ${doc.data()}');
         allAvailableSongs.add(Song.fromMap(doc.data() as Map<String, dynamic>));
       });
 
     }).catchError((error) => print("Failed to fetch users: $error"));
     return allAvailableSongs;
-  }
-
-  void goToMusicPlayerScreen(BuildContext context) {
-
-    Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (ctx) => MusicPlayerScreen(),
-        )
-    );
   }
 
   @override
@@ -72,17 +59,14 @@ class SongListScreen extends StatelessWidget {
             return ListView.builder(
               itemCount: snapshot.data?.length,
               itemBuilder: (ctx, index) =>
-              //Text(songs[index].title)
-              SongItem(
-                song: snapshot.data![index],
-                onSelectSong: (song) {
-                  RhythmProvider.of(context).updateSong(song, index);
-                  goToMusicPlayerScreen(context);
-                },
-              ),
+                SongItem(
+                  song: snapshot.data![index],
+                  onSelectSong: (song) {
+                    RhythmProvider.of(context).updateSong(song, index);
+                    onSelectScreen('play-a-song');
+                  },
+                ),
             );
-
-            //return Text(snapshot.data);
           } else {
             return const Text('Empty data');
           }

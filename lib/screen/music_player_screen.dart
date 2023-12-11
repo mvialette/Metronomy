@@ -25,15 +25,11 @@ class MusicPlayerScreen extends ConsumerStatefulWidget {
 
 class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
-  int _songIndex = 0;
-  //late CollectionReference songs;
   late bool firstSongDifferent;
 
   @override
   void initState() {
-    //songs = ref.read(songsProvider.notifier).loadSongs();
     firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
-
     super.initState();
   }
 
@@ -187,30 +183,31 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                           ? Icons.radio_button_on_rounded
                           : Icons.radio_button_off_rounded,
                       color: Theme.of(context).colorScheme.primary),
+                  RhythmProvider.of(context).selectedSong.beatsByBar > 3 ? (
                   Icon(
                       RhythmStore.of(context).timeFour
                           ? Icons.radio_button_on_rounded
                           : Icons.radio_button_off_rounded,
-                      color: Theme.of(context).colorScheme.primary),
+                      color: Theme.of(context).colorScheme.primary)):Text(""),
                 ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Tempo : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  // ${songsAvailable[0].tempo}
-                  RhythmLabel(),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: RhythmSlider(),
               ),
             ],
           ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Tempo : ',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            // ${songsAvailable[0].tempo}
+            RhythmLabel(),
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: RhythmSlider(),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

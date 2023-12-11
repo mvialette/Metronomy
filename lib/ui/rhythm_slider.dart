@@ -15,7 +15,7 @@ class RhythmSlider extends StatelessWidget {
       min: kMinRhythm.toDouble(),
       max: kMaxRhythm.toDouble(),
       // utiliser RhythmStore pour RÉCUPÉRER la valeur du rythme
-      value: RhythmStore.of(context).rhythm.toDouble(),
+      value: RhythmProvider.of(context).rhythm.toDouble(),
       onChanged: (double value) =>
       // utiliser RhythmProvider pour MODIFIER la valeur du rythme
       RhythmProvider.of(context).updateRhythm(value.toInt()),

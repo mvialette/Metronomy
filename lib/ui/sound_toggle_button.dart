@@ -67,7 +67,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
     periodicTimer?.cancel();
     periodicTimer = Timer.periodic(
       // récupérer la valeur courante du rythme
-      SoundToggleButton.getRhythmInterval(RhythmStore.of(context).rhythm),
+      SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm),
           (_) {
           final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
         _printMaintenant();
@@ -77,7 +77,15 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
           RhythmProvider.of(context).updateMakeCountdown();
 
           if (RhythmStore.of(context).debugTickCount > 0) {
-            if(firstSongDifferent && RhythmStore.of(context).timeFour){
+            if(firstSongDifferent &&
+                (
+                    (RhythmProvider.of(context).selectedSong.beatsByBar == 3 && RhythmStore.of(context).timeThree) ||
+                    (RhythmProvider.of(context).selectedSong.beatsByBar == 4 && RhythmStore.of(context).timeFour) ||
+                    (RhythmProvider.of(context).selectedSong.beatsByBar == 5 && RhythmStore.of(context).timeFive) ||
+                    (RhythmProvider.of(context).selectedSong.beatsByBar == 6 && RhythmStore.of(context).timeSix) ||
+                    (RhythmProvider.of(context).selectedSong.beatsByBar == 7 && RhythmStore.of(context).timeSeven)
+                )
+            ){
                 // case occures when play tick 1, 5, 9, 13, ...
                 playHighSound();
               }else{

@@ -205,9 +205,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   void updateSong(Song song, int indexOfSong) {
     selectedSong = song;
     rhythm = song.tempo;
-    if(startingCountdown == kDefaultStartingCountdown){
-      resetStartingCountdown();
-    }
+    resetStartingCountdown();
     updateMusicInformations(indexOfSong, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
   }
 }

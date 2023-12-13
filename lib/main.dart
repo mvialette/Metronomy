@@ -1,4 +1,4 @@
-import 'package:Metronomy/screen/tabs_screen.dart';
+import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class MetronomyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Metronomy App',
       theme: theme,
-      home: const MainScreen(),
+      home: const HomeScreen(),
     );
   }
 }

@@ -5,16 +5,16 @@ import 'package:Metronomy/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class MainScreen extends ConsumerStatefulWidget {
-  const MainScreen({super.key});
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  ConsumerState<MainScreen> createState() {
-    return _MainScreenState();
+  ConsumerState<HomeScreen> createState() {
+    return _HomeScreenState();
   }
 }
 
-class _MainScreenState extends ConsumerState<MainScreen> {
+class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget? activePage;
 

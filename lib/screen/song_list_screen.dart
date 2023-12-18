@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
@@ -28,7 +29,7 @@ class SongListScreen extends StatelessWidget {
 
   Future<List<Song>> getAllAvailableSongs() async {
 
-    CollectionReference songs = FirebaseFirestore.instance.collection("songs");
+    CollectionReference songs = FirebaseFirestore.instance.collection(kSelectedCollection);
 
     List<Song> allAvailableSongs = <Song>[];
     await songs.get().then((QuerySnapshot snapshot) {
@@ -63,7 +64,7 @@ class SongListScreen extends StatelessWidget {
                   song: snapshot.data![index],
                   onSelectSong: (song) {
                     RhythmProvider.of(context).updateSong(song, index);
-                    onSelectScreen('play-a-song');
+                    onSelectScreen('summary');
                   },
                 ),
             );

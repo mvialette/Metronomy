@@ -23,14 +23,14 @@ class Song {
 
     return Song(
         title: map['title'],
-        tempo: map['rhythm'],
-        beatsByBar: map['beatsByBar'],
+        tempo: map['tempo'],
+        beatsByBar: map['beatsByBars'],
         musiquePart: _sections ?? List.empty());
   }
 
   Map<String, dynamic> toJson() => {
     'title': title,
-    'rhythm': tempo,
+    'tempo': tempo,
     'beatsByBar': beatsByBar,
     'sections': musiquePart,
   };

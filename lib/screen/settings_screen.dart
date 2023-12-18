@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/providers/songs_provider.dart';
@@ -60,6 +61,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Row(
               children: [
                 Text('Starting coutdown bars number = ${startingBarsNumber}'),
+              ],
+            ),
+            Row(
+              children: [
+                Text('Selected collection = ${kSelectedCollection}'),
               ],
             ),
           ]),

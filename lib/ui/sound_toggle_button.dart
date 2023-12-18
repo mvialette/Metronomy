@@ -32,6 +32,7 @@ class SoundToggleButton extends ConsumerStatefulWidget {
 }
 
 class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
+
   Timer? periodicTimer;
   int oldValuePrint = 0;
 
@@ -46,6 +47,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
   @override
   Widget build(BuildContext context) {
+
     return FloatingActionButton(
       enableFeedback: false,
       onPressed: () {

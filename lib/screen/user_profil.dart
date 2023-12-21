@@ -16,19 +16,23 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 
-class SettingsScreen extends ConsumerStatefulWidget {
-  const SettingsScreen({
+class UserProfilScreen extends ConsumerStatefulWidget {
+  const UserProfilScreen({
     super.key,
   });
 
   @override
-  ConsumerState<SettingsScreen> createState() => _SettingsScreenState();
+  ConsumerState<UserProfilScreen> createState() => _UserProfilScreenState();
 }
 
-class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+enum UserLocalEnum { french, us }
+
+class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
   late bool firstSongDifferent;
   late int startingBarsNumber;
   late bool debuggingMode;
+
+  UserLocalEnum? _actualUserLocal = UserLocalEnum.french;
 
   @override
   void initState() {
@@ -47,44 +51,41 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Row(
               children: [
-                const Text('First song Different'),
-                Switch(
-                    value: firstSongDifferent,
-                    onChanged: (check) {
-                      setState(() {
-                        firstSongDifferent = check;
-                      });
-                      ref
-                          .read(allSettingsProvider.notifier)
-                          .updateFirstSongDifferent(firstSongDifferent);
-                    }),
+                const Text('User email : '),
               ],
             ),
             Row(
               children: [
-                const Text('Debuging mode'),
-                Switch(
-                    value: debuggingMode,
-                    onChanged: (check) {
-                      setState(() {
-                        debuggingMode = check;
-                      });
-                      ref
-                          .read(allSettingsProvider.notifier)
-                          .updateDebuggingMode(firstSongDifferent);
-                    }),
+                const Text('Language'),
               ],
-            ),
-            Row(
+            ),Row(
               children: [
-                Text('Starting coutdown bars number = ${startingBarsNumber}'),
+                const Text('French'),
+                Radio(
+                  value: UserLocalEnum.french,
+                  groupValue: _actualUserLocal,
+                  onChanged: (UserLocalEnum? selectedValue) {
+                    setState(() {
+                      _actualUserLocal = selectedValue;
+                    });
+                  },
+                ),
               ],
-            ),
-            Row(
+            ),Row(
               children: [
-                Text('Selected collection = ${kSelectedCollection}'),
+                const Text('Anglais'),
+                Radio(
+                  value: UserLocalEnum.us,
+                  groupValue: _actualUserLocal,
+                  onChanged: (UserLocalEnum? selectedValue) {
+                    setState(() {
+                      _actualUserLocal = selectedValue;
+                    });
+                  },
+                ),
               ],
             ),
+
           ]),
         ),
       ],

@@ -26,7 +26,7 @@ class SongItem extends StatelessWidget {
           onSelectSong(song);
         },
         child: Text(
-          '${song.title} / bmp = ${song.tempo}',
+          '${song.title} / bpm = ${song.tempo}',
           maxLines: 2,
           textAlign: TextAlign.center,
           softWrap: true,

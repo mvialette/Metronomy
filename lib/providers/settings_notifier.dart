@@ -14,6 +14,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final newState = state.copy(startingBarsNumber: startingBarsNumber);
     state = newState;
   }
+
+  void updateDebuggingMode(bool debuggingMode) {
+    final newState = state.copy(debuggingMode: debuggingMode);
+    state = newState;
+  }
 }
 
 final allSettingsProvider = StateNotifierProvider<SettingsNotifier, Settings>((ref) => SettingsNotifier());

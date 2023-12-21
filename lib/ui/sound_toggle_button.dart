@@ -36,6 +36,8 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   Timer? periodicTimer;
   int oldValuePrint = 0;
 
+  Duration? tempoDuration;
+
   @override
   void dispose() {
     this.widget.audioPlayerHighPitchedSound.dispose();
@@ -47,6 +49,8 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
   @override
   Widget build(BuildContext context) {
+
+    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm) as Duration;
 
     return FloatingActionButton(
       enableFeedback: false,
@@ -66,54 +70,58 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   @override
   void didChangeDependencies() {
 
+    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm) as Duration;
+
     periodicTimer?.cancel();
     periodicTimer = Timer.periodic(
       // récupérer la valeur courante du rythme
-      SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm),
+      tempoDuration!,
           (_) {
-          final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
-        _printMaintenant();
+            //final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
+            final bool firstSongDifferent = true;
+            _printMaintenant();
 
-        if (RhythmStore.of(context).enable) {
+            if (RhythmStore.of(context).enable) {
 
-          RhythmProvider.of(context).updateMakeCountdown();
+              RhythmProvider.of(context).updateMakeCountdown();
 
-          if (RhythmStore.of(context).debugTickCount > 0) {
-            if(firstSongDifferent &&
-                (
-                    (RhythmProvider.of(context).selectedSong.beatsByBar == 3 && RhythmStore.of(context).timeThree) ||
-                    (RhythmProvider.of(context).selectedSong.beatsByBar == 4 && RhythmStore.of(context).timeFour) ||
-                    (RhythmProvider.of(context).selectedSong.beatsByBar == 5 && RhythmStore.of(context).timeFive) ||
-                    (RhythmProvider.of(context).selectedSong.beatsByBar == 6 && RhythmStore.of(context).timeSix) ||
-                    (RhythmProvider.of(context).selectedSong.beatsByBar == 7 && RhythmStore.of(context).timeSeven)
-                )
-            ){
-                // case occures when play tick 1, 5, 9, 13, ...
-                playHighSound();
-              }else{
-                // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, ...)
-                playLowSound();
+              if (RhythmStore.of(context).debugTickCount > 0) {
+                if(firstSongDifferent &&
+                    (
+                        (RhythmProvider.of(context).selectedSong.beatsByBar == 3 && RhythmStore.of(context).timeThree) ||
+                            (RhythmProvider.of(context).selectedSong.beatsByBar == 4 && RhythmStore.of(context).timeFour) ||
+                            (RhythmProvider.of(context).selectedSong.beatsByBar == 5 && RhythmStore.of(context).timeFive) ||
+                            (RhythmProvider.of(context).selectedSong.beatsByBar == 6 && RhythmStore.of(context).timeSix) ||
+                            (RhythmProvider.of(context).selectedSong.beatsByBar == 7 && RhythmStore.of(context).timeSeven)
+                    )
+                ){
+                  // case occures when play tick 1, 5, 9, 13, ...
+                  playHighSound();
+                }else{
+                  // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, ...)
+                  playLowSound();
+                }
+              }else {
+                if(RhythmProvider.of(context).startingCountdown == 0 && RhythmProvider.of(context).debugTickCount > 0) {
+                  // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)
+                  //audioPlayer.play(songA);
+                  if(firstSongDifferent){
+                    playHighSound();
+                  }else{
+                    playLowSound();
+                  }
+                } else {
+                  // case occures when startingCountdown > 0, debugTickCount = 0 (time -9, -8, -7, -6, -5, -4, -3, -2, -1, 0)
+                  playLowSound();
+                }
               }
-          }else {
-            if(RhythmProvider.of(context).startingCountdown == 0 && RhythmProvider.of(context).debugTickCount > 0) {
-              // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)
-              //audioPlayer.play(songA);
-              if(firstSongDifferent){
-                playHighSound();
-              }else{
-                playLowSound();
-              }
-            } else {
-              // case occures when startingCountdown > 0, debugTickCount = 0 (time -9, -8, -7, -6, -5, -4, -3, -2, -1, 0)
-              playLowSound();
             }
-          }
-        }
-        this.widget.setStateCallback();
+            this.widget.setStateCallback();
       },
     );
     super.didChangeDependencies();
   }
+
 
   void playLowSound() {
     this.widget.audioPlayerLowPitchedSound.pause();
@@ -136,5 +144,10 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
     print('${nowDT} // ${gradian /1000} microsec');
 
     oldValuePrint = nowMicrosecondsSinceEpoch;
+  }
+
+  void refreshTempoDuration(BuildContext context){
+    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm);
+    RhythmProvider.of(context).updateStopTimer();
   }
 }

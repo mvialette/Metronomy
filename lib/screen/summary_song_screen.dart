@@ -58,7 +58,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Beats by bar / Temps par mesure : ',
+              'Beats by bar / Chiffrage : ',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
@@ -71,31 +71,43 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Starting countdown : ',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              '${RhythmProvider.of(context).startingCountdown}',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.orange),
-            ),
-          ],
+
+        Visibility(
+          visible: (ref.read(allSettingsProvider).debuggingMode),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Starting countdown : ',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                '${RhythmProvider.of(context).startingCountdown}',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.orange),
+              ),
+            ],
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tempo: ',
+              'Tempo : ',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             RhythmLabel(),
           ],
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: RhythmSlider(
+            setStateCallback: () {
+              setState(() {});
+            },
+          ),
         ),
         new Expanded(
           child:

@@ -61,11 +61,11 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
     super.initState();
   }
 
-  /*void updateRhythm(int val) {
+  void updateRhythm(int val) {
     setState(() {
       rhythm = val;
     });
-  }*/
+  }
 
   void updateEnableTimer(bool value) {
     setState(() {

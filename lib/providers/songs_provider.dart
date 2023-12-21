@@ -6,10 +6,6 @@ import 'package:Metronomy/model/song.dart';
 
 class SongsNotifier extends StateNotifier<List<Song>> {
   SongsNotifier() : super(const []);
-
-  CollectionReference loadSongs() {
-    return FirebaseFirestore.instance.collection("songs");
-  }
 }
 
 final songsProvider = StateNotifierProvider<SongsNotifier, List<Song>>(

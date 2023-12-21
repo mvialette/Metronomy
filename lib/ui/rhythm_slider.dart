@@ -17,8 +17,12 @@ class RhythmSlider extends StatelessWidget {
       // utiliser RhythmStore pour RÉCUPÉRER la valeur du rythme
       value: RhythmProvider.of(context).rhythm.toDouble(),
       onChanged: (double value) {
-        RhythmProvider.of(context).rhythm = value.toInt();
+        //RhythmProvider.of(context).rhythm = value.toInt();
+        RhythmProvider. of(context).updateRhythm(value.toInt());
+        //RhythmProvider.of(context).updateStopTimer();
         setStateCallback();
+        //
+        //setStateCallback();
       },
     );
   }

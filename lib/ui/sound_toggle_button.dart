@@ -107,7 +107,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
                   //audioPlayer.play(songA);
                   if(firstSongDifferent){
                     playHighSound();
-                  }else{
+                  } else {
                     playLowSound();
                   }
                 } else {

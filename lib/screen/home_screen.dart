@@ -32,7 +32,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       if (identifier == 'all-songs') {
         activePage = SongListScreen(onSelectScreen: _setScreen,);
       } else if (identifier == 'play-a-song') {
-        activePage = MusicPlayerScreen();
+        activePage = MusicPlayerScreen(onSelectScreen: _setScreen,);
       } else if (identifier == 'settings') {
         activePage = SettingsScreen();
       } else if (identifier == 'summary') {

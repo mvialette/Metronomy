@@ -15,8 +15,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 class MusicPlayerScreen extends ConsumerStatefulWidget {
-  const MusicPlayerScreen({super.key});
+
+  const MusicPlayerScreen({super.key, required this.onSelectScreen});
+
+  final void Function(String identifier) onSelectScreen;
 
   @override
   ConsumerState<MusicPlayerScreen> createState() => _MusicPlayerScreenState();
@@ -42,6 +47,17 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
       setStateCallback: () {
         setState(() {});
       },
+    );
+
+    // const spinkit = SpinKitRotatingCircle(
+    //   color: Colors.white,
+    //   size: 50.0,
+    // );
+
+    final spinkit = SpinKitFadingCircle(
+      color: Colors.orange,
+      size: 200.0,
+      //controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
     );
 
     return Column(
@@ -74,21 +90,33 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           // The green box must be a child of the AnimatedOpacity widget.
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Starting countdown : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    '${RhythmProvider.of(context).startingCountdown}',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.orange),
-                  ),
-                ],
+              Visibility(
+                visible: ref.read(allSettingsProvider).debuggingMode,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Starting countdown : ',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      '${RhythmProvider.of(context).startingCountdown}',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.orange),
+                    ),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: RhythmProvider.of(context).enableTimer,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    spinkit,
+                  ],
+                ),
               ),
             ],
           ),
@@ -102,21 +130,24 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           // The green box must be a child of the AnimatedOpacity widget.
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Debug hit count : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    '${RhythmStore.of(context).debugTickCount}',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.orange),
-                  ),
-                ],
+              Visibility(
+                visible: ref.read(allSettingsProvider).debuggingMode,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Debug hit count : ',
+                      style: Theme.of(context).textTheme.headlineMedium,
+                    ),
+                    Text(
+                      '${RhythmStore.of(context).debugTickCount}',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.orange),
+                    ),
+                  ],
+                ),
               ),
               SizedBox(
                 height: 30,
@@ -237,6 +268,19 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            FloatingActionButton(
+              enableFeedback: false,
+              onPressed: () {
+                setState(() {
+                  RhythmProvider.of(context).updateStopTimer();
+                  widget.onSelectScreen('summary');
+                });
+              },
+              tooltip: 'Return',
+              backgroundColor: Colors.orangeAccent,
+              child: Icon(Icons.arrow_back),
+            ),
+            const SizedBox(width: 8.0),
             soundToggleButton,
             const SizedBox(width: 8.0),
             StopButton(

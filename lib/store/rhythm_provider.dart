@@ -30,8 +30,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
   late Future<List<Song>> songsAvailable;
 
-  //int _rhythm = kDefaultRhythm;
-  int _rhythm = 120;
+  int rhythm = kDefaultRhythm;
   bool _enable = kDefaultEnable;
 
   int _startingBarsNumber = kDefaultStartingBarsNumber;
@@ -53,7 +52,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   int _maximumBarsSection = 0;
   int _sectionsLength = 0;
 
-  late Song _song;
+  late Song selectedSong;
 
   @override
   void initState() {
@@ -62,11 +61,11 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
     super.initState();
   }
 
-  void updateRhythm(int val) {
+  /*void updateRhythm(int val) {
     setState(() {
-      _rhythm = val;
+      rhythm = val;
     });
-  }
+  }*/
 
   void updateEnableTimer(bool value) {
     setState(() {
@@ -94,7 +93,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   }
 
   void resetStartingCountdown(){
-    startingCountdown = _song.beatsByBar * _startingBarsNumber;
+    startingCountdown = selectedSong.beatsByBar * _startingBarsNumber;
   }
 
   void updateMakeCountdown() {
@@ -119,10 +118,15 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           _timeThree = true;
         } else if (_timeThree) {
           _timeThree = false;
-          _timeFour = true;
+          if(selectedSong.beatsByBar == 3) {
+            _timeOne = true;
+            _barsCurrentCounter++;
+          } else {
+            _timeFour = true;
+          }
         } else if (_timeFour) {
           _timeFour = false;
-          if(_song.beatsByBar == 4) {
+          if(selectedSong.beatsByBar == 4) {
             _timeOne = true;
             _barsCurrentCounter++;
           } else {
@@ -130,7 +134,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           }
         } else if (_timeFive) {
           _timeFive = false;
-          if(_song.beatsByBar == 5) {
+          if(selectedSong.beatsByBar == 5) {
             _timeOne = true;
             _barsCurrentCounter++;
           } else {
@@ -138,7 +142,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           }
         } else if (_timeSix) {
           _timeSix = false;
-          if(_song.beatsByBar == 5) {
+          if(selectedSong.beatsByBar == 5) {
             _timeOne = true;
             _barsCurrentCounter++;
           } else {
@@ -164,7 +168,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
           }
         }
 
-        updateMusicInformations(_songIndex, _song.musiquePart[_sectionCurrentIndex].maximumBarsSection, _song.musiquePart.length);
+        updateMusicInformations(_songIndex, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
       }
     });
   }
@@ -174,7 +178,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
     return RhythmStore(
       child: widget.child,
-      rhythm: _rhythm,
+      //rhythm: _rhythm,
       enable: _enable,
       debugTickCount: debugTickCount,
       timeOne: _timeOne,
@@ -199,10 +203,9 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   }
 
   void updateSong(Song song, int indexOfSong) {
-    _song = song;
-    if(startingCountdown == kDefaultStartingCountdown){
-      resetStartingCountdown();
-    }
-    updateMusicInformations(indexOfSong, _song.musiquePart[_sectionCurrentIndex].maximumBarsSection, _song.musiquePart.length);
+    selectedSong = song;
+    rhythm = song.tempo;
+    resetStartingCountdown();
+    updateMusicInformations(indexOfSong, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
   }
 }

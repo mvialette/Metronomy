@@ -9,6 +9,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final newState = state.copy(firstSongDifferent: firstSongDifferent);
     state = newState;
   }
+
+  void updateStartingBarsNumber(int startingBarsNumber) {
+    final newState = state.copy(startingBarsNumber: startingBarsNumber);
+    state = newState;
+  }
 }
 
 final allSettingsProvider = StateNotifierProvider<SettingsNotifier, Settings>((ref) => SettingsNotifier());

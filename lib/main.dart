@@ -1,11 +1,10 @@
+import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-
-import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final colorScheme = ColorScheme.fromSeed(
@@ -62,7 +61,7 @@ class MetronomyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Metronomy App',
       theme: theme,
-      home: const MusicPlayerScreen(),
+      home: const HomeScreen(),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 // représente le rythme du métronome par défaut quand on arrive dans l'application
-//const kDefaultRhythm = 120;
+const kDefaultRhythm = 120;
 
 // représente l'état d'activié du métronome par défaut quand on arrive dans l'application
 const kDefaultEnable = false;
@@ -28,3 +28,5 @@ const kPauseIcon = Icons.pause;
 
 final songA = AssetSource('song-a.mpeg');
 final songB = AssetSource('song-b.mpeg');
+
+final kSelectedCollection = "songs_202312132100";

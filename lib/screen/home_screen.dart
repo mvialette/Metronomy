@@ -1,4 +1,6 @@
-import 'package:Metronomy/main.i18n.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:Metronomy/screen/settings_screen.dart';
 import 'package:Metronomy/screen/song_list_screen.dart';
@@ -54,7 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           title: Row(children: [
             Icon(Icons.music_note),
             SizedBox(width: 15),
-            Text(appbarTitle.i18n),
+            Text(AppLocalizations.of(context)!.applicationTitle),
           ]),
         ),
         drawer: MainDrawer(

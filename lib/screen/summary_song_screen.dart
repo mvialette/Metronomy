@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
 import 'package:Metronomy/ui/stop_button.dart';
-import 'package:Metronomy/widgets/song_musique_part_widget.dart';
+import 'package:Metronomy/widgets/lists_with_cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,11 +53,11 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ],
           ),
         ),
-        Row(
+        /*Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Beats by bar / Chiffrage : ',
+              'Beats by bar : ',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
@@ -70,8 +69,24 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
                   color: Colors.orange),
             ),
           ],
+        ),*/
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'Signature rythmique : ',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
+              // permet d'accéder à la valeur actualisée du rythme
+              RhythmProvider.of(context).selectedSong.getSignature(),
+              style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.orange),
+            ),
+          ],
         ),
-
         Visibility(
           visible: (ref.read(allSettingsProvider).debuggingMode),
           child: Row(

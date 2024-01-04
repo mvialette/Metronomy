@@ -1,10 +1,13 @@
 import 'dart:async';
 
-import 'package:Metronomy/main.i18n.dart';
+import 'package:Metronomy/l10n/l10n.dart';
+import 'package:Metronomy/main.dart';
+import 'package:Metronomy/widgets/language.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
@@ -16,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import 'dart:convert';
 
 import 'package:i18n_extension/i18n_widget.dart';
@@ -29,7 +33,7 @@ class UserProfilScreen extends ConsumerStatefulWidget {
   ConsumerState<UserProfilScreen> createState() => _UserProfilScreenState();
 }
 
-enum UserLocalEnum { french, us }
+//enum UserLocalEnum { french, us }
 
 class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
 
@@ -38,8 +42,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
   late bool firstSongDifferent;
   late int startingBarsNumber;
   late bool debuggingMode;
-
-  UserLocalEnum? _actualUserLocal = UserLocalEnum.french;
+  late String languageCode;
 
   @override
   void initState() {
@@ -51,6 +54,13 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final locale = Localizations.localeOf(context);
+
+    languageCode = locale.languageCode;
+
+    final flag = L10n.getFlag(locale.languageCode);
+
     return Column(
       children: <Widget>[
         Padding(
@@ -59,6 +69,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
             Row(
               children: [
                 const Text('User email : '),
+                const Text('prenom.nom@email.com'),
               ],
             ),
             Row(
@@ -67,40 +78,65 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
               ],
             ),Row(
               children: [
-                Text(localFrenchText.i18n),
-                Radio(
-                  value: UserLocalEnum.french,
-                  groupValue: _actualUserLocal,
-                  onChanged: (UserLocalEnum? selectedValue) {
-                    setState(() {
-                      _actualUserLocal = UserLocalEnum.french;
-                      print(selectedValue);
-                      I18n.of(context).locale = Locale("fr", "FR");
-                      /*_actualUserLocal = selectedValue;
-                      localization.translate('fr');*/
-                    });
-                  },
+                //Text("fr"),
+                Text(
+                  L10n.getFlag('fr'),
+                  style: TextStyle(fontSize: 30),
                 ),
-              ],
-            ),Row(
-              children: [
-                Text(localEnglishText.i18n),
+                Text(AppLocalizations.of(context)!.localFr),
                 Radio(
-                  value: UserLocalEnum.us,
-                  groupValue: _actualUserLocal,
-                  onChanged: (UserLocalEnum? selectedValue) {
+                  value: L10n.all[1].languageCode,
+                  groupValue: languageCode,
+                  onChanged: (String? value) {
                     setState(() {
-                      _actualUserLocal = UserLocalEnum.us;
-                      print(selectedValue);
-                      I18n.of(context).locale = Locale("en", "US");
-                      //_actualUserLocal = selectedValue;
-                      //localization.translate('en');
+                      languageCode = value!;
+                      MetronomyApp.setLocale(context, Locale(languageCode));
                     });
                   },
                 ),
               ],
             ),
+            Row(
+              children: [
+                Text(
+                  L10n.getFlag('en'),
+                  style: TextStyle(fontSize: 30),
+                ),
+                Text(AppLocalizations.of(context)!.localEn),
+                //Text("en"),
+                Radio(
+                  value: L10n.all[0].languageCode,
+                  groupValue: languageCode,
+                  onChanged: (String? value) {
+                    setState(() {
 
+                      languageCode = value!;
+                      MetronomyApp.setLocale(context, Locale(languageCode));
+                    });
+
+                  },
+                )
+              ],
+            ),
+            // Row(
+            //   children: [
+            //     Container(
+            //       child:ListView.builder(
+            //         shrinkWrap: true,
+            //         physics: NeverScrollableScrollPhysics(),
+            //         padding: const EdgeInsets.all(8),
+            //         itemCount: L10n.all.length,
+            //         itemBuilder: (context, index) {
+            //           //return Text(L10n.all[index].languageCode);
+            //           return Container(
+            //             height: 50,
+            //             child: Center(child: Text(L10n.all[index].languageCode),),
+            //           );
+            //         },
+            //       )
+            //     )
+            //   ],
+            // ),
           ]),
         ),
       ],

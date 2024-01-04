@@ -1,0 +1,38 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The current language"
+  },
+  "applicationTitle": "Metronomy",
+  "@applicationTitle": {
+    "description": "The name of the application"
+  },
+  "localEn": "English",
+  "@localEn": {
+    "description": "The english (default) language"
+  },
+  "localFr": "French",
+  "@localFr": {
+    "description": "One alternative langauage (fr)"
+  },
+  "propertyWithOneParam": "tutu ",
+  "@propertyWithOneParam": {
+    "description": "One alternative langauage (fr)"
+  },
+  "allSongs": "All songs",
+  "@allSongs": {
+    "description": "Go to all songs"
+  },
+  "playASong": "Play a song",
+  "@playASong": {
+    "description": "Play a song"
+  },
+  "profil": "Profil",
+  "@profil": {
+    "description": "Go to profil"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Go to application settings"
+  }
+}

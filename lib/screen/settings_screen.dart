@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';

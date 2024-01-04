@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
 
@@ -39,7 +41,7 @@ class MainDrawer extends StatelessWidget {
                 ),
                 const SizedBox(width: 18),
                 Text(
-                  'Metronomy !',
+                  AppLocalizations.of(context)!.applicationTitle,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -54,7 +56,7 @@ class MainDrawer extends StatelessWidget {
               color: Theme.of(context).colorScheme.onBackground,
             ),
             title: Text(
-              'All songs',
+              AppLocalizations.of(context)!.allSongs,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24,
@@ -71,7 +73,7 @@ class MainDrawer extends StatelessWidget {
               color: Theme.of(context).colorScheme.onBackground,
             ),
             title: Text(
-              'Play a song',
+              AppLocalizations.of(context)!.playASong,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24,
@@ -88,7 +90,7 @@ class MainDrawer extends StatelessWidget {
               color: Theme.of(context).colorScheme.onBackground,
             ),
             title: Text(
-              'Profil',
+              AppLocalizations.of(context)!.profil,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24,
@@ -104,7 +106,7 @@ class MainDrawer extends StatelessWidget {
               color: Theme.of(context).colorScheme.onBackground,
             ),
             title: Text(
-              'Settings',
+              AppLocalizations.of(context)!.settings,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24,

@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Settings {
   final bool firstSongDifferent;
   final int startingBarsNumber;

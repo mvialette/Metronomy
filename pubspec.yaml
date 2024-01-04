@@ -41,6 +41,7 @@ dependencies:
   flutter_spinkit: ^5.2.0
   i18n_extension: ^10.0.1
   flutter_localization: ^0.2.0
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -59,6 +60,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
+  generate: true
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

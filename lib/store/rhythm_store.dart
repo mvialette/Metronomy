@@ -18,15 +18,6 @@ class RhythmStore extends InheritedWidget {
   final bool enable;
   //final int startingCountdown;
   final int debugTickCount;
-
-  final bool timeOne;
-  final bool timeTwo;
-  final bool timeThree;
-  final bool timeFour;
-  final bool timeFive;
-  final bool timeSix;
-  final bool timeSeven;
-
   final int songIndex;
   final int sectionCurrentIndex;
   final int barsCurrentCounter;
@@ -40,13 +31,6 @@ class RhythmStore extends InheritedWidget {
     required this.enable,
     //required this.startingCountdown,
     required this.debugTickCount,
-    required this.timeOne,
-    required this.timeTwo,
-    required this.timeThree,
-    required this.timeFour,
-    required this.timeFive,
-    required this.timeSix,
-    required this.timeSeven,
     required this.songIndex,
     required this.sectionCurrentIndex,
     required this.barsCurrentCounter,
@@ -60,9 +44,4 @@ class RhythmStore extends InheritedWidget {
     // TODO: implement updateShouldNotify
     //throw UnimplementedError();
   }
-
-  /*@override
-  bool updateShouldNotify(RhythmStore oldWidget) {
-    return rhythm != oldWidget.rhythm;
-  }*/
 }

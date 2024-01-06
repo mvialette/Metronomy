@@ -87,13 +87,14 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
               if (RhythmStore.of(context).debugTickCount > 0) {
                 if(firstSongDifferent &&
-                    (
-                        (RhythmProvider.of(context).selectedSong.beatsByBar == 3 && RhythmStore.of(context).timeThree) ||
-                            (RhythmProvider.of(context).selectedSong.beatsByBar == 4 && RhythmStore.of(context).timeFour) ||
-                            (RhythmProvider.of(context).selectedSong.beatsByBar == 5 && RhythmStore.of(context).timeFive) ||
-                            (RhythmProvider.of(context).selectedSong.beatsByBar == 6 && RhythmStore.of(context).timeSix) ||
-                            (RhythmProvider.of(context).selectedSong.beatsByBar == 7 && RhythmStore.of(context).timeSeven)
-                    )
+                    (1 == 1)
+                    // (
+                    //     (RhythmProvider.of(context).selectedSong.beatsByBar == 3 && RhythmStore.of(context).timeThree) ||
+                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 4 && RhythmStore.of(context).timeFour) ||
+                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 5 && RhythmStore.of(context).timeFive) ||
+                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 6 && RhythmStore.of(context).timeSix) ||
+                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 7 && RhythmStore.of(context).timeSeven)
+                    // )
                 ){
                   // case occures when play tick 1, 5, 9, 13, ...
                   playHighSound();
@@ -104,7 +105,11 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
               }else {
                 if(RhythmProvider.of(context).startingCountdown == 0 && RhythmProvider.of(context).debugTickCount > 0) {
                   // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)
-                  //audioPlayer.play(songA);
+                  //
+                  //
+                  //
+                  //
+                  // SaudioPlayer.play(songA);
                   if(firstSongDifferent){
                     playHighSound();
                   } else {

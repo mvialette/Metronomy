@@ -8,13 +8,13 @@ class Settings {
   Settings({
     this.firstSongDifferent = true,
     this.startingBarsNumber = 2,
-    this.debuggingMode = false,
+    this.debuggingMode = true,
   });
 
   Settings copy({
     bool firstSongDifferent = true,
     int startingBarsNumber = 2,
-    bool debuggingMode = false,
+    bool debuggingMode = true,
   }) =>
       Settings(
         firstSongDifferent: firstSongDifferent ?? this.firstSongDifferent,

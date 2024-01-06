@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
@@ -37,7 +39,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Titre : ',
+                AppLocalizations.of(context)!.songTitleLabel,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               SizedBox(
@@ -53,28 +55,11 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ],
           ),
         ),
-        /*Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Beats by bar : ',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              // permet d'accéder à la valeur actualisée du rythme
-              RhythmProvider.of(context).selectedSong.beatsByBar.toString(),
-              style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.orange),
-            ),
-          ],
-        ),*/
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Signature rythmique : ',
+              AppLocalizations.of(context)!.timeSignature,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
@@ -110,7 +95,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tempo : ',
+              AppLocalizations.of(context)!.tempo,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             RhythmLabel(),

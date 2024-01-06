@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
@@ -49,15 +51,9 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
       },
     );
 
-    // const spinkit = SpinKitRotatingCircle(
-    //   color: Colors.white,
-    //   size: 50.0,
-    // );
-
-    final spinkit = SpinKitFadingCircle(
+    final spinkit = SpinKitWave(
       color: Colors.orange,
       size: 200.0,
-      //controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
     );
 
     return Column(
@@ -67,7 +63,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Titre : ',
+              AppLocalizations.of(context)!.songTitleLabel,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             SizedBox(
@@ -97,7 +93,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Starting countdown : ',
+                      AppLocalizations.of(context)!.startingCountdown,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     Text(
@@ -137,7 +133,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Debug hit count : ',
+                      AppLocalizations.of(context)!.debugHitCount,
                       style: Theme.of(context).textTheme.headlineMedium,
                     ),
                     Text(
@@ -153,26 +149,8 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Partie : ',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                  Text(
-                    '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
               Text(
-                'Timeline : ',
+                AppLocalizations.of(context)!.breadcrumb,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               Container(
@@ -188,9 +166,9 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     margin: const EdgeInsets.symmetric(horizontal: 5),
                     child: CircleAvatar(
                       backgroundColor:
-                          RhythmStore.of(context).sectionCurrentIndex == index
-                              ? Colors.orange
-                              : Colors.grey,
+                      RhythmStore.of(context).sectionCurrentIndex == index
+                          ? Colors.orange
+                          : Colors.grey,
                       child: Text(RhythmProvider.of(context)
                           .selectedSong
                           .musiquePart[index]
@@ -206,8 +184,26 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Time number : ',
-                    //'Temps : ',
+                    AppLocalizations.of(context)!.songSection,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                  Text(
+                    '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.beatsByBar,
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
@@ -217,35 +213,6 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.orange),
                   ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    RhythmStore.of(context).timeOne
-                        ? Icons.radio_button_on_rounded
-                        : Icons.radio_button_off_rounded,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 30,
-                  ),
-                  Icon(
-                      RhythmStore.of(context).timeTwo
-                          ? Icons.radio_button_on_rounded
-                          : Icons.radio_button_off_rounded,
-                      color: Theme.of(context).colorScheme.primary),
-                  Icon(
-                      RhythmStore.of(context).timeThree
-                          ? Icons.radio_button_on_rounded
-                          : Icons.radio_button_off_rounded,
-                      color: Theme.of(context).colorScheme.primary),
-                  RhythmProvider.of(context).selectedSong.beatsByBar > 3
-                      ? (Icon(
-                          RhythmStore.of(context).timeFour
-                              ? Icons.radio_button_on_rounded
-                              : Icons.radio_button_off_rounded,
-                          color: Theme.of(context).colorScheme.primary))
-                      : Text(""),
                 ],
               ),
               Container(
@@ -265,7 +232,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tempo: ',
+              AppLocalizations.of(context)!.tempo,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             RhythmLabel(),

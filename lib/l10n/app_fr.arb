@@ -6,5 +6,20 @@
   "allSongs": "Tous les morceaux",
   "playASong": "Jouer un morceau",
   "profil": "Gérer votre compte",
-  "settings": "Paramètres"
+  "settings": "Paramètres",
+  "firstSongDifferent": "Jouer un premier song différent",
+  "debugMode": "Mode debug",
+  "startingCountdownBarsNumber": "Nombre de mesure de compte à rebours",
+  "databaseVersion": "Version de la base de données",
+  "usernameLabel": "Nom d'utilisateur :",
+  "languageLabel": "Langue sélectionnée :",
+  "listDescriptionAllSongs": "Liste des morceaux disponible :",
+  "songTitleLabel": "Titre :",
+  "timeSignature": "Signature rythmique : ",
+  "tempo": "Tempo : ",
+  "songSection": "Partie : ",
+  "breadcrumb": "Fil d'ariane / parties du morceaubeatsByBar  : ",
+  "beatsByBar": "Unité par mesure : ",
+  "debugHitCount": "Debug hit count : ",
+  "startingCountdown": "Compte à rebours : "
 }

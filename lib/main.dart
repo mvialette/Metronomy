@@ -1,8 +1,14 @@
+import 'package:Metronomy/l10n/l10n.dart';
 import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,13 +40,18 @@ final theme = ThemeData().copyWith(
 );
 
 // le point d'entrée de l'application devient asynchone afin que audioplayers charge correctement le son
-void main() async {
+Future main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   runApp(
     ProviderScope(
@@ -51,17 +62,53 @@ void main() async {
   );
 }
 
-class MetronomyApp extends StatelessWidget {
+class MetronomyApp extends StatefulWidget {
 
   const MetronomyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MetronomyApp> createState() => _MetronomyAppState();
+
+  static void setLocale(BuildContext context, Locale newLocale) {
+    _MetronomyAppState? state = context.findAncestorStateOfType<_MetronomyAppState>();
+    state?.setLocale(newLocale);
+  }
+}
+
+class _MetronomyAppState extends State<MetronomyApp> {
+
+  Locale? _locale;
+
+  setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
+
+  // @override
   @override
   Widget build(BuildContext context) {
+
+    //var currentLocale = AppLocalizations.of(context)?.localeName;
+    //Locale myLocale = Localizations.localeOf(context);
+
     return MaterialApp(
-      title: 'Metronomy App',
+      localeResolutionCallback: (
+          locale,
+          supportedLocales,
+          ) {
+        return locale;
+      },
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
+      locale: _locale,
+      home: HomeScreen(),
       theme: theme,
-      home: const HomeScreen(),
     );
   }
 }

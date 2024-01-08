@@ -1,0 +1,98 @@
+{
+  "language": "English",
+  "@language": {
+    "description": "The current language"
+  },
+  "applicationTitle": "Metronomy",
+  "@applicationTitle": {
+    "description": "The name of the application"
+  },
+  "localEn": "English",
+  "@localEn": {
+    "description": "The english (default) language"
+  },
+  "localFr": "French",
+  "@localFr": {
+    "description": "One alternative langauage (fr)"
+  },
+  "propertyWithOneParam": "tutu ",
+  "@propertyWithOneParam": {
+    "description": "One alternative langauage (fr)"
+  },
+  "allSongs": "All songs",
+  "@allSongs": {
+    "description": "Go to all songs"
+  },
+  "playASong": "Play a song",
+  "@playASong": {
+    "description": "Play a song"
+  },
+  "profil": "Profil",
+  "@profil": {
+    "description": "Go to profil"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Go to application settings"
+  },
+  "firstSongDifferent": "First song must be different",
+  "@firstSongDifferent": {
+    "description": "First song must be different"
+  },
+  "debugMode": "Debuging mode",
+  "@debugMode": {
+    "description": "Debuging mode"
+  },
+  "startingCountdownBarsNumber": "Starting countdown bars number",
+  "@startingCountdownBarsNumber": {
+    "description": "Starting countdown bars number"
+  },
+  "databaseVersion": "Version of the database",
+  "@databaseVersion": {
+    "description": "Version of the database"
+  },
+  "usernameLabel": "User name :",
+  "@usernameLabel": {
+    "description": "Label for the user email field"
+  },
+  "languageLabel": "Selected locale :",
+  "@languageLabel": {
+    "description": "Label for the local field"
+  },
+  "listDescriptionAllSongs": "List of all available songs :",
+  "@listDescriptionAllSongs": {
+    "description": "List of all available songs"
+  },
+  "songTitleLabel": "Title : ",
+  "@songTitleLabel": {
+    "description": "Title"
+  },
+  "timeSignature": "Time signature : ",
+  "@timeSignature": {
+    "description": "Title"
+  },
+  "tempo": "BPM (Beats Per Minutes) : ",
+  "@tempo": {
+    "description": "BPM"
+  },
+  "songSection": "Section : ",
+  "@songSection": {
+    "description": "Section"
+  },
+  "breadcrumb": "Breadcrumb : ",
+  "@breadcrumb": {
+    "description": "Breadcrumb"
+  },
+  "beatsByBar": "Beats by bar : ",
+  "@beatsByBar": {
+    "description": "Beats by bar"
+  },
+  "debugHitCount": "Debug hit count : ",
+  "@debugHitCount": {
+    "description": "Debug hit count"
+  },
+  "startingCountdown": "Starting countdown : ",
+  "@debugHitCount": {
+    "description": "Starting countdown"
+  }
+}

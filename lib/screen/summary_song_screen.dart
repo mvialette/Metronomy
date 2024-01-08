@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/providers/songs_provider.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
 import 'package:Metronomy/ui/stop_button.dart';
-import 'package:Metronomy/widgets/song_musique_part_widget.dart';
+import 'package:Metronomy/widgets/lists_with_cards.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +39,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Titre : ',
+                AppLocalizations.of(context)!.songTitleLabel,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               SizedBox(
@@ -58,12 +59,12 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Beats by bar / Temps par mesure : ',
+              AppLocalizations.of(context)!.timeSignature,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
               // permet d'accéder à la valeur actualisée du rythme
-              RhythmProvider.of(context).selectedSong.beatsByBar.toString(),
+              RhythmProvider.of(context).selectedSong.getSignature(),
               style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.normal,
@@ -71,31 +72,42 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Starting countdown : ',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              '${RhythmProvider.of(context).startingCountdown}',
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.orange),
-            ),
-          ],
+        Visibility(
+          visible: (ref.read(allSettingsProvider).debuggingMode),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Starting countdown : ',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+              Text(
+                '${RhythmProvider.of(context).startingCountdown}',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.orange),
+              ),
+            ],
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tempo: ',
+              AppLocalizations.of(context)!.tempo,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             RhythmLabel(),
           ],
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 8),
+          child: RhythmSlider(
+            setStateCallback: () {
+              setState(() {});
+            },
+          ),
         ),
         new Expanded(
           child:

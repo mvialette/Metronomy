@@ -1,7 +1,11 @@
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:Metronomy/screen/settings_screen.dart';
 import 'package:Metronomy/screen/song_list_screen.dart';
 import 'package:Metronomy/screen/summary_song_screen.dart';
+import 'package:Metronomy/screen/user_profil.dart';
 import 'package:Metronomy/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,11 +35,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       if (identifier == 'all-songs') {
         activePage = SongListScreen(onSelectScreen: _setScreen,);
       } else if (identifier == 'play-a-song') {
-        activePage = MusicPlayerScreen();
+        activePage = MusicPlayerScreen(onSelectScreen: _setScreen,);
       } else if (identifier == 'settings') {
         activePage = SettingsScreen();
       } else if (identifier == 'summary') {
         activePage = SummarySongScreen(onSelectScreen: _setScreen,);
+      } else if (identifier == 'user-profil') {
+        activePage = UserProfilScreen();
       }
     });
   }
@@ -50,7 +56,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           title: Row(children: [
             Icon(Icons.music_note),
             SizedBox(width: 15),
-            Text('Metronomy')
+            Text(AppLocalizations.of(context)!.applicationTitle),
           ]),
         ),
         drawer: MainDrawer(

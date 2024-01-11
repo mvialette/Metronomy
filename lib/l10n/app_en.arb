@@ -15,10 +15,6 @@
   "@localFr": {
     "description": "One alternative langauage (fr)"
   },
-  "propertyWithOneParam": "tutu ",
-  "@propertyWithOneParam": {
-    "description": "One alternative langauage (fr)"
-  },
   "allSongs": "All songs",
   "@allSongs": {
     "description": "Go to all songs"

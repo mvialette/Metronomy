@@ -77,8 +77,8 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
       // récupérer la valeur courante du rythme
       tempoDuration!,
           (_) {
-            //final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
-            final bool firstSongDifferent = true;
+            final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
+            //final bool firstSongDifferent = true;
             _printMaintenant();
 
             if (RhythmStore.of(context).enable) {
@@ -86,17 +86,8 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
               RhythmProvider.of(context).updateMakeCountdown();
 
               if (RhythmStore.of(context).debugTickCount > 0) {
-                if(firstSongDifferent &&
-                    (1 == 1)
-                    // (
-                    //     (RhythmProvider.of(context).selectedSong.beatsByBar == 3 && RhythmStore.of(context).timeThree) ||
-                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 4 && RhythmStore.of(context).timeFour) ||
-                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 5 && RhythmStore.of(context).timeFive) ||
-                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 6 && RhythmStore.of(context).timeSix) ||
-                    //         (RhythmProvider.of(context).selectedSong.beatsByBar == 7 && RhythmStore.of(context).timeSeven)
-                    // )
-                ){
-                  // case occures when play tick 1, 5, 9, 13, ...
+                if(firstSongDifferent && RhythmProvider.of(context).debugTickCount % RhythmProvider.of(context).selectedSong.beatsByBar == 0){
+                  // case occures when this is the first tick as mesure / bar (aka modulo == 0)
                   playHighSound();
                 }else{
                   // case occures when startingCountdown == 0, debugTickCount > 0 (ie : time 2, 3, 4, 6, 7, 8, 10, 11, 12, 14, ...)
@@ -105,11 +96,6 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
               }else {
                 if(RhythmProvider.of(context).startingCountdown == 0 && RhythmProvider.of(context).debugTickCount > 0) {
                   // case occures when startingCountdown == 0, debugTickCount = 0 (time 1)
-                  //
-                  //
-                  //
-                  //
-                  // SaudioPlayer.play(songA);
                   if(firstSongDifferent){
                     playHighSound();
                   } else {

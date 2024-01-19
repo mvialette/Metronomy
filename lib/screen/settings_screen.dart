@@ -31,12 +31,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   late bool firstSongDifferent;
   late int startingBarsNumber;
   late bool debuggingMode;
+  late bool advancedMode;
 
   @override
   void initState() {
     firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
     startingBarsNumber = ref.read(allSettingsProvider).startingBarsNumber;
     debuggingMode = ref.read(allSettingsProvider).debuggingMode;
+    advancedMode = ref.read(allSettingsProvider).advanceMode;
     super.initState();
   }
 
@@ -57,8 +59,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                         firstSongDifferent = check;
                       });
                       ref
-                          .read(allSettingsProvider.notifier)
-                          .updateFirstSongDifferent(firstSongDifferent);
+                           .read(allSettingsProvider.notifier)
+                           .updateSettings(firstSongDifferent, debuggingMode, advancedMode);
                     }),
               ],
             ),
@@ -73,7 +75,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       });
                       ref
                           .read(allSettingsProvider.notifier)
-                          .updateDebuggingMode(firstSongDifferent);
+                          .updateSettings(firstSongDifferent, debuggingMode, advancedMode);
+                    }),
+              ],
+            ),
+            Row(
+              children: [
+                Text(AppLocalizations.of(context)!.advancedMode),
+                Switch(
+                    value: advancedMode,
+                    onChanged: (check) {
+                      setState(() {
+                        advancedMode = check;
+                      });
+                      ref
+                          .read(allSettingsProvider.notifier)
+                          .updateSettings(firstSongDifferent, debuggingMode, advancedMode);
                     }),
               ],
             ),

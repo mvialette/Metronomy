@@ -85,7 +85,9 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
               RhythmProvider.of(context).updateMakeCountdown();
 
-              if (RhythmStore.of(context).debugTickCount > 0) {
+              if(RhythmProvider.of(context).startingCountdown >0){
+                playLowSound();
+              }else if (RhythmStore.of(context).debugTickCount >= 0) {
                 if(firstSongDifferent && RhythmProvider.of(context).debugTickCount % RhythmProvider.of(context).selectedSong.beatsByBar == 0){
                   // case occures when this is the first tick as mesure / bar (aka modulo == 0)
                   playHighSound();

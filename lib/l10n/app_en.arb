@@ -88,7 +88,15 @@
     "description": "Debug hit count"
   },
   "startingCountdown": "Starting countdown : ",
-  "@debugHitCount": {
+  "@startingCountdown": {
     "description": "Starting countdown"
+  },
+  "advancedMode": "Advanced mode : ",
+  "@advancedMode": {
+    "description": "Advanced mode"
+  },
+  "nextSection": "Next : ",
+  "@nextSection": {
+    "description": "Next section"
   }
 }

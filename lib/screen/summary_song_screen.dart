@@ -82,7 +82,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
               Text(
-                '${RhythmProvider.of(context).startingCountdown}',
+                '${RhythmProvider.of(context).startingCountdown - 1}',
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.normal,

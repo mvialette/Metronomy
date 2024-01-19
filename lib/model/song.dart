@@ -16,6 +16,13 @@ class Song {
     required this.musiquePart
   });
 
+  String nextSectionName(int sectionCurrentIndex){
+    if((sectionCurrentIndex + 1) == this.musiquePart.length){
+      return ""; // We display nothing
+    }
+    return this.musiquePart[sectionCurrentIndex + 1].sectionName;
+  }
+
   factory Song.fromMap(Map<String, dynamic> map) {
 
     List<MusicStructure> _sections = [];

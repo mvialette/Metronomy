@@ -23,8 +23,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'dart:convert';
 
-import 'package:i18n_extension/i18n_widget.dart';
-
 class UserProfilScreen extends ConsumerStatefulWidget {
   const UserProfilScreen({
     super.key,

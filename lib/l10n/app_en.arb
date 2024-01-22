@@ -15,10 +15,6 @@
   "@localFr": {
     "description": "One alternative langauage (fr)"
   },
-  "propertyWithOneParam": "tutu ",
-  "@propertyWithOneParam": {
-    "description": "One alternative langauage (fr)"
-  },
   "allSongs": "All songs",
   "@allSongs": {
     "description": "Go to all songs"
@@ -92,7 +88,15 @@
     "description": "Debug hit count"
   },
   "startingCountdown": "Starting countdown : ",
-  "@debugHitCount": {
+  "@startingCountdown": {
     "description": "Starting countdown"
+  },
+  "advancedMode": "Advanced mode : ",
+  "@advancedMode": {
+    "description": "Advanced mode"
+  },
+  "nextSection": "Next : ",
+  "@nextSection": {
+    "description": "Next section"
   }
 }

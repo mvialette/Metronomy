@@ -22,6 +22,16 @@ class SettingsNotifier extends StateNotifier<Settings> {
     final newState = state.copy(debuggingMode: debuggingMode);
     state = newState;
   }
+
+  void updateAdvancedMode(bool advancedMode) {
+    final newState = state.copy(advanceMode: advancedMode);
+    state = newState;
+  }
+
+  void updateSettings(bool firstSongDifferent, bool debuggingMode, bool advancedMode) {
+    final newState = state.copy(firstSongDifferent: firstSongDifferent, debuggingMode: debuggingMode, advanceMode: advancedMode);
+    state = newState;
+  }
 }
 
 final allSettingsProvider = StateNotifierProvider<SettingsNotifier, Settings>((ref) => SettingsNotifier());

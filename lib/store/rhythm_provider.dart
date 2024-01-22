@@ -84,7 +84,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
     // we add 1 to have a rang above 0
     // ie: beatsByBar == 7 && _startingBarsNumber == 2, the result will be 14 so the values fallow the range 13 to 0
-    startingCountdown = selectedSong.beatsByBar * _startingBarsNumber;
+    startingCountdown = selectedSong.beatsByBar * _startingBarsNumber + 1;
   }
 
   void updateMakeCountdown() {
@@ -100,53 +100,6 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
         if(((debugTickCount + 1) % selectedSong.beatsByBar) == 1){
           _barsCurrentCounter++;
         }
-
-        // if (_timeOne) {
-        //   _timeOne = false;
-        //   _timeTwo = true;
-        // } else if (_timeTwo) {
-        //   _timeTwo = false;
-        //   _timeThree = true;
-        // } else if (_timeThree) {
-        //   _timeThree = false;
-        //   if(selectedSong.beatsByBar == 3) {
-        //     _timeOne = true;
-        //     _barsCurrentCounter++;
-        //   } else {
-        //     _timeFour = true;
-        //   }
-        // } else if (_timeFour) {
-        //   _timeFour = false;
-        //   if(selectedSong.beatsByBar == 4) {
-        //     _timeOne = true;
-        //     _barsCurrentCounter++;
-        //   } else {
-        //     _timeFive = true;
-        //   }
-        // } else if (_timeFive) {
-        //   _timeFive = false;
-        //   if(selectedSong.beatsByBar == 5) {
-        //     _timeOne = true;
-        //     _barsCurrentCounter++;
-        //   } else {
-        //     _timeSix = true;
-        //   }
-        // } else if (_timeSix) {
-        //   _timeSix = false;
-        //   if(selectedSong.beatsByBar == 6) {
-        //     _timeOne = true;
-        //     _barsCurrentCounter++;
-        //   } else {
-        //     _timeSeven = true;
-        //   }
-        // } else if (_timeSeven) {
-        //   _timeSeven = false;
-        //   _timeOne = true;
-        //   _barsCurrentCounter++;
-        // } else {
-        //   // All flags are set to false
-        //   _timeOne = true;
-        // }
 
         if(_barsCurrentCounter >  _maximumBarsSection) {
           if(_sectionCurrentIndex < (_sectionsLength -1)) {

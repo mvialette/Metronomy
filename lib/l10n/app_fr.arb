@@ -19,7 +19,9 @@
   "tempo": "Tempo : ",
   "songSection": "Partie : ",
   "breadcrumb": "Fil d'ariane / parties du morceaubeatsByBar  : ",
-  "beatsByBar": "Unité par mesure : ",
+  "beatsByBar": "Avancement : ",
   "debugHitCount": "Debug hit count : ",
-  "startingCountdown": "Compte à rebours : "
+  "startingCountdown": "Compte à rebours : ",
+  "advancedMode": "Mode avancé : ",
+  "nextSection": "à suivre : "
 }

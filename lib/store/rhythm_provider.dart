@@ -39,7 +39,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   int debugTickCount = 0;
   int _songIndex = 0;
   int _sectionCurrentIndex = 0;
-  int _barsCurrentCounter = 0;
+  int _barsCurrentCounter = 1;
   int _maximumBarsSection = 0;
   int _sectionsLength = 0;
 
@@ -72,7 +72,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       enableTimer = false;
       resetStartingCountdown();
       debugTickCount = 0;
-      _barsCurrentCounter = 0;
+      _barsCurrentCounter = 1;
       _sectionCurrentIndex = 0;
     });
   }
@@ -104,7 +104,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
         if(_barsCurrentCounter >  _maximumBarsSection) {
           if(_sectionCurrentIndex < (_sectionsLength -1)) {
             // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
-            _barsCurrentCounter = 0;
+            _barsCurrentCounter = 1;
             _sectionCurrentIndex++;
           }else{
             // this is the end of sections

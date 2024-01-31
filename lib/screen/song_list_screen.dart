@@ -61,12 +61,23 @@ class SongListScreen extends StatelessWidget {
                     physics: NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data?.length,
                     itemBuilder: (ctx, index) =>
-                      SongItem(
-                        song: snapshot.data![index],
-                        onSelectSong: (song) {
-                          RhythmProvider.of(context).updateSong(song, index);
-                          onSelectScreen('summary');
-                        },
+                      Column(
+                        children: [
+                          SongItem(
+                            song: snapshot.data![index],
+                            onSelectSong: (song) {
+                              RhythmProvider.of(context).updateSong(song, index);
+                              onSelectScreen('summary');
+                            },
+                          ),
+                          const Divider(
+                            height: 20,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 0,
+                            color: Colors.grey,
+                          ),
+                        ],
                       ),
                   ),
                 ],

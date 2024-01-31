@@ -58,7 +58,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         drawer: MainDrawer(
           onSelectScreen: _setScreen,
         ),
-        body: activePage,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/MotifsBlancs.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: activePage,
+      ),
     );
   }
 }

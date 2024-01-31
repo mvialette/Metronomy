@@ -119,13 +119,13 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   void playLowSound() {
     this.widget.audioPlayerLowPitchedSound.pause();
     this.widget.audioPlayerLowPitchedSound.seek(Duration.zero);
-    this.widget.audioPlayerLowPitchedSound.play(songB);
+    this.widget.audioPlayerLowPitchedSound.play(songLow);
   }
 
   void playHighSound() {
     this.widget.audioPlayerHighPitchedSound.pause();
     this.widget.audioPlayerHighPitchedSound.seek(Duration.zero);
-    this.widget.audioPlayerHighPitchedSound.play(songA);
+    this.widget.audioPlayerHighPitchedSound.play(songHigh);
   }
 
   void _printMaintenant() {

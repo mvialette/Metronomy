@@ -20,7 +20,7 @@ class _LoaderScreenState extends State<LoaderScreen> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/images/bkg1.JPG',
+            'assets/images/intro_1.JPG',
             fit: BoxFit.cover,
           ),
           ListView(
@@ -37,7 +37,7 @@ class _LoaderScreenState extends State<LoaderScreen> {
                   MainAxisAlignment.start : MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      'assets/images/logo1.png',
+                      'assets/images/metronomy_icon_yellow.png',
                       width:
                       MediaQuery.of(context).orientation == Orientation.landscape ?
                       40.0: 80.0,

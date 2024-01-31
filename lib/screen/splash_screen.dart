@@ -27,14 +27,14 @@ class _SplashScreenState extends State<SplashScreen> {
         fit: StackFit.expand,
         children: [
           Image.asset(
-            'assets/images/bkg2.JPG',
+            'assets/images/intro_2.JPG',
             fit: BoxFit.cover,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/images/logo1.png',
+                'assets/images/metronomy_icon_yellow.png',
                 width: 100.0,
                 height: 100.0,
               ),

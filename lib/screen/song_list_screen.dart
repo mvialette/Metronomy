@@ -2,23 +2,11 @@ import 'dart:async';
 
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
-import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
-import 'package:Metronomy/ui/rhythm_label.dart';
-import 'package:Metronomy/ui/rhythm_slider.dart';
-import 'package:Metronomy/ui/sound_toggle_button.dart';
-import 'package:Metronomy/ui/stop_button.dart';
 import 'package:Metronomy/widgets/song_item.dart';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SongListScreen extends StatelessWidget {
 
@@ -62,7 +50,12 @@ class SongListScreen extends StatelessWidget {
 
               return Column(
                 children: [
-                  Text(AppLocalizations.of(context)!.listDescriptionAllSongs,),
+                  SizedBox(height: 15,),
+                  Text(
+                    AppLocalizations.of(context)!.listDescriptionAllSongs,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  SizedBox(height: 15,),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),

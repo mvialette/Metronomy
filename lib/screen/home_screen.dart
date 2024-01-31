@@ -52,12 +52,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.background,
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Row(children: [
-            Icon(Icons.music_note),
-            SizedBox(width: 15),
-            Text(AppLocalizations.of(context)!.applicationTitle),
-          ]),
+          iconTheme: Theme.of(context).iconTheme,
+          title: Text(AppLocalizations.of(context)!.applicationTitle, style: TextStyle(color: Theme.of(context).colorScheme.primary),),
         ),
         drawer: MainDrawer(
           onSelectScreen: _setScreen,

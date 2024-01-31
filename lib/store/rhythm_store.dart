@@ -1,4 +1,3 @@
-import 'package:Metronomy/model/song.dart';
 import 'package:flutter/material.dart';
 
 class RhythmStore extends InheritedWidget {

@@ -2,23 +2,13 @@ import 'dart:async';
 
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
-import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/screen/music_player_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
-import 'package:Metronomy/ui/rhythm_label.dart';
-import 'package:Metronomy/ui/rhythm_slider.dart';
-import 'package:Metronomy/ui/sound_toggle_button.dart';
-import 'package:Metronomy/ui/stop_button.dart';
 import 'package:Metronomy/widgets/song_item.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
 
 class SongListScreen extends StatelessWidget {
 
@@ -35,9 +25,9 @@ class SongListScreen extends StatelessWidget {
 
     List<Song> allAvailableSongs = <Song>[];
     await songs.get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((doc) {
+      for (var doc in snapshot.docs) {
         allAvailableSongs.add(Song.fromMap(doc.data() as Map<String, dynamic>));
-      });
+      }
 
     }).catchError((error) => print("Failed to fetch users: $error"));
     return allAvailableSongs;
@@ -54,7 +44,7 @@ class SongListScreen extends StatelessWidget {
             AsyncSnapshot<List<Song>> snapshot,
             ) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           } else if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasError) {
               return const Text('Error');
@@ -65,7 +55,7 @@ class SongListScreen extends StatelessWidget {
                   Text(AppLocalizations.of(context)!.listDescriptionAllSongs,),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: snapshot.data?.length,
                     itemBuilder: (ctx, index) =>
                       SongItem(

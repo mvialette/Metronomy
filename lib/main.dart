@@ -1,9 +1,7 @@
-import 'package:Metronomy/l10n/l10n.dart';
 import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -54,8 +52,8 @@ Future main() async {
   ]);
 
   runApp(
-    ProviderScope(
-        child: const RhythmProvider(
+    const ProviderScope(
+        child: RhythmProvider(
             child: MetronomyApp()
         ),
     ),
@@ -99,7 +97,7 @@ class _MetronomyAppState extends State<MetronomyApp> {
           ) {
         return locale;
       },
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -107,7 +105,7 @@ class _MetronomyAppState extends State<MetronomyApp> {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-      home: HomeScreen(),
+      home: const HomeScreen(),
       theme: theme,
     );
   }

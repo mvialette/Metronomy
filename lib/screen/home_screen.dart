@@ -37,11 +37,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       } else if (identifier == 'play-a-song') {
         activePage = MusicPlayerScreen(onSelectScreen: _setScreen,);
       } else if (identifier == 'settings') {
-        activePage = SettingsScreen();
+        activePage = const SettingsScreen();
       } else if (identifier == 'summary') {
         activePage = SummarySongScreen(onSelectScreen: _setScreen,);
       } else if (identifier == 'user-profil') {
-        activePage = UserProfilScreen();
+        activePage = const UserProfilScreen();
       }
     });
   }
@@ -54,8 +54,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           title: Row(children: [
-            Icon(Icons.music_note),
-            SizedBox(width: 15),
+            const Icon(Icons.music_note),
+            const SizedBox(width: 15),
             Text(AppLocalizations.of(context)!.applicationTitle),
           ]),
         ),

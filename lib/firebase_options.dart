@@ -53,10 +53,10 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyACoDcvi9134K8dB61ABe9TgICs423P3BA',
-    appId: '1:661359608221:android:92b4a371f58a793e2f2f74',
-    messagingSenderId: '661359608221',
-    projectId: 'metronomy-1e0dd',
-    storageBucket: 'metronomy-1e0dd.appspot.com',
+    apiKey: 'AIzaSyDIa8XG81zfIHdO4uf0DPRswc4LfZMek5g',
+    appId: '1:848264158556:android:eba52520e47946ee2ab599',
+    messagingSenderId: '848264158556',
+    projectId: 'metronomy-c5c63',
+    storageBucket: 'metronomy-c5c63.appspot.com',
   );
 }

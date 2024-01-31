@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
 
 class RhythmSlider extends StatelessWidget {
 

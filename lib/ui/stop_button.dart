@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class StopButton extends StatelessWidget {
       },
       tooltip: 'Stop',
       backgroundColor: Colors.orangeAccent,
-      child: Icon(Icons.stop),
+      child: const Icon(Icons.stop),
     );
   }
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "848264158556",
+    "project_id": "metronomy-c5c63",
+    "storage_bucket": "metronomy-c5c63.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:848264158556:android:eba52520e47946ee2ab599",
+        "android_client_info": {
+          "package_name": "com.vialette.Metronomy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "848264158556-5ra32v1c77mqgelb1h9n9q5c2ntvbqg9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vialette.Metronomy",
+            "certificate_hash": "b261f28865210250c763d39839f319d11fdda39a"
+          }
+        },
+        {
+          "client_id": "848264158556-d7ma047otuh81o932nvb8p06nhpq2nar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIa8XG81zfIHdO4uf0DPRswc4LfZMek5g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "848264158556-d7ma047otuh81o932nvb8p06nhpq2nar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

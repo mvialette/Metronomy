@@ -168,8 +168,6 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   Widget build(BuildContext context) {
 
     return RhythmStore(
-      child: widget.child,
-      //rhythm: _rhythm,
       enable: enableTimer,
       debugTickCount: debugTickCount,
       songIndex: _songIndex,
@@ -177,6 +175,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       barsCurrentCounter: _barsCurrentCounter,
       maximumBarsSection: _maximumBarsSection,
       sectionsLength: _sectionsLength,
+      child: widget.child,
     );
   }
 

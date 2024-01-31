@@ -29,4 +29,4 @@ const kPauseIcon = Icons.pause;
 final songA = AssetSource('song-a.mpeg');
 final songB = AssetSource('song-b.mpeg');
 
-final kSelectedCollection = "songs_202312132100";
+const kSelectedCollection = "songs_202312132100";

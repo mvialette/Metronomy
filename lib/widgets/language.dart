@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 
 class Language extends StatelessWidget {
+  const Language({super.key});
+
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +15,7 @@ class Language extends StatelessWidget {
     return Center(
       child: Text(
         flag,
-        style: TextStyle(fontSize: 30),
+        style: const TextStyle(fontSize: 30),
       ),
       // Ou alors pour mettre dans un cercle :
       // CircleAvatar(

@@ -1,21 +1,13 @@
-import 'dart:async';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
-import 'package:Metronomy/ui/sound_toggle_button.dart';
-import 'package:Metronomy/ui/stop_button.dart';
 import 'package:Metronomy/widgets/lists_with_cards.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
 
 class SummarySongScreen extends ConsumerStatefulWidget {
 
@@ -42,12 +34,12 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
                 AppLocalizations.of(context)!.songTitleLabel,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 40,
               ),
               Text(
                 RhythmProvider.of(context).selectedSong.title,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.normal,
                     color: Colors.orange),
@@ -65,7 +57,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             Text(
               // permet d'accéder à la valeur actualisée du rythme
               RhythmProvider.of(context).selectedSong.getSignature(),
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.normal,
                   color: Colors.orange),
@@ -83,7 +75,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
               ),
               Text(
                 '${RhythmProvider.of(context).startingCountdown}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.normal,
                     color: Colors.orange),
@@ -98,22 +90,22 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
               AppLocalizations.of(context)!.tempo,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            RhythmLabel(),
+            const RhythmLabel(),
           ],
         ),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: RhythmSlider(
             setStateCallback: () {
               setState(() {});
             },
           ),
         ),
-        new Expanded(
+        const Expanded(
           child:
             ListsWithCards(),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Row(

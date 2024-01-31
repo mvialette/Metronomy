@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +39,8 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
   @override
   void dispose() {
-    this.widget.audioPlayerHighPitchedSound.dispose();
-    this.widget.audioPlayerLowPitchedSound.dispose();
+    widget.audioPlayerHighPitchedSound.dispose();
+    widget.audioPlayerLowPitchedSound.dispose();
 
     periodicTimer?.cancel();
     super.dispose();
@@ -50,7 +49,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   @override
   Widget build(BuildContext context) {
 
-    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm) as Duration;
+    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm);
 
     return FloatingActionButton(
       enableFeedback: false,
@@ -70,7 +69,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   @override
   void didChangeDependencies() {
 
-    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm) as Duration;
+    tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm);
 
     periodicTimer?.cancel();
     periodicTimer = Timer.periodic(
@@ -78,7 +77,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
       tempoDuration!,
           (_) {
             //final bool firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
-            final bool firstSongDifferent = true;
+            const bool firstSongDifferent = true;
             _printMaintenant();
 
             if (RhythmStore.of(context).enable) {
@@ -121,7 +120,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
                 }
               }
             }
-            this.widget.setStateCallback();
+            widget.setStateCallback();
       },
     );
     super.didChangeDependencies();
@@ -129,15 +128,15 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
 
   void playLowSound() {
-    this.widget.audioPlayerLowPitchedSound.pause();
-    this.widget.audioPlayerLowPitchedSound.seek(Duration.zero);
-    this.widget.audioPlayerLowPitchedSound.play(songB);
+    widget.audioPlayerLowPitchedSound.pause();
+    widget.audioPlayerLowPitchedSound.seek(Duration.zero);
+    widget.audioPlayerLowPitchedSound.play(songB);
   }
 
   void playHighSound() {
-    this.widget.audioPlayerHighPitchedSound.pause();
-    this.widget.audioPlayerHighPitchedSound.seek(Duration.zero);
-    this.widget.audioPlayerHighPitchedSound.play(songA);
+    widget.audioPlayerHighPitchedSound.pause();
+    widget.audioPlayerHighPitchedSound.seek(Duration.zero);
+    widget.audioPlayerHighPitchedSound.play(songA);
   }
 
   void _printMaintenant() {
@@ -146,7 +145,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
     var nowMicrosecondsSinceEpoch = nowDT.microsecondsSinceEpoch;
     int gradian = nowMicrosecondsSinceEpoch - oldValuePrint;
 
-    print('${nowDT} // ${gradian /1000} microsec');
+    print('$nowDT // ${gradian /1000} microsec');
 
     oldValuePrint = nowMicrosecondsSinceEpoch;
   }

@@ -1,22 +1,11 @@
-import 'dart:async';
 
 import 'package:Metronomy/model/constants.dart';
-import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
-import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
-import 'package:Metronomy/ui/rhythm_label.dart';
-import 'package:Metronomy/ui/rhythm_slider.dart';
-import 'package:Metronomy/ui/sound_toggle_button.dart';
-import 'package:Metronomy/ui/stop_button.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({
@@ -45,7 +34,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     return Column(
       children: <Widget>[
         Padding(
-          padding: EdgeInsets.all(20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Row(
               children: [
@@ -80,8 +69,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Row(
               children: [
                 Text(AppLocalizations.of(context)!.startingCountdownBarsNumber),
-                SizedBox(width: 10,),
-                Text('${startingBarsNumber}',
+                const SizedBox(width: 10,),
+                Text('$startingBarsNumber',
                   //style: Theme.of(context).textTheme.headlineMedium,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
@@ -90,12 +79,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 )
               ],
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Row(
               children: [
                 Text(AppLocalizations.of(context)!.databaseVersion),
-                SizedBox(width: 10,),
-                Text('${kSelectedCollection}',
+                const SizedBox(width: 10,),
+                Text(kSelectedCollection,
                   //style: Theme.of(context).textTheme.headlineMedium,
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                     color: Theme.of(context).colorScheme.primary,

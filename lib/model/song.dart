@@ -18,9 +18,9 @@ class Song {
 
   factory Song.fromMap(Map<String, dynamic> map) {
 
-    List<MusicStructure> _sections = [];
+    List<MusicStructure> sections = [];
     map['sections'].forEach((element) {
-      _sections.add(MusicStructure.fromMap(element));
+      sections.add(MusicStructure.fromMap(element));
     });
 
     var signatureSplit = map['signature'].split('/');
@@ -30,7 +30,7 @@ class Song {
         tempo: map['tempo'],
         beatsByBar: int.parse(signatureSplit[0]),
         beatsDuring: int.parse(signatureSplit[1]),
-        musiquePart: _sections ?? List.empty());
+        musiquePart: sections ?? List.empty());
   }
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +43,6 @@ class Song {
 
   String getSignature(){
     // '2/4', '3/4', '4/4', '7/8', '12/8'
-    return beatsByBar.toString() + "/" + beatsDuring.toString();
+    return "$beatsByBar/$beatsDuring";
   }
 }

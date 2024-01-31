@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -7,13 +6,10 @@ import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
-import 'package:Metronomy/ui/rhythm_slider.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
 import 'package:Metronomy/ui/stop_button.dart';
 import 'package:Metronomy/widgets/bullets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:convert';
 
@@ -39,7 +35,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
   }
 
   void _printSong(Song currentSong) {
-    JsonEncoder encoder = new JsonEncoder.withIndent('  ');
+    JsonEncoder encoder = const JsonEncoder.withIndent('  ');
     print(encoder.convert(currentSong));
   }
 
@@ -51,7 +47,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
       },
     );
 
-    final spinkit = SpinKitWave(
+    const spinkit = SpinKitWave(
       color: Colors.orange,
       size: 200.0,
     );
@@ -66,12 +62,12 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               AppLocalizations.of(context)!.songTitleLabel,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Text(
               RhythmProvider.of(context).selectedSong.title,
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.normal,
                   color: Colors.orange),
@@ -98,7 +94,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     ),
                     Text(
                       '${RhythmProvider.of(context).startingCountdown}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
                           color: Colors.orange),
@@ -108,7 +104,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               ),
               Visibility(
                 visible: RhythmProvider.of(context).enableTimer,
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     spinkit,
@@ -138,7 +134,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     ),
                     Text(
                       '${RhythmStore.of(context).debugTickCount}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.normal,
                           color: Colors.orange),
@@ -146,14 +142,14 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Text(
                 AppLocalizations.of(context)!.breadcrumb,
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 child: ListView.builder(
                   shrinkWrap: true,
@@ -177,7 +173,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
@@ -188,14 +184,14 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text(
-                    '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
+                    RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Theme.of(context).colorScheme.primary,
                         ),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
 
@@ -208,24 +204,24 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   ),
                   Text(
                     '${RhythmStore.of(context).barsCurrentCounter} / ${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].maximumBarsSection}',
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
                         color: Colors.orange),
                   ),
                 ],
               ),
-              Container(
+              const SizedBox(
                 height: 50,
                 child: Bullets(),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
             ],
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: 30,
         ),
         Row(
@@ -235,7 +231,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               AppLocalizations.of(context)!.tempo,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            RhythmLabel(),
+            const RhythmLabel(),
           ],
         ),
         Row(
@@ -251,7 +247,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               },
               tooltip: 'Return',
               backgroundColor: Colors.orangeAccent,
-              child: Icon(Icons.arrow_back),
+              child: const Icon(Icons.arrow_back),
             ),
             const SizedBox(width: 8.0),
             soundToggleButton,

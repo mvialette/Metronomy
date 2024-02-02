@@ -170,6 +170,25 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             Text(
+              '${RhythmProvider.of(context).selectedSong.beatsByBar}',
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.orange),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              AppLocalizations.of(context)!.timeSignature,
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            Text(
               '${RhythmStore.of(context).barsCurrentCounter} / ${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].maximumBarsSection}',
               style: TextStyle(
                   fontSize: 30,

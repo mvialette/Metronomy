@@ -77,7 +77,6 @@ class _MetronomyAppState extends State<MetronomyApp> {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-      //home: HomeScreen(),
       home: SplashScreen(),
       theme: darkTheme,
     );

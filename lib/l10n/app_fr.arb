@@ -23,5 +23,8 @@
   "debugHitCount": "Debug hit count : ",
   "startingCountdown": "Compte à rebours : ",
   "advancedMode": "Mode avancé : ",
-  "nextSection": "à suivre : "
+  "nextSection": "à suivre : ",
+  "join": "Rejoindre",
+  "welcomeTextOne": "Batteurs passionnés, rejoignez notre communauté en vous inscrivant pour découvrir ce monde exceptionnel.",
+  "welcomeTextTwo": "Frappez avec nous et laissez votre rythme résonner et créez de la musique qui fait vibrer !"
 }

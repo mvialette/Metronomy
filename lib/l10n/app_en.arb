@@ -98,5 +98,17 @@
   "nextSection": "Next : ",
   "@nextSection": {
     "description": "Next section"
+  },
+  "join": "Join",
+  "@join": {
+    "description": "Join the metronomy users"
+  },
+  "welcomeTextOne": "Drum addict, join our community and welcome in a new way of practice.",
+  "@welcomeTextOne": {
+    "description": "Welcome text screen in step one"
+  },
+  "welcomeTextTwo": "Play with us, follow the rythm.",
+  "@welcomeTextTwo": {
+    "description": "Welcome text screen in step two"
   }
 }

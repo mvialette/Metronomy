@@ -28,8 +28,6 @@ class RhythmProvider extends ConsumerStatefulWidget {
 
 class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
-  late Future<List<Song>> songsAvailable;
-
   int rhythm = kDefaultRhythm;
   bool enableTimer = kDefaultEnable;
 

@@ -2,6 +2,7 @@ import 'package:Metronomy/screen/loader_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -43,19 +44,18 @@ class _SplashScreenState extends State<SplashScreen> {
               Text(
                 'Metronomy',
                 style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                  color: Color(0xFFFFC601),
-
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ],
           ),
-          const Positioned(
+          Positioned(
             bottom: 20.0,
             left: 0,
             right: 0,
             child: Center(
               child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFFC601)),
+                valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).colorScheme.primary),
               ),
             ),
           ),

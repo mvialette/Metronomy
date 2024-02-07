@@ -18,11 +18,12 @@ class MainDrawer extends StatelessWidget {
       child: Column(
         children: [
           DrawerHeader(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              color: Theme.of(context).colorScheme.background,
+              /*gradient: LinearGradient(
                 colors: [
-                  Theme.of(context).colorScheme.primaryContainer,
+                  Theme.of(context).colorScheme.background,
                   Theme.of(context)
                       .colorScheme
                       .primaryContainer
@@ -30,7 +31,7 @@ class MainDrawer extends StatelessWidget {
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-              ),
+              ),*/
             ),
             child: Row(
               children: [

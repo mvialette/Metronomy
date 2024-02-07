@@ -1,6 +1,7 @@
 import 'package:Metronomy/screen/home_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoaderScreen extends StatefulWidget {
 
@@ -9,6 +10,7 @@ class LoaderScreen extends StatefulWidget {
 }
 
 class _LoaderScreenState extends State<LoaderScreen> {
+
   int _current = 0;
   final CarouselController _controller = CarouselController();
   bool _showJoinButton = false;
@@ -61,9 +63,9 @@ class _LoaderScreenState extends State<LoaderScreen> {
                   Container(
                     child: Center(
                       child: Text(
-                        'Batteurs passionnés, rejoignez notre communauté en vous inscrivant pour découvrir ce monde exceptionnel.',
+                        AppLocalizations.of(context)!.welcomeTextOne,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -73,9 +75,9 @@ class _LoaderScreenState extends State<LoaderScreen> {
                   Container(
                     child: Center(
                       child: Text(
-                        'Frappez avec nous et laissez votre rythme résonner et créez de la musique qui fait vibrer !',
+                        AppLocalizations.of(context)!.welcomeTextOne,
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.secondary,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -130,7 +132,7 @@ class _LoaderScreenState extends State<LoaderScreen> {
                         );
 
                       },
-                      label: Text('Rejoindre'),
+                      label: Text(AppLocalizations.of(context)!.join),
                       backgroundColor: Color(0xFFFFC601),
                       foregroundColor: Colors.black,
                       shape: RoundedRectangleBorder(

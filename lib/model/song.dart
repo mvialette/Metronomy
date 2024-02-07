@@ -6,14 +6,16 @@ class Song {
   final int tempo;
   final int beatsByBar;
   final int beatsDuring;
+  final String signature;
   final List<MusicStructure> musiquePart;
 
   const Song({
     required this.title,
     required this.tempo,
     required this.beatsByBar,
+    required this.signature,
     required this.beatsDuring,
-    required this.musiquePart
+    required this.musiquePart,
   });
 
   String nextSectionName(int sectionCurrentIndex){
@@ -35,7 +37,8 @@ class Song {
     return Song(
         title: map['title'],
         tempo: map['tempo'],
-        beatsByBar: int.parse(signatureSplit[0]),
+        beatsByBar: map['beatsByBars'],
+        signature: map['signature'],
         beatsDuring: int.parse(signatureSplit[1]),
         musiquePart: _sections ?? List.empty());
   }
@@ -47,9 +50,4 @@ class Song {
     'beatsDuring': beatsDuring,
     'sections': musiquePart,
   };
-
-  String getSignature(){
-    // '2/4', '3/4', '4/4', '7/8', '12/8'
-    return beatsByBar.toString() + "/" + beatsDuring.toString();
-  }
 }

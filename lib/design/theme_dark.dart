@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 final darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   primary: const Color.fromARGB(255, 255, 214, 1),
+  secondary: Colors.white,
+  tertiary: Colors.grey,
   seedColor: const Color.fromARGB(255, 212, 178, 1),
   background: const Color.fromARGB(255, 15, 15, 15),
 

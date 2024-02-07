@@ -1,0 +1,42 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "$id": "https://example.com/employee.schema.json",
+    "title": "Structure Metronomy",
+    "description": "Structure des enregistrements metronomy",
+    "type": "object",
+    "properties": {
+        "title": {
+            "description": "Titre de la chanson",
+            "type": "string"
+        },
+        "beatsByBars": {
+            "description": "Nombre de temps par mesure",
+            "type": "number"
+			"minimum" : "2"
+			"maximum" : "7"	
+        },
+        "tempo": {
+            "description": "tempo",
+            "type": "number"
+        },
+        "sections": {
+            "description": "liste des sections du morceau",
+            "type": "array",
+            "properties": {
+                "name": {
+					"description" : "Nom de la section"
+                    "type": "string",
+                },
+                "maximumBars": {
+					"description": "Nombre de Mesures pour cette section"
+                    "type": "number",
+				}
+                "beats": {
+					"description" : "Compteur sur les temps"
+                    "type": "number",
+                  
+                }
+			}
+		}
+	}
+}

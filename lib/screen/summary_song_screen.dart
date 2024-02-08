@@ -1,21 +1,11 @@
-import 'dart:async';
-
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
-import 'package:Metronomy/ui/sound_toggle_button.dart';
-import 'package:Metronomy/ui/stop_button.dart';
 import 'package:Metronomy/widgets/lists_with_cards.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
 
 class SummarySongScreen extends ConsumerStatefulWidget {
 
@@ -64,7 +54,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ),
             Text(
               // permet d'accéder à la valeur actualisée du rythme
-              RhythmProvider.of(context).selectedSong.getSignature(),
+              RhythmProvider.of(context).selectedSong.signature,
               style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.normal,
@@ -77,6 +67,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // FIXME afficher le chiffre du compte à rebours
               Text(
                 'Starting countdown : ',
                 style: Theme.of(context).textTheme.headlineMedium,

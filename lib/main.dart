@@ -1,5 +1,9 @@
 
 import 'package:Metronomy/design/theme_dark.dart';
+import 'package:Metronomy/design/theme_light.dart';
+import 'package:Metronomy/l10n/l10n.dart';
+import 'package:Metronomy/providers/dark_mode_provider.dart';
+import 'package:Metronomy/providers/locale_provider.dart';
 import 'package:Metronomy/screen/splash_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/services.dart';
@@ -35,32 +39,15 @@ Future main() async {
   );
 }
 
-class MetronomyApp extends StatefulWidget {
+class MetronomyApp extends ConsumerWidget {
 
   const MetronomyApp({super.key});
 
   @override
-  State<MetronomyApp> createState() => _MetronomyAppState();
+  Widget build(BuildContext context, WidgetRef ref) {
 
-  static void setLocale(BuildContext context, Locale newLocale) {
-    _MetronomyAppState? state = context.findAncestorStateOfType<_MetronomyAppState>();
-    state?.setLocale(newLocale);
-  }
-}
-
-class _MetronomyAppState extends State<MetronomyApp> {
-
-  Locale? _locale;
-
-  setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-  // @override
-  @override
-  Widget build(BuildContext context) {
+    var darkMode = ref.watch(darkModeProvider);
+    var localeCurrent = ref.watch(localeProvider);
 
     return MaterialApp(
       localeResolutionCallback: (
@@ -76,9 +63,11 @@ class _MetronomyAppState extends State<MetronomyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: _locale,
+      locale: localeCurrent ? L10n.all[0] : L10n.all[1],
       home: SplashScreen(),
-      theme: darkTheme,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

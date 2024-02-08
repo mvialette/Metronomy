@@ -7,7 +7,7 @@ class MainDrawer extends StatelessWidget {
 
   final void Function(String identifier) onSelectScreen;
 
-  void onSelectScreenFromDrawer(BuildContext context, String pageIdentifier){
+  void onSelectScreenFromDrawer(BuildContext context, String pageIdentifier) {
     Navigator.of(context).pop();
     onSelectScreen(pageIdentifier);
   }
@@ -15,109 +15,113 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          DrawerHeader(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              /*gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.background,
-                  Theme.of(context)
-                      .colorScheme
-                      .primaryContainer
-                      .withOpacity(0.8),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),*/
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.music_note,
-                  size: 48,
-                  color: Theme.of(context).colorScheme.primary,
+      child: Container(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+        child: new ListView(
+          children: [
+            DrawerHeader(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                //color: Theme.of(context).colorScheme.background,
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.background,
+                    Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.8),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-                const SizedBox(width: 18),
-                Text(
-                  AppLocalizations.of(context)!.applicationTitle,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: Theme.of(context).colorScheme.primary,
+              ),
+              child: Row(
+                children: [
+                  Image(
+                    image:
+                        AssetImage("assets/images/metronomy_icon_yellow.png"),
+                    width: 40,
                   ),
-                ),
-              ],
-            ),
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.list,
-              size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            title: Text(
-              AppLocalizations.of(context)!.allSongs,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-                fontSize: 24,
+                  const SizedBox(width: 18),
+                  Text(
+                    AppLocalizations.of(context)!.applicationTitle,
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                  ),
+                ],
               ),
             ),
-            onTap: () {
-              onSelectScreenFromDrawer(context, 'all-songs');
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.play_circle,
-              size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            title: Text(
-              AppLocalizations.of(context)!.playASong,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-                fontSize: 24,
+            ListTile(
+              leading: Icon(
+                Icons.list,
+                size: 26,
+                color: Theme.of(context).colorScheme.secondary,
               ),
-            ),
-            onTap: () {
-              onSelectScreenFromDrawer(context, 'play-a-song');
-            },
-          ),
-          ListTile(
-            leading: Icon(
-              Icons.face,
-              size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            title: Text(
-              AppLocalizations.of(context)!.profil,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-                fontSize: 24,
+              title: Text(
+                AppLocalizations.of(context)!.allSongs,
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
               ),
+              onTap: () {
+                onSelectScreenFromDrawer(context, 'all-songs');
+              },
             ),
-            onTap: () {
-              onSelectScreenFromDrawer(context, 'user-profil');
-            },
-          ),ListTile(
-            leading: Icon(
-              Icons.settings,
-              size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
-            ),
-            title: Text(
-              AppLocalizations.of(context)!.settings,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: Theme.of(context).colorScheme.onBackground,
-                fontSize: 24,
+            ListTile(
+              leading: Icon(
+                Icons.play_circle,
+                size: 26,
+                color: Theme.of(context).colorScheme.secondary,
               ),
+              title: Text(
+                AppLocalizations.of(context)!.playASong,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+              ),
+              onTap: () {
+                onSelectScreenFromDrawer(context, 'play-a-song');
+              },
             ),
-            onTap: () {
-              onSelectScreenFromDrawer(context, 'settings');
-            },
-          ),
-        ],
+            ListTile(
+              leading: Icon(
+                Icons.face,
+                size: 26,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.profil,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+              ),
+              onTap: () {
+                onSelectScreenFromDrawer(context, 'user-profil');
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.settings,
+                size: 26,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.settings,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
+              ),
+              onTap: () {
+                onSelectScreenFromDrawer(context, 'settings');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

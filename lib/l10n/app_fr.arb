@@ -26,5 +26,9 @@
   "nextSection": "à suivre : ",
   "join": "Rejoindre",
   "welcomeTextOne": "Batteurs passionnés, rejoignez notre communauté en vous inscrivant pour découvrir ce monde exceptionnel.",
-  "welcomeTextTwo": "Frappez avec nous et laissez votre rythme résonner et créez de la musique qui fait vibrer !"
+  "welcomeTextTwo": "Frappez avec nous et laissez votre rythme résonner et créez de la musique qui fait vibrer !",
+  "themeDarkMode": "Mode sombre",
+  "themeLightMode": "Mode claire",
+  "enable": "Activé",
+  "disable": "Désactivé"
 }

@@ -8,8 +8,8 @@ final darkColorScheme = ColorScheme.fromSeed(
   tertiary: Colors.grey,
   seedColor: const Color.fromARGB(255, 212, 178, 1),
   background: const Color.fromARGB(255, 15, 15, 15),
-
-
+  primaryContainer: Colors.black,
+  onSurfaceVariant: Colors.black38,
 
   /*onPrimary: Color(0xFFFFFFFF),
   primaryContainer: Color(0xFFFFE170),
@@ -50,6 +50,10 @@ final darkTheme = ThemeData.dark().copyWith(
 
   colorScheme: darkColorScheme,
 
+  radioTheme: RadioThemeData(
+    fillColor: MaterialStateColor.resolveWith((states) => darkColorScheme.primary), //<-- SEE HERE
+  ),
+
   iconTheme: IconThemeData(color: darkColorScheme.primary),
 
   // Text theme section
@@ -68,10 +72,12 @@ final darkTheme = ThemeData.dark().copyWith(
       fontSize: 35,
     ),
      */
+    /*
     titleSmall: const TextStyle(
       fontFamily: 'StarsAndLoveBottomHeavy',
       fontSize: 16,
     ),
+    */
     titleMedium: const TextStyle(
       fontFamily: 'StarsAndLoveBottomHeavy',
       fontSize: 26,
@@ -81,7 +87,7 @@ final darkTheme = ThemeData.dark().copyWith(
       fontSize: 36,
     ),
     bodySmall: GoogleFonts.acme(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.normal,
       fontSize: 15,
     ),
     bodyMedium: GoogleFonts.acme(
@@ -89,7 +95,7 @@ final darkTheme = ThemeData.dark().copyWith(
       fontSize: 20,
     ),
     bodyLarge: GoogleFonts.acme(
-      fontWeight: FontWeight.bold,
+      fontWeight: FontWeight.normal,
       fontSize: 35,
     ),
   ),

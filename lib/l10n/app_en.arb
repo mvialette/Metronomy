@@ -110,5 +110,21 @@
   "welcomeTextTwo": "Play with us, follow the rythm.",
   "@welcomeTextTwo": {
     "description": "Welcome text screen in step two"
+  },
+  "themeDarkMode": "Dark mode",
+  "@themeDarkMode": {
+    "description": "Dark mode enable"
+  },
+  "themeLightMode": "Light mode",
+  "@themeLightMode": {
+    "description": "Light mode enable"
+  },
+  "enable": "Enable",
+  "@enable": {
+    "description": "Enable"
+  },
+  "disable": "Disable",
+  "@disable": {
+    "description": "Disable"
   }
 }

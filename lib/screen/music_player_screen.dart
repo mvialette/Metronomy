@@ -7,7 +7,6 @@ import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
-import 'package:Metronomy/ui/rhythm_label.dart';
 import 'package:Metronomy/ui/rhythm_slider.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
 import 'package:Metronomy/ui/stop_button.dart';
@@ -264,7 +263,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
               AppLocalizations.of(context)!.tempo,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            RhythmLabel(),
+            //RhythmLabel(),
           ],
         ),
         Row(

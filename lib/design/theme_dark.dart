@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 final darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   primary: const Color.fromARGB(255, 255, 214, 1),
+  onPrimary: Colors.black,
   secondary: Colors.white,
   tertiary: Colors.grey,
   seedColor: const Color.fromARGB(255, 212, 178, 1),
@@ -55,6 +56,15 @@ final darkTheme = ThemeData.dark().copyWith(
   ),
 
   iconTheme: IconThemeData(color: darkColorScheme.primary),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      //primary: darkColorScheme.primary,
+      primary: Colors.teal,
+      onPrimary: Colors.white,
+      onSurface: Colors.grey,
+    ),
+  ),
 
   // Text theme section
   textTheme: TextTheme(

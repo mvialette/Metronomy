@@ -1,5 +1,4 @@
 import 'package:Metronomy/l10n/l10n.dart';
-import 'package:Metronomy/main.dart';
 import 'package:Metronomy/providers/dark_mode_provider.dart';
 import 'package:Metronomy/providers/locale_provider.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
@@ -25,8 +24,6 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
   late bool debuggingMode;
   late String languageCode;
 
-  //late bool darkMode;
-
   @override
   void initState() {
     firstSongDifferent = ref.read(allSettingsProvider).firstSongDifferent;
@@ -37,13 +34,10 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     var darkMode = ref.watch(darkModeProvider);
-
     final locale = Localizations.localeOf(context);
-
     languageCode = locale.languageCode;
-
-    final flag = L10n.getFlag(locale.languageCode);
 
     return Column(
       children: <Widget>[
@@ -68,7 +62,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                     'Mon compte',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: Theme.of(context).colorScheme.secondary,
-                        fontSize: 30),
+                    ),
                   )
                 ],
               ),
@@ -114,7 +108,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                           value: L10n.all[index].languageCode,
                           groupValue: languageCode,
                           onChanged: (String? value) {
-                            ref.read(localeProvider.notifier).toggle();
+                            ref.read(localeProvider.notifier).toggle(value!);
                           },
                         ),
                         Text(
@@ -148,7 +142,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.themeLightMode + " : ",
+                    AppLocalizations.of(context)!.themeDarkMode + " : ",
                     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Theme.of(context).colorScheme.secondary),
                   ),
@@ -156,6 +150,8 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                     width: 10,
                   ),
                   Switch(
+                    activeColor: Theme.of(context).colorScheme.primaryContainer,
+                    activeTrackColor: Theme.of(context).colorScheme.primary,
                     value: darkMode,
                     onChanged: (val) {
                       ref.read(darkModeProvider.notifier).toggle();

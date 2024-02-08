@@ -63,7 +63,7 @@ class MetronomyApp extends ConsumerWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: localeCurrent ? L10n.all[0] : L10n.all[1],
+      locale: localeCurrent,
       home: SplashScreen(),
       theme: lightTheme,
       darkTheme: darkTheme,

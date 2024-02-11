@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:wakelock/wakelock.dart';
 
 class RhythmProvider extends ConsumerStatefulWidget {
   static RhythmProviderState of(BuildContext context) {
@@ -59,6 +60,9 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   void updateEnableTimer(bool value) {
     setState(() {
       enableTimer = value;
+
+      Wakelock.toggle(enable: enableTimer);
+
       if(startingCountdown == kDefaultStartingCountdown){
         resetStartingCountdown();
       }
@@ -72,6 +76,8 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       debugTickCount = 0;
       _barsCurrentCounter = 1;
       _sectionCurrentIndex = 0;
+
+      Wakelock.toggle(enable: enableTimer);
     });
   }
 

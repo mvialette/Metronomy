@@ -1,4 +1,3 @@
-
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:Metronomy/screen/music_player_screen.dart';
@@ -20,7 +19,6 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-
   Widget? activePage;
 
   @override
@@ -30,16 +28,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   void _setScreen(String identifier) async {
-
     setState(() {
       if (identifier == 'all-songs') {
-        activePage = SongListScreen(onSelectScreen: _setScreen,);
+        activePage = SongListScreen(
+          onSelectScreen: _setScreen,
+        );
       } else if (identifier == 'play-a-song') {
-        activePage = MusicPlayerScreen(onSelectScreen: _setScreen,);
+        activePage = MusicPlayerScreen(
+          onSelectScreen: _setScreen,
+        );
       } else if (identifier == 'settings') {
         activePage = SettingsScreen();
       } else if (identifier == 'summary') {
-        activePage = SummarySongScreen(onSelectScreen: _setScreen,);
+        activePage = SummarySongScreen(
+          onSelectScreen: _setScreen,
+        );
       } else if (identifier == 'user-profil') {
         activePage = UserProfilScreen();
       }
@@ -48,21 +51,30 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.background,
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          title: Row(children: [
-            Icon(Icons.music_note),
-            SizedBox(width: 15),
-            Text(AppLocalizations.of(context)!.applicationTitle),
-          ]),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: AppBar(
+        iconTheme: Theme.of(context).iconTheme,
+        title: Text(
+          AppLocalizations.of(context)!.applicationTitle,
+          style: TextStyle(color: Theme.of(context).colorScheme.primary),
         ),
-        drawer: MainDrawer(
-          onSelectScreen: _setScreen,
+      ),
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/MotifsNoirs.png"),
+            colorFilter: ColorFilter.mode(
+                Theme.of(context).colorScheme.background.withOpacity(0.1), BlendMode.dstATop
+            ),
+            fit: BoxFit.cover,
+          ),
         ),
-        body: activePage,
+        child: activePage,
+      ),
     );
   }
 }

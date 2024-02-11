@@ -52,15 +52,19 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
     tempoDuration = SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm) as Duration;
 
-    return FloatingActionButton(
-      enableFeedback: false,
+    return ElevatedButton(
+      //enableFeedback: false,
+      // style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
+      //     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+      //     minimumSize: Size(100, 50),
+      // ),
       onPressed: () {
         setState(() {
           RhythmProvider.of(context).updateEnableTimer(!RhythmStore.of(context).enable);
         });
       },
-      tooltip: 'Play',
-      backgroundColor: Colors.orangeAccent,
+      //tooltip: 'Play',
+      //backgroundColor: Theme.of(context).colorScheme.primary,
       child: Icon(
         RhythmStore.of(context).enable ? kPauseIcon : kPlayIcon,
       ),
@@ -119,13 +123,13 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   void playLowSound() {
     this.widget.audioPlayerLowPitchedSound.pause();
     this.widget.audioPlayerLowPitchedSound.seek(Duration.zero);
-    this.widget.audioPlayerLowPitchedSound.play(songB);
+    this.widget.audioPlayerLowPitchedSound.play(songLow);
   }
 
   void playHighSound() {
     this.widget.audioPlayerHighPitchedSound.pause();
     this.widget.audioPlayerHighPitchedSound.seek(Duration.zero);
-    this.widget.audioPlayerHighPitchedSound.play(songA);
+    this.widget.audioPlayerHighPitchedSound.play(songHigh);
   }
 
   void _printMaintenant() {

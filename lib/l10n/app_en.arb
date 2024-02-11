@@ -98,5 +98,45 @@
   "nextSection": "Next : ",
   "@nextSection": {
     "description": "Next section"
+  },
+  "join": "Join",
+  "@join": {
+    "description": "Join the metronomy users"
+  },
+  "welcomeTextOne": "Drum addict, join our community and welcome in a new way of practice.",
+  "@welcomeTextOne": {
+    "description": "Welcome text screen in step one"
+  },
+  "welcomeTextTwo": "Play with us, follow the rythm.",
+  "@welcomeTextTwo": {
+    "description": "Welcome text screen in step two"
+  },
+  "themeDarkMode": "Dark mode",
+  "@themeDarkMode": {
+    "description": "Dark mode enable"
+  },
+  "themeLightMode": "Light mode",
+  "@themeLightMode": {
+    "description": "Light mode enable"
+  },
+  "enable": "Enable",
+  "@enable": {
+    "description": "Enable"
+  },
+  "disable": "Disable",
+  "@disable": {
+    "description": "Disable"
+  },
+  "countdown": "Countdown",
+  "@countdown": {
+    "description": "Countdown"
+  },
+  "myAccount": "My account",
+  "@myAccount": {
+    "description": "My account"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings"
   }
 }

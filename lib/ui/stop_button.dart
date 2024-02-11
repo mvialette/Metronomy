@@ -12,13 +12,13 @@ class StopButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      //backgroundColor: Theme.of(context).colorScheme.primary,
       enableFeedback: false,
       onPressed: () {
         RhythmProvider.of(context).updateStopTimer();
         setStateCallback();
       },
       tooltip: 'Stop',
-      backgroundColor: Colors.orangeAccent,
       child: Icon(Icons.stop),
     );
   }

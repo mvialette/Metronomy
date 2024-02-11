@@ -1,9 +1,13 @@
+
+import 'package:Metronomy/design/theme_dark.dart';
+import 'package:Metronomy/design/theme_light.dart';
 import 'package:Metronomy/l10n/l10n.dart';
-import 'package:Metronomy/screen/home_screen.dart';
+import 'package:Metronomy/providers/dark_mode_provider.dart';
+import 'package:Metronomy/providers/locale_provider.dart';
+import 'package:Metronomy/screen/splash_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -11,33 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-final colorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  primary: const Color.fromARGB(255, 226, 126, 20),
-  seedColor: const Color.fromARGB(255, 226, 126, 20),
-  background: const Color.fromARGB(158, 189, 183, 171),
-);
-
-final theme = ThemeData().copyWith(
-  scaffoldBackgroundColor: colorScheme.background,
-  colorScheme: colorScheme,
-  textTheme: GoogleFonts.acmeTextTheme().copyWith(
-    titleSmall: GoogleFonts.acme(
-      fontWeight: FontWeight.bold,
-      fontSize: 15,
-    ),
-    titleMedium: GoogleFonts.acme(
-      fontWeight: FontWeight.bold,
-      fontSize: 25,
-    ),
-    titleLarge: GoogleFonts.acme(
-      fontWeight: FontWeight.bold,
-      fontSize: 35,
-    ),
-  ),
-);
 
 // le point d'entrée de l'application devient asynchone afin que audioplayers charge correctement le son
 Future main() async {
@@ -62,35 +39,15 @@ Future main() async {
   );
 }
 
-class MetronomyApp extends StatefulWidget {
+class MetronomyApp extends ConsumerWidget {
 
   const MetronomyApp({super.key});
 
   @override
-  State<MetronomyApp> createState() => _MetronomyAppState();
+  Widget build(BuildContext context, WidgetRef ref) {
 
-  static void setLocale(BuildContext context, Locale newLocale) {
-    _MetronomyAppState? state = context.findAncestorStateOfType<_MetronomyAppState>();
-    state?.setLocale(newLocale);
-  }
-}
-
-class _MetronomyAppState extends State<MetronomyApp> {
-
-  Locale? _locale;
-
-  setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-  // @override
-  @override
-  Widget build(BuildContext context) {
-
-    //var currentLocale = AppLocalizations.of(context)?.localeName;
-    //Locale myLocale = Localizations.localeOf(context);
+    var darkMode = ref.watch(darkModeProvider);
+    var localeCurrent = ref.watch(localeProvider);
 
     return MaterialApp(
       localeResolutionCallback: (
@@ -106,9 +63,11 @@ class _MetronomyAppState extends State<MetronomyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: _locale,
-      home: HomeScreen(),
-      theme: theme,
+      locale: localeCurrent,
+      home: SplashScreen(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,
     );
   }
 }

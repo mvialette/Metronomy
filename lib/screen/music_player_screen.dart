@@ -1,23 +1,16 @@
-import 'dart:async';
-
-import 'package:Metronomy/widgets/bullets_countdown.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:convert';
 
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
-import 'package:Metronomy/ui/rhythm_slider.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
 import 'package:Metronomy/ui/stop_button.dart';
 import 'package:Metronomy/widgets/bullets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:Metronomy/widgets/bullets_countdown.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'dart:convert';
-
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class MusicPlayerScreen extends ConsumerStatefulWidget {
 
@@ -45,68 +38,42 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
     print(encoder.convert(currentSong));
   }
 
-  Column getCountdownWidgets(){
-
-    final spinkit = SpinKitWave(
-      color: Colors.orange,
-      size: 200.0,
-    );
-
-    return Column(
-      children: [
-        Visibility(
-          visible: ref.read(allSettingsProvider).debuggingMode,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.startingCountdown,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              Text(
-                '${RhythmProvider.of(context).startingCountdown - 1}',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.orange),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: 50,
-          //child: BulletsCountdown(ref.read(allSettingsProvider).startingBarsNumber),
-          child: BulletsCountdown(startingBarsNumber: ref.read(allSettingsProvider).startingBarsNumber,),
-        ),
-      ],
-    );
-  }
-
   Column getPlayWidgets(){
-    return Column(
-      children: [
-        Visibility(
-          visible: ref.read(allSettingsProvider).debuggingMode,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                AppLocalizations.of(context)!.debugHitCount,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-              Text(
-                '${RhythmStore.of(context).debugTickCount}',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.orange),
-              ),
-            ],
-          ),
+    return Column(children: [
+      Visibility(
+        visible: ref.read(allSettingsProvider).debuggingMode,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  '${RhythmStore.of(context).debugTickCount}',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.secondary,
+                      ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  AppLocalizations.of(context)!.debugHitCount,
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                ),
+              ],
+            ),
+            SizedBox(height: 40,),
+          ],
         ),
-        Visibility(
-          visible: ref.read(allSettingsProvider).advanceMode,
-          child: Column(children: [
+      ),
+      Visibility(
+        visible: ref.read(allSettingsProvider).advanceMode,
+        child: Column(
+          children: [
             SizedBox(
               height: 30,
             ),
@@ -138,88 +105,114 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 ),
               ),
             ),
-          ],)
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.songSection,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            Text(
-              '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
           ],
         ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.beatsByBar,
-              style: Theme.of(context).textTheme.headlineMedium,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${RhythmStore.of(context).barsCurrentCounter} / ${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].maximumBarsSection}',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            Text(
-              '${RhythmProvider.of(context).selectedSong.beatsByBar}',
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orange),
+          ),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.beatsByBar,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
             ),
-          ],
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.timeSignature,
-              style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 30,
+      ),
+      Container(
+        height: 50,
+        child: Bullets(),
+      ),
+      SizedBox(
+        height: 30,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            Text(
-              '${RhythmStore.of(context).barsCurrentCounter} / ${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].maximumBarsSection}',
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.orange),
+          ),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.songSection,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
             ),
-          ],
-        ),
-        Container(
-          height: 50,
-          child: Bullets(),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.nextSection,
-              style: Theme.of(context).textTheme.headlineMedium,
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 30,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            '${RhythmProvider.of(context).selectedSong.nextSectionName(RhythmStore.of(context).sectionCurrentIndex)}',
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
             ),
-            Text(
-              '${RhythmProvider.of(context).selectedSong.nextSectionName(RhythmStore.of(context).sectionCurrentIndex)}',
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
+          ),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.nextSection,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
             ),
-          ],
-        ),
-      ],
-    );
+          ),
+        ],
+      ),
+      SizedBox(
+        height: 30,
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            RhythmProvider.of(context).rhythm.toString(),
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.secondary,
+            ),
+          ),
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            AppLocalizations.of(context)!.tempo,
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+        ],
+      ),
+    ]);
   }
 
   @override
@@ -232,56 +225,99 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
     return Column(
       children: [
-
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              AppLocalizations.of(context)!.songTitleLabel,
-              style: Theme.of(context).textTheme.headlineMedium,
+        Row(children: [
+          IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Theme.of(context).colorScheme.primary,
             ),
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              RhythmProvider.of(context).selectedSong.title,
-              style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.orange),
-            ),
-          ],
+            tooltip: 'Select this song en go to play mode',
+            onPressed: () {
+              widget.onSelectScreen('all-songs');
+            },
+          ),
+          Expanded(
+            child: Container(),
+          ),
+        ],),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.music_note,
+                //Icons.music_note,
+                color: Theme.of(context).colorScheme.primary,
+                size: 80,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                RhythmProvider.of(context).selectedSong.title,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                'Author',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+            ],
+          ),
         ),
-        RhythmProvider.of(context).startingCountdown > 0 ? getCountdownWidgets() : getPlayWidgets(),
+        Visibility(
+          visible: RhythmProvider.of(context).startingCountdown > 0,
+          child: Column(
+            children: [
+              SizedBox(height: 40,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    '${RhythmProvider.of(context).startingCountdown - 1}',
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.countdown,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20,),
+              Column(children: [
+                Container(
+                  height: 50,
+                  //child: BulletsCountdown(ref.read(allSettingsProvider).startingBarsNumber),
+                  child: BulletsCountdown(startingBarsNumber: ref.read(allSettingsProvider).startingBarsNumber,),
+                ),
+              ],)
+            ],
+          ),
+        ),
         SizedBox(
           height: 30,
         ),
+        RhythmProvider.of(context).startingCountdown > 0 ? Text("") : getPlayWidgets(),
+        Expanded(child: Container()),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              AppLocalizations.of(context)!.tempo,
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-            //RhythmLabel(),
-          ],
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FloatingActionButton(
-              enableFeedback: false,
-              onPressed: () {
-                setState(() {
-                  RhythmProvider.of(context).updateStopTimer();
-                  widget.onSelectScreen('summary');
-                });
-              },
-              tooltip: 'Return',
-              backgroundColor: Colors.orangeAccent,
-              child: Icon(Icons.arrow_back),
-            ),
-            const SizedBox(width: 8.0),
             soundToggleButton,
             const SizedBox(width: 8.0),
             StopButton(

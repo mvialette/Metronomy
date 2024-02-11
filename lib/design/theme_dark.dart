@@ -45,30 +45,8 @@ final darkColorScheme = ColorScheme.fromSeed(
 
 );
 
-final darkTheme = ThemeData.dark().copyWith(
-
-  scaffoldBackgroundColor: darkColorScheme.background,
-
-  colorScheme: darkColorScheme,
-
-  radioTheme: RadioThemeData(
-    fillColor: MaterialStateColor.resolveWith((states) => darkColorScheme.primary), //<-- SEE HERE
-  ),
-
-  iconTheme: IconThemeData(color: darkColorScheme.primary),
-
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-      //primary: darkColorScheme.primary,
-      primary: Colors.teal,
-      onPrimary: Colors.white,
-      onSurface: Colors.grey,
-    ),
-  ),
-
-  // Text theme section
-  textTheme: TextTheme(
-    /*
+final darkTextTheme = TextTheme(
+/*
     titleSmall: GoogleFonts.acme(
       fontWeight: FontWeight.bold,
       fontSize: 15,
@@ -82,31 +60,73 @@ final darkTheme = ThemeData.dark().copyWith(
       fontSize: 35,
     ),
      */
-    /*
+/*
     titleSmall: const TextStyle(
       fontFamily: 'StarsAndLoveBottomHeavy',
       fontSize: 16,
     ),
     */
-    titleMedium: const TextStyle(
-      fontFamily: 'StarsAndLoveBottomHeavy',
-      fontSize: 26,
-    ),
-    titleLarge: const TextStyle(
-      fontFamily: 'StarsAndLoveBottomHeavy',
-      fontSize: 36,
-    ),
-    bodySmall: GoogleFonts.acme(
-      fontWeight: FontWeight.normal,
-      fontSize: 15,
-    ),
-    bodyMedium: GoogleFonts.acme(
-      fontWeight: FontWeight.normal,
-      fontSize: 20,
-    ),
-    bodyLarge: GoogleFonts.acme(
-      fontWeight: FontWeight.normal,
-      fontSize: 35,
+  titleMedium: const TextStyle(
+    fontFamily: 'StarsAndLoveBottomHeavy',
+    fontSize: 26,
+  ),
+  titleLarge: const TextStyle(
+    fontFamily: 'StarsAndLoveBottomHeavy',
+    fontSize: 36,
+  ),
+  bodySmall: GoogleFonts.nunitoSans(
+    fontWeight: FontWeight.normal,
+    fontSize: 15,
+  ),
+  bodyMedium: GoogleFonts.nunitoSans(
+    fontWeight: FontWeight.normal,
+    fontSize: 20,
+  ),
+  bodyLarge: GoogleFonts.nunitoSans(
+    fontWeight: FontWeight.normal,
+    fontSize: 35,
+  ),
+);
+
+final darkTheme = ThemeData.dark().copyWith(
+
+  scaffoldBackgroundColor: darkColorScheme.background,
+
+  colorScheme: darkColorScheme,
+
+  textTheme: darkTextTheme,
+
+  radioTheme: RadioThemeData(
+    fillColor: MaterialStateColor.resolveWith((states) => darkColorScheme.primary), //<-- SEE HERE
+  ),
+
+  iconTheme: IconThemeData(color: darkColorScheme.primary),
+
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: darkColorScheme.primary,
+      onPrimary: darkColorScheme.onPrimary,
+      textStyle: darkTextTheme.bodyMedium,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(32.0)),
+      minimumSize: Size(300, 50),
     ),
   ),
+
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: darkColorScheme.primary,
+    foregroundColor: darkColorScheme.onPrimary,
+  ),
+
+  scrollbarTheme: ScrollbarThemeData(
+      thumbVisibility: MaterialStateProperty.all(true),
+      thickness: MaterialStateProperty.all(5),
+      thumbColor: MaterialStateProperty.all(darkColorScheme.primary),
+      radius: const Radius.circular(10),
+      minThumbLength: 50,
+  ),
+
+  // Text theme section
+
+
 );

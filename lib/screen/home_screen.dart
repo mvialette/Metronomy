@@ -66,12 +66,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/MotifsBlancs.png"),
-            /*
-            uncomment to make image look transparent
+            image: AssetImage("assets/images/MotifsNoirs.png"),
             colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.5), BlendMode.dstATop),
-            */
+                Theme.of(context).colorScheme.background.withOpacity(0.1), BlendMode.dstATop
+            ),
             fit: BoxFit.cover,
           ),
         ),

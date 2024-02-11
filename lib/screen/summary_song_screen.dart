@@ -145,14 +145,14 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
         ),
         SizedBox(height: 20,),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
           child: RhythmSlider(
             setStateCallback: () {
               setState(() {});
             },
           ),
         ),
-        SizedBox(height: 40,),
+        SizedBox(height: 30,),
         Visibility(
           visible: (ref.read(allSettingsProvider).debuggingMode),
           child: Column(
@@ -232,26 +232,14 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ],
           ),
         ),*/
-        new Expanded(
-          child:
-            ListsWithCards(),
-        ),
-        /*
+        ListsWithCards(),
         Expanded(
           child: Container(),
-        ),*/
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                primary: Theme.of(context).colorScheme.primary,
-                foregroundColor: Theme.of(context).colorScheme.onPrimary,
-                textStyle: Theme.of(context).textTheme.bodyMedium,
-                shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32.0)),
-                  minimumSize: Size(300, 50),
-              ),
               onPressed: () {
                 widget.onSelectScreen('play-a-song');
               },

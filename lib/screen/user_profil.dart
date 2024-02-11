@@ -59,7 +59,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Mon compte',
+                    AppLocalizations.of(context)!.myAccount,
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: Theme.of(context).colorScheme.secondary,
                     ),

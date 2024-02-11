@@ -126,5 +126,17 @@
   "disable": "Disable",
   "@disable": {
     "description": "Disable"
+  },
+  "countdown": "Countdown",
+  "@countdown": {
+    "description": "Countdown"
+  },
+  "myAccount": "My account",
+  "@myAccount": {
+    "description": "My account"
+  },
+  "settings": "Settings",
+  "@settings": {
+    "description": "Settings"
   }
 }

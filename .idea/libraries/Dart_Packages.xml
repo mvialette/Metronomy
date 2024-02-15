@@ -352,6 +352,13 @@
             </list>
           </value>
         </entry>
+        <entry key="iconly">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/iconly-1.0.1/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="intl">
           <value>
             <list>
@@ -674,6 +681,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/http-1.1.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/http_parser-4.0.2/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/i18n_extension-10.0.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/iconly-1.0.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/intl-0.18.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/js-0.6.7/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/lints-3.0.0/lib" />

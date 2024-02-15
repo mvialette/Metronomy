@@ -1,3 +1,4 @@
+import 'package:Metronomy/screen/firstpage.dart';
 import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/services.dart';
@@ -105,7 +106,7 @@ class _MetronomyAppState extends State<MetronomyApp> {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: _locale,
-      home: const HomeScreen(),
+      home: const Firstpage(),
       theme: theme,
     );
   }

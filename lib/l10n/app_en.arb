@@ -23,6 +23,10 @@
   "@playASong": {
     "description": "Play a song"
   },
+  "play": "Play",
+  "@play": {
+    "description": "Play"
+  },
   "profil": "Profil",
   "@profil": {
     "description": "Go to profil"
@@ -138,5 +142,9 @@
   "settings": "Settings",
   "@settings": {
     "description": "Settings"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "Login"
   }
 }

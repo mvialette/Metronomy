@@ -118,6 +118,8 @@ final darkTheme = ThemeData.dark().copyWith(
     foregroundColor: darkColorScheme.onPrimary,
   ),
 
+
+
   scrollbarTheme: ScrollbarThemeData(
       thumbVisibility: MaterialStateProperty.all(true),
       thickness: MaterialStateProperty.all(5),

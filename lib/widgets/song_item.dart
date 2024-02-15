@@ -24,13 +24,21 @@ class SongItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                (song.title == "Billie Jean"?Icons.favorite:Icons.favorite_border),
+            IconButton(
+              icon: Icon(
+                (song.title == "Billie Jean"
+                    ? Icons.favorite
+                    : Icons.favorite_border),
                 color: Theme.of(context).colorScheme.primary,
                 size: 24.0,
                 semanticLabel: 'Text to announce in accessibility modes',
               ),
-              SizedBox(width: 10,),
+              tooltip: 'Select this song en go to play mode',
+              onPressed: () {
+                //widget.onSelectScreen('all-songs');
+              },
+            ),
+            SizedBox(width: 10,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

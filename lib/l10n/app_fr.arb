@@ -5,6 +5,7 @@
   "localFr": "Français",
   "allSongs": "Tous les morceaux",
   "playASong": "Jouer un morceau",
+  "play": "Jouer",
   "profil": "Gérer votre compte",
   "settings": "Paramètres",
   "firstSongDifferent": "Jouer un premier song différent",
@@ -33,5 +34,6 @@
   "disable": "Désactivé",
   "countdown": "Compte à rebours",
   "myAccount": "Mon compte",
-  "settings": "Paramètres"
+  "settings": "Paramètres",
+  "login": "Authentification"
 }

@@ -243,10 +243,11 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
               onPressed: () {
                 widget.onSelectScreen('play-a-song');
               },
-              child: Text('Jouer'),
+              child: Text(AppLocalizations.of(context)!.play),
             ),
           ],
         ),
+        SizedBox(height: 20,),
       ],
     );
   }

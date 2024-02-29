@@ -66,7 +66,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 40,),
+            SizedBox(height: 20,),
           ],
         ),
       ),
@@ -131,21 +131,21 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         ],
       ),
       SizedBox(
-        height: 30,
+        height: 10,
       ),
       Container(
-        height: 50,
+        height: 40,
         child: Bullets(),
       ),
       SizedBox(
-        height: 30,
+        height: 20,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -170,7 +170,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         children: [
           Text(
             '${RhythmProvider.of(context).selectedSong.nextSectionName(RhythmStore.of(context).sectionCurrentIndex)}',
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -241,18 +241,18 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           ),
         ],),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              /*Icon(
                 Icons.music_note,
                 //Icons.music_note,
                 color: Theme.of(context).colorScheme.primary,
-                size: 80,
-              ),
+                size: 50,
+              ),*/
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Text(
                 RhythmProvider.of(context).selectedSong.title,
@@ -276,7 +276,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           visible: RhythmProvider.of(context).startingCountdown > 0,
           child: Column(
             children: [
-              SizedBox(height: 40,),
+              SizedBox(height: 100,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -299,10 +299,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(height: 10,),
               Column(children: [
                 Container(
-                  height: 50,
+                  height: 40,
                   //child: BulletsCountdown(ref.read(allSettingsProvider).startingBarsNumber),
                   child: BulletsCountdown(startingBarsNumber: ref.read(allSettingsProvider).startingBarsNumber,),
                 ),
@@ -310,10 +310,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
             ],
           ),
         ),
-        SizedBox(
-          height: 30,
+        Visibility(
+          visible: RhythmProvider.of(context).startingCountdown <= 0,
+          child: getPlayWidgets(),
         ),
-        RhythmProvider.of(context).startingCountdown > 0 ? Text("") : getPlayWidgets(),
         Expanded(child: Container()),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

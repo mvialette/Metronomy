@@ -1,12 +1,11 @@
 import 'dart:async';
 
+import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:Metronomy/model/constants.dart';
-
-import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SoundToggleButton extends ConsumerStatefulWidget {

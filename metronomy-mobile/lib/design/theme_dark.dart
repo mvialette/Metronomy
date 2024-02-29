@@ -66,25 +66,29 @@ final darkTextTheme = TextTheme(
       fontSize: 16,
     ),
     */
-  titleMedium: const TextStyle(
-    fontFamily: 'StarsAndLoveBottomHeavy',
-    fontSize: 26,
-  ),
   titleLarge: const TextStyle(
     fontFamily: 'StarsAndLoveBottomHeavy',
-    fontSize: 36,
+    fontSize: 30,
   ),
-  bodySmall: GoogleFonts.nunitoSans(
+  titleMedium: const TextStyle(
+    fontFamily: 'StarsAndLoveBottomHeavy',
+    fontSize: 20,
+  ),
+  titleSmall: const TextStyle(
+    fontFamily: 'StarsAndLoveBottomHeavy',
+    fontSize: 10,
+  ),
+  bodyLarge: GoogleFonts.nunitoSans(
     fontWeight: FontWeight.normal,
-    fontSize: 15,
+    fontSize: 25,
   ),
   bodyMedium: GoogleFonts.nunitoSans(
     fontWeight: FontWeight.normal,
     fontSize: 20,
   ),
-  bodyLarge: GoogleFonts.nunitoSans(
+  bodySmall: GoogleFonts.nunitoSans(
     fontWeight: FontWeight.normal,
-    fontSize: 35,
+    fontSize: 10,
   ),
 );
 

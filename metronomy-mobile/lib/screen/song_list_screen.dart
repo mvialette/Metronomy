@@ -53,7 +53,9 @@ class SongListScreen extends StatelessWidget {
                   SizedBox(height: 15,),
                   Text(
                     AppLocalizations.of(context)!.listDescriptionAllSongs,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Theme.of(context).colorScheme.tertiary,
+                    ),
                   ),
                   SizedBox(height: 15,),
                   ListView.builder(

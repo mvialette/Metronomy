@@ -146,5 +146,49 @@
   "login": "Login",
   "@login": {
     "description": "Login"
+  },
+  "signIn": "Sign in",
+  "@signIn": {
+    "description": "Sign in"
+  },
+  "emailAddress": "Email address",
+  "@emailAddress": {
+    "description": "Email address"
+  },
+  "needAnAccount": "Need an account ?",
+  "@needAnAccount": {
+    "description": "Need an account"
+  },
+  "alreadHaveAnAccount": "Already have an account ?",
+  "@alreadHaveAnAccount": {
+    "description": "Already have an account"
+  },
+  "signUp": "Sign up",
+  "@signUp": {
+    "description": "Sign up"
+  },
+  "password": "Password",
+  "@password": {
+    "description": "Password"
+  },
+  "otherSignInMethods": "To connect a sign in method, the ",
+  "@otherSignInMethods": {
+    "description": "Password"
+  },
+  "continueWithGoogle": "Continue with Google",
+  "@continueWithGoogle": {
+    "description": "Continue with google"
+  },
+  "or": "or",
+  "@or": {
+    "description": "or"
+  },
+  "pleaseEnterAValideEmailAddress": "Please enter a valide email address",
+  "@pleaseEnterAValideEmailAddress": {
+    "description": "Please enter a valide email address"
+  },
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout"
   }
 }

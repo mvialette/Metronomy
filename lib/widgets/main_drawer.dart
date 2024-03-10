@@ -1,3 +1,5 @@
+import 'package:Metronomy/screen/login_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -118,6 +120,29 @@ class MainDrawer extends StatelessWidget {
               ),
               onTap: () {
                 onSelectScreenFromDrawer(context, 'settings');
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.logout,
+                size: 26,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              title: Text(
+                AppLocalizations.of(context)!.logout,
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontSize: 24,
+                ),
+              ),
+              onTap: () async {
+
+                await FirebaseAuth.instance.signOut();
+
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                );
               },
             ),
           ],

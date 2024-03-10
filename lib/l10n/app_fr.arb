@@ -35,5 +35,15 @@
   "countdown": "Compte à rebours",
   "myAccount": "Mon compte",
   "settings": "Paramètres",
-  "login": "Authentification"
+  "login": "Authentification",
+  "signIn": "S'identifier",
+  "emailAddress": "Adresse E-mail",
+  "needAnAccount": "Créer un compte ?",
+  "alreadHaveAnAccount": "Déjà un compte ?",
+  "signUp" : "S'enregistrer",
+  "password": "Mot de passe",
+  "continueWithGoogle": "Continuez avec Google",
+  "or": "ou",
+  "pleaseEnterAValideEmailAddress": "Veuillez entrer un adresse email valide.",
+  "logout": "Déconnexion"
 }

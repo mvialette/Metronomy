@@ -45,6 +45,8 @@ dependencies:
   shared_preferences: ^2.2.2
   input_quantity: ^2.2.0
   wakelock: ^0.6.2
+  flutter_svg: ^2.0.10+1
+  google_sign_in: ^6.2.1
 
 
 dev_dependencies:
@@ -74,6 +76,10 @@ flutter:
     # Assets for songs
     - assets/songs/song-high.mpeg
     - assets/songs/song-low.mpeg
+
+    # Icons
+    - assets/images/icons/android_neutral_rd_na.svg
+
     # Assets for images
     - assets/images/MotifsBlancs.png
     - assets/images/MotifsNoirs.png

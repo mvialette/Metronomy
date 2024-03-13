@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   var _enteredEmail = '';
   var _enteredUsername = '';
   var _enteredPassword = '';
-  File? _selectedImage;
+
   var _isAuthenticating = false;
   bool _passwordObscureText = true;
 
@@ -37,9 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    if (!_isLoginMode && _selectedImage == null) {
-      return;
-    }
+    // if (!_isLoginMode) {
+    //   return;
+    // }
 
     _formKey.currentState!.save();
 
@@ -56,14 +56,14 @@ class _LoginScreenState extends State<LoginScreen> {
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
 
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('user_images')
-            .child('${userCredentials.user!.uid}.jpg');
+        // final storageRef = FirebaseStorage.instance
+        //     .ref()
+        //     .child('user_images')
+        //     .child('${userCredentials.user!.uid}.jpg');
 
-        await storageRef.putFile(_selectedImage!);
-        final imageUrl = await storageRef.getDownloadURL();
-        print(imageUrl);
+        //await storageRef.putFile(_selectedImage!);
+        // final imageUrl = await storageRef.getDownloadURL();
+        // print(imageUrl);
 
         await FirebaseFirestore.instance
             .collection('users')
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .set({
           'username': _enteredUsername,
           'email': _enteredEmail,
-          'image_url': imageUrl,
+          //'image_url': imageUrl,
           //'username': 'to be done...',
         });
       }

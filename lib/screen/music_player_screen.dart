@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
@@ -217,6 +218,15 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // try{
+    //   _printSong(RhythmProvider.of(context).selectedSong);
+    // }catch(LateInitializationError){
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomeScreen()),
+    //   );
+    // }
+
     SoundToggleButton soundToggleButton = SoundToggleButton(
       setStateCallback: () {
         setState(() {});

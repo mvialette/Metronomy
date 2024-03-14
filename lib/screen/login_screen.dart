@@ -71,13 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
             .set({
           'username': _enteredUsername,
           'email': _enteredEmail,
-          //'image_url': imageUrl,
-          //'username': 'to be done...',
+          'authentication-method': 'email-and-password'
         });
       }
-
-      print(_enteredEmail);
-      print(_enteredPassword);
 
       Navigator.pushReplacement(
         context,
@@ -115,7 +111,30 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final userCredentials = await FirebaseAuth.instance.signInWithCredential(credential);
+
+    final alreadyKnownUser = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userCredentials.user!.uid).get();
+
+    if(alreadyKnownUser.data() == null){
+      // user unknow, we must create a new one
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredentials.user!.uid)
+          .set({
+        'username': userCredentials.user?.displayName,
+        'email': userCredentials.user?.email,
+        'authentication-method': 'google',
+        'language': 'fr',
+        'theme': 'dark'
+      });
+    }else {
+      // user already known, we don't need to update data to firestore database.
+    }
+
+    return userCredentials;
   }
 
   Future<bool> signOutFromGoogle() async {
@@ -408,6 +427,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             SizedBox(height: 20,),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {

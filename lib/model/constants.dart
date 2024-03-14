@@ -26,7 +26,7 @@ const kPlayIcon = Icons.play_arrow;
 // icône du bouton "pause"
 const kPauseIcon = Icons.pause;
 
-final songHigh = AssetSource('song-high.mpeg');
-final songLow = AssetSource('song-low.mpeg');
+final songHigh = AssetSource('songs/song-high.mpeg');
+final songLow = AssetSource('songs/song-low.mpeg');
 
 final kSelectedCollection = "songs_202312132100";

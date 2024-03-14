@@ -57,12 +57,6 @@ class SongListScreen extends StatelessWidget {
                 children: [
                   SizedBox(height: 15,),
                   Text(
-                    "Bienvenue " + userEmail.toString(),
-                    //"Bienvenue " + name.toString(),
-                    style: Theme.of(context).textTheme.bodyMedium,
-                  ),
-                  SizedBox(height: 15,),
-                  Text(
                     AppLocalizations.of(context)!.listDescriptionAllSongs,
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),

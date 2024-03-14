@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:Metronomy/screen/home_screen.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:Metronomy/ui/sound_toggle_button.dart';
@@ -66,7 +67,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 40,),
           ],
         ),
       ),
@@ -131,21 +132,21 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         ],
       ),
       SizedBox(
-        height: 10,
+        height: 30,
       ),
       Container(
-        height: 40,
+        height: 50,
         child: Bullets(),
       ),
       SizedBox(
-        height: 20,
+        height: 30,
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '${RhythmProvider.of(context).selectedSong.musiquePart[RhythmStore.of(context).sectionCurrentIndex].sectionName}',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -170,7 +171,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
         children: [
           Text(
             '${RhythmProvider.of(context).selectedSong.nextSectionName(RhythmStore.of(context).sectionCurrentIndex)}',
-            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            style: Theme.of(context).textTheme.bodySmall!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
             ),
           ),
@@ -217,6 +218,15 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // try{
+    //   _printSong(RhythmProvider.of(context).selectedSong);
+    // }catch(LateInitializationError){
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => HomeScreen()),
+    //   );
+    // }
+
     SoundToggleButton soundToggleButton = SoundToggleButton(
       setStateCallback: () {
         setState(() {});
@@ -241,18 +251,18 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           ),
         ],),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.all(20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              /*Icon(
+              Icon(
                 Icons.music_note,
                 //Icons.music_note,
                 color: Theme.of(context).colorScheme.primary,
-                size: 50,
-              ),*/
+                size: 80,
+              ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Text(
                 RhythmProvider.of(context).selectedSong.title,
@@ -276,7 +286,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
           visible: RhythmProvider.of(context).startingCountdown > 0,
           child: Column(
             children: [
-              SizedBox(height: 100,),
+              SizedBox(height: 40,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -299,10 +309,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 20,),
               Column(children: [
                 Container(
-                  height: 40,
+                  height: 50,
                   //child: BulletsCountdown(ref.read(allSettingsProvider).startingBarsNumber),
                   child: BulletsCountdown(startingBarsNumber: ref.read(allSettingsProvider).startingBarsNumber,),
                 ),
@@ -310,10 +320,10 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
             ],
           ),
         ),
-        Visibility(
-          visible: RhythmProvider.of(context).startingCountdown <= 0,
-          child: getPlayWidgets(),
+        SizedBox(
+          height: 30,
         ),
+        RhythmProvider.of(context).startingCountdown > 0 ? Text("") : getPlayWidgets(),
         Expanded(child: Container()),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

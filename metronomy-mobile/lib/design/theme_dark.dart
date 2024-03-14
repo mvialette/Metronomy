@@ -66,29 +66,25 @@ final darkTextTheme = TextTheme(
       fontSize: 16,
     ),
     */
-  titleLarge: const TextStyle(
-    fontFamily: 'StarsAndLoveBottomHeavy',
-    fontSize: 30,
-  ),
   titleMedium: const TextStyle(
     fontFamily: 'StarsAndLoveBottomHeavy',
-    fontSize: 20,
+    fontSize: 26,
   ),
-  titleSmall: const TextStyle(
+  titleLarge: const TextStyle(
     fontFamily: 'StarsAndLoveBottomHeavy',
-    fontSize: 10,
+    fontSize: 36,
   ),
-  bodyLarge: GoogleFonts.nunitoSans(
+  bodySmall: GoogleFonts.nunitoSans(
     fontWeight: FontWeight.normal,
-    fontSize: 25,
+    fontSize: 15,
   ),
   bodyMedium: GoogleFonts.nunitoSans(
     fontWeight: FontWeight.normal,
     fontSize: 20,
   ),
-  bodySmall: GoogleFonts.nunitoSans(
+  bodyLarge: GoogleFonts.nunitoSans(
     fontWeight: FontWeight.normal,
-    fontSize: 10,
+    fontSize: 35,
   ),
 );
 
@@ -108,8 +104,8 @@ final darkTheme = ThemeData.dark().copyWith(
 
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      primary: darkColorScheme.primary,
-      onPrimary: darkColorScheme.onPrimary,
+      backgroundColor: darkColorScheme.primary,
+      foregroundColor: darkColorScheme.onPrimary,
       textStyle: darkTextTheme.bodyMedium,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(32.0)),
@@ -121,6 +117,8 @@ final darkTheme = ThemeData.dark().copyWith(
     backgroundColor: darkColorScheme.primary,
     foregroundColor: darkColorScheme.onPrimary,
   ),
+
+
 
   scrollbarTheme: ScrollbarThemeData(
       thumbVisibility: MaterialStateProperty.all(true),

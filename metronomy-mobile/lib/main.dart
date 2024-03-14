@@ -50,6 +50,7 @@ class MetronomyApp extends ConsumerWidget {
     var localeCurrent = ref.watch(localeProvider);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       localeResolutionCallback: (
           locale,
           supportedLocales,

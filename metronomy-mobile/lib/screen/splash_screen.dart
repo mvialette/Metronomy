@@ -1,4 +1,5 @@
 import 'package:Metronomy/screen/loader_screen.dart';
+import 'package:Metronomy/screen/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,11 +13,12 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 3), () {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoaderScreen()),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        //MaterialPageRoute(builder: (context) => LoaderScreen()),
       );
     });
   }

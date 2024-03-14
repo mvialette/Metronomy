@@ -5,6 +5,7 @@ import 'package:Metronomy/model/song.dart';
 import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:Metronomy/widgets/song_item.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -33,6 +34,10 @@ class SongListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
+    final name = user != null ? user.displayName : "toto";
+    final userEmail = user != null ? user.email : "toto";
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: FutureBuilder<List<Song>>(
@@ -53,10 +58,9 @@ class SongListScreen extends StatelessWidget {
                   SizedBox(height: 15,),
                   Text(
                     AppLocalizations.of(context)!.listDescriptionAllSongs,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                      color: Theme.of(context).colorScheme.tertiary,
-                    ),
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
+
                   SizedBox(height: 15,),
                   ListView.builder(
                     shrinkWrap: true,

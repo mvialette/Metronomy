@@ -2,6 +2,7 @@ import 'package:Metronomy/l10n/l10n.dart';
 import 'package:Metronomy/providers/dark_mode_provider.dart';
 import 'package:Metronomy/providers/locale_provider.dart';
 import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -39,6 +40,11 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
     final locale = Localizations.localeOf(context);
     languageCode = locale.languageCode;
 
+    User? user = FirebaseAuth.instance.currentUser;
+    final displayName = user != null ? user.displayName : "toto";
+    final userEmail = user != null ? user.email : "toto";
+    final userImage = user != null ? user.photoURL : null;
+
     return Column(
       children: <Widget>[
         Padding(
@@ -48,22 +54,30 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.person_outline,
-                    color: Theme.of(context).colorScheme.primary,
-                    size: 80,
+                  Text(
+                    AppLocalizations.of(context)!.myAccount,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
                 ],
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    AppLocalizations.of(context)!.myAccount,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary,
+                  if (userImage == null)
+                    Icon(
+                      Icons.person_outline,
+                      color: Theme.of(context).colorScheme.primary,
+                      size: 80,
+                    )
+                  else
+                    CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage:
+                      Image.network(userImage!).image,
+                      backgroundColor: Colors.transparent,
                     ),
-                  )
                 ],
               ),
               SizedBox(
@@ -72,9 +86,24 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Icon(Icons.person, color: Theme.of(context).colorScheme.secondary),
+                  SizedBox(width: 10,),
                   Text(
-                    'prenom.nom@email.com',
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    displayName.toString(),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        fontSize: 20),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.email, color: Theme.of(context).colorScheme.secondary),
+                  SizedBox(width: 10,),
+                  Text(
+                    userEmail.toString(),
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                         color: Theme.of(context).colorScheme.primary,
                         fontSize: 20),
                   )

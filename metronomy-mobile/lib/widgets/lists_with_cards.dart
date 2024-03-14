@@ -32,7 +32,7 @@ class ListsWithCards extends StatelessWidget {
                     style: Theme
                         .of(context)
                         .textTheme
-                        .bodySmall!
+                        .bodyMedium!
                         .copyWith(
                       color: Theme
                           .of(context)
@@ -54,7 +54,7 @@ class ListsWithCards extends StatelessWidget {
                         style: Theme
                             .of(context)
                             .textTheme
-                            .bodySmall!
+                            .bodyMedium!
                             .copyWith(
                           color: Theme
                               .of(context)

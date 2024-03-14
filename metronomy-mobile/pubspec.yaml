@@ -47,6 +47,7 @@ dependencies:
   wakelock: ^0.6.2
   flutter_svg: ^2.0.10+1
   google_sign_in: ^6.2.1
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +62,13 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
+
+flutter_icons:
+  android: true
+  # ios: true
+  image_path: "assets/images/metronomy_icon_yellow.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo_foreground.png"
 
 # The following section is specific to Flutter packages.
 flutter:

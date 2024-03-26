@@ -46,10 +46,10 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
                 Icons.music_note,
                 //Icons.music_note,
                 color: Theme.of(context).colorScheme.primary,
-                size: 80,
+                size: 40,
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Text(
                 RhythmProvider.of(context).selectedSong.title,

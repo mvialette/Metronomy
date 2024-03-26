@@ -1,4 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:path_provider/path_provider.dart';
 
 import 'package:Metronomy/model/constants.dart';
 import 'package:Metronomy/model/song.dart';
@@ -18,17 +22,94 @@ class SongListScreen extends StatelessWidget {
 
   final void Function(String identifier) onSelectScreen;
 
-  Future<List<Song>> getAllAvailableSongs() async {
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
 
-    CollectionReference songs = FirebaseFirestore.instance.collection(kSelectedCollection);
+    return directory.path;
+  }
 
-    List<Song> allAvailableSongs = <Song>[];
-    await songs.get().then((QuerySnapshot snapshot) {
-      snapshot.docs.forEach((doc) {
-        allAvailableSongs.add(Song.fromMap(doc.data() as Map<String, dynamic>));
+  Future<File> getLocalFile(String collectionDatabaseName) async {
+    final path = await _localPath;
+
+    late String collectionDatabaseNameInLocal;
+    Directory('$path').listSync().forEach((fileIntoApplicationDocumentsDirectory) {
+      String currentFileName = Directory('$path').listSync()[2].path.split('/').last;
+      if(currentFileName.startsWith("database-songs_20")){
+        collectionDatabaseNameInLocal = currentFileName;
+      }
+      //allAvailableSongsInLocal.add(Song.fromMap(songString));
+    });
+
+    return File('$path/database-' + collectionDatabaseNameInLocal == null ? collectionDatabaseName + '.json' : collectionDatabaseNameInLocal);
+  }
+
+  Future<File> writeDatabase(String collectionDatabaseName, List<Song> songs) async {
+    final file = await getLocalFile(collectionDatabaseName);
+
+    String songsInJsonString = jsonEncode(songs);
+
+    // Write the file
+    return file.writeAsString(songsInJsonString);
+  }
+
+  Future<List<Song>> readDatabase(String collectionDatabaseName) async {
+    try {
+      final file = await getLocalFile(collectionDatabaseName);
+
+      // Read the file
+      final contents = await file.readAsString();
+
+      List<Song> allAvailableSongsInLocal = <Song>[];
+      jsonDecode(contents).forEach((songString) {
+        allAvailableSongsInLocal.add(Song.fromMap(songString));
       });
 
-    }).catchError((error) => print("Failed to fetch users: $error"));
+      return allAvailableSongsInLocal;
+    } catch (e) {
+      // If encountering an error, return 0
+      return <Song>[];
+    }
+  }
+
+  Future<List<Song>> getAllAvailableSongsFromFirestore(String collectionDatabaseName) async {
+
+    CollectionReference songs = FirebaseFirestore.instance.collection(collectionDatabaseName);
+    List<Song> allAvailableSongs = <Song>[];
+
+     await songs.get().then((QuerySnapshot snapshot) {
+       snapshot.docs.forEach((doc) {
+         allAvailableSongs.add(Song.fromMap(doc.data() as Map<String, dynamic>));
+       });
+
+     }).catchError((error) => print("Failed to fetch users: $error"));
+
+    // save into a local file
+    writeDatabase(collectionDatabaseName, allAvailableSongs);
+
+    return allAvailableSongs;
+  }
+
+  Future<List<Song>> getAllAvailableSongsFromLocalFile(String collectionDatabaseName) async {
+    List<Song> allAvailableSongs = await readDatabase(collectionDatabaseName);
+    return allAvailableSongs;
+  }
+
+  Future<List<Song>> getAllAvailableSongs() async {
+
+    CollectionReference settings = FirebaseFirestore.instance.collection(kFirebaseSettings);
+    late String collectionDatabaseName;
+
+    List<List<String>> allFirebaseSettings = <List<String>>[];
+    await settings.get().then((QuerySnapshot snapshot) {
+      snapshot.docs.forEach((doc) {
+        collectionDatabaseName = (doc.data()! as Map)["name"];
+      });
+
+    }).catchError((error) => print("Failed to fetch database settings from Firebase: $error"));
+
+    //List<Song> allAvailableSongs = await getAllAvailableSongsFromLocalFile(collectionDatabaseName);
+    List<Song> allAvailableSongs = await getAllAvailableSongsFromFirestore(collectionDatabaseName);
+
     return allAvailableSongs;
   }
 

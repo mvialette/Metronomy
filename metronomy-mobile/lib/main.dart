@@ -1,7 +1,5 @@
-
 import 'package:Metronomy/design/theme_dark.dart';
 import 'package:Metronomy/design/theme_light.dart';
-import 'package:Metronomy/l10n/l10n.dart';
 import 'package:Metronomy/providers/dark_mode_provider.dart';
 import 'package:Metronomy/providers/locale_provider.dart';
 import 'package:Metronomy/screen/splash_screen.dart';

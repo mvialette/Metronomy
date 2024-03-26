@@ -171,10 +171,6 @@
   "@password": {
     "description": "Password"
   },
-  "otherSignInMethods": "To connect a sign in method, the ",
-  "@otherSignInMethods": {
-    "description": "Password"
-  },
   "continueWithGoogle": "Continue with Google",
   "@continueWithGoogle": {
     "description": "Continue with google"

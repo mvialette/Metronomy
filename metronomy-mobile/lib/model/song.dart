@@ -46,8 +46,9 @@ class Song {
   Map<String, dynamic> toJson() => {
     'title': title,
     'tempo': tempo,
-    'beatsByBar': beatsByBar,
+    'beatsByBars': beatsByBar,
     'beatsDuring': beatsDuring,
+    'signature' : signature,
     'sections': musiquePart,
   };
 }

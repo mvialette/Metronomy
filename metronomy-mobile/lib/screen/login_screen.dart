@@ -56,15 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
 
-        // final storageRef = FirebaseStorage.instance
-        //     .ref()
-        //     .child('user_images')
-        //     .child('${userCredentials.user!.uid}.jpg');
-
-        //await storageRef.putFile(_selectedImage!);
-        // final imageUrl = await storageRef.getDownloadURL();
-        // print(imageUrl);
-
         await FirebaseFirestore.instance
             .collection('users')
             .doc(userCredentials.user!.uid)
@@ -171,26 +162,6 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Container(
-                //   margin: const EdgeInsets.only(
-                //     top: 10,
-                //     bottom: 20,
-                //     left: 20,
-                //     right: 20,
-                //   ),
-                //   width: 100,
-                //   child: Icon(
-                //     Icons.lock,
-                //     color: Theme.of(context).colorScheme.primary,
-                //     size: 30,
-                //   ),
-                // ),
-                // Text(
-                //   AppLocalizations.of(context)!.signIn,
-                //   style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                //         color: Theme.of(context).colorScheme.onPrimaryContainer,
-                //       ),
-                // ),
                 Card(
                   color: Colors.grey,
                   margin: const EdgeInsets.all(30),
@@ -431,15 +402,21 @@ class _LoginScreenState extends State<LoginScreen> {
                               children: [
                                 ElevatedButton(
                                   onPressed: () async {
-                                    userCredential.value = await signInWithGoogle();
-                                    if (userCredential.value != null) {
-                                      print(userCredential.value.user!.email);
 
-                                      Navigator.pushReplacement(
+                                    try {
+                                      userCredential.value = await signInWithGoogle();
+
+                                      if (userCredential.value != null) {
+                                        print(userCredential.value.user!.email);
+                                      }
+                                    } catch (error) {
+                                      print("Network failure, go to offline mode : $error");
+                                    }
+
+                                    Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(builder: (context) => HomeScreen()),
                                       );
-                                    }
                                   },
                                   child: Row(
                                     children: [

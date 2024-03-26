@@ -156,7 +156,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               Row(
                 children: [
                   Text(
-                    '${kSelectedCollection}',
+                    'version de la bdd', // ${kSelectedCollection}',
                     //style: Theme.of(context).textTheme.headlineMedium,
                     style: Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: Theme.of(context).colorScheme.tertiary,

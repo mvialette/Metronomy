@@ -5,7 +5,7 @@ class ListsWithCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 300,
       child: Scrollbar(
         child: ListView.builder(
         itemCount: RhythmProvider.of(context).selectedSong.musiquePart.length,

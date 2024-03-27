@@ -33,24 +33,12 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
               widget.onSelectScreen('all-songs');
             },
           ),
-          Expanded(
-            child: Container(),
-          ),
         ],),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                Icons.music_note,
-                //Icons.music_note,
-                color: Theme.of(context).colorScheme.primary,
-                size: 40,
-              ),
-              SizedBox(
-                height: 10,
-              ),
               Text(
                 RhythmProvider.of(context).selectedSong.title,
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -69,7 +57,7 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ],
           ),
         ),
-        SizedBox(height: 40,),
+        SizedBox(height: 10,),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -143,95 +131,16 @@ class _SummarySongScreenState extends ConsumerState<SummarySongScreen> {
             ),
           ],
         ),
-        SizedBox(height: 20,),
+        SizedBox(height: 10,),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: RhythmSlider(
             setStateCallback: () {
               setState(() {});
             },
           ),
         ),
-        SizedBox(height: 30,),
-        Visibility(
-          visible: (ref.read(allSettingsProvider).debuggingMode),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // FIXME afficher le chiffre du compte à rebours
-                  Text(
-                    'Starting countdown : ',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  Text(
-                    '${RhythmProvider.of(context).startingCountdown - 1}',
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 40,),
-            ],
-          ),
-        ),
-        /*Row(
-          children: [
-            Expanded(
-              child: Container(),
-            ),
-            Column(children: [
-              Text('AAA',),
-              Text('A',),
-              Text('AA',),
-            ]),
-            Expanded(
-              child: Container(),
-            ),
-            Column(children: [
-              Text('AB',),
-              Text('ABBBBB',),
-              Text('A',),
-            ]),
-            Expanded(
-              child: Container(),
-            ),
-          ],
-        ),*/
-        /*Expanded(
-          child: ListView(
-            padding: const EdgeInsets.all(8),
-            children: <Widget>[
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Column(children: [
-                    Text(
-                      'AAA',
-                    ),
-                  ]),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  Column(children: [
-                    Text(
-                      'AB',
-                    ),
-                  ]),
-                  Expanded(
-                    child: Container(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),*/
+        SizedBox(height: 10,),
         ListsWithCards(),
         Expanded(
           child: Container(),

@@ -38,7 +38,7 @@ dependencies:
   flutter_riverpod: ^2.4.0
   firebase_storage: ^11.6.11
   firebase_auth: ^4.18.0
-  cloud_firestore: ^4.13.0
+  cloud_firestore: ^4.15.10
   flutter_spinkit: ^5.2.0
   flutter_localization: ^0.2.0
   carousel_slider: ^4.2.1

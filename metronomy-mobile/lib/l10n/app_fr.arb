@@ -45,5 +45,6 @@
   "continueWithGoogle": "Continuez avec Google",
   "or": "ou",
   "pleaseEnterAValideEmailAddress": "Veuillez entrer un adresse email valide.",
-  "logout": "Déconnexion"
+  "logout": "Déconnexion",
+  "latency": "Latence"
 }

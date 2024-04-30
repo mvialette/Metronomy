@@ -1,7 +1,7 @@
-import 'package:Metronomy/l10n/l10n.dart';
-import 'package:Metronomy/providers/dark_mode_provider.dart';
-import 'package:Metronomy/providers/locale_provider.dart';
-import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:metronomy/l10n/l10n.dart';
+import 'package:metronomy/providers/dark_mode_provider.dart';
+import 'package:metronomy/providers/locale_provider.dart';
+import 'package:metronomy/providers/settings_notifier.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -35,7 +35,6 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     var darkMode = ref.watch(darkModeProvider);
     final locale = Localizations.localeOf(context);
     languageCode = locale.languageCode;
@@ -43,96 +42,69 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
     User? user = FirebaseAuth.instance.currentUser;
     final displayName = user != null ? user.displayName : "toto";
     final userEmail = user != null ? user.email : "toto";
-    final userImage = user != null ? user.photoURL : null;
+    final userImage = user?.photoURL;
 
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.myAccount,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (userImage == null)
-                    Icon(
-                      Icons.person_outline,
-                      color: Theme.of(context).colorScheme.primary,
-                      size: 80,
-                    )
-                  else
-                    CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage:
-                      Image.network(userImage!).image,
-                      backgroundColor: Colors.transparent,
-                    ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.person, color: Theme.of(context).colorScheme.secondary),
-                  SizedBox(width: 10,),
-                  Text(
-                    displayName.toString(),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 20),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.email, color: Theme.of(context).colorScheme.secondary),
-                  SizedBox(width: 10,),
-                  Text(
-                    userEmail.toString(),
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontSize: 20),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 60,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.languageLabel,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                ],
-              ),
-              ListView.builder(
+    return Column(children: <Widget>[
+      Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(children: [
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text(AppLocalizations.of(context)!.myAccount,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: Theme.of(context).colorScheme.secondary))
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              if (userImage == null)
+                Icon(Icons.person_outline,
+                    color: Theme.of(context).colorScheme.primary, size: 80)
+              else
+                CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: Image.network(userImage).image,
+                    backgroundColor: Colors.transparent),
+            ]),
+            const SizedBox(height: 20),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(Icons.person,
+                  color: Theme.of(context).colorScheme.secondary),
+              const SizedBox(width: 10),
+              Text(
+                displayName.toString(),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.primary, fontSize: 20),
+              )
+            ]),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Icon(Icons.email, color: Theme.of(context).colorScheme.secondary),
+              const SizedBox(width: 10),
+              Text(
+                userEmail.toString(),
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.primary, fontSize: 20),
+              )
+            ]),
+            const SizedBox(height: 60),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text(
+                AppLocalizations.of(context)!.languageLabel,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
+              )
+            ]),
+            ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(8),
                 itemCount: L10n.all.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 50,
-                    child: Center(
-                        child: Row(
-                      children: [
+                  return SizedBox(
+                      height: 50,
+                      child: Center(
+                          child: Row(children: [
                         Radio(
                           value: L10n.all[index].languageCode,
                           groupValue: languageCode,
@@ -142,9 +114,9 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         ),
                         Text(
                           L10n.getFlag(L10n.all[index].languageCode),
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 30),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
@@ -158,40 +130,28 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                               .copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
-                        ),
-                      ],
-                    )),
-                  );
-                },
+                        )
+                      ])));
+                }),
+            const SizedBox(height: 40),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text(
+                "${AppLocalizations.of(context)!.themeDarkMode} : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.themeDarkMode + " : ",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Switch(
-                    activeColor: Theme.of(context).colorScheme.primaryContainer,
-                    activeTrackColor: Theme.of(context).colorScheme.primary,
-                    value: darkMode,
-                    onChanged: (val) {
-                      ref.read(darkModeProvider.notifier).toggle();
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+              const SizedBox(width: 10),
+              Switch(
+                  activeColor: Theme.of(context).colorScheme.primaryContainer,
+                  activeTrackColor: Theme.of(context).colorScheme.primary,
+                  value: darkMode,
+                  onChanged: (val) {
+                    ref.read(darkModeProvider.notifier).toggle();
+                  })
+            ])
+          ]))
+    ]);
   }
 }

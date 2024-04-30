@@ -1,4 +1,4 @@
-package com.vialette.Metronomy
+package com.vialette.metronomy
 
 import io.flutter.embedding.android.FlutterActivity
 

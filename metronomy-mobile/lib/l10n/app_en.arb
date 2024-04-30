@@ -3,7 +3,7 @@
   "@language": {
     "description": "The current language"
   },
-  "applicationTitle": "Metronomy",
+  "applicationTitle": "metronomy",
   "@applicationTitle": {
     "description": "The name of the application"
   },

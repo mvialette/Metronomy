@@ -1,10 +1,7 @@
-import 'dart:async';
-
-import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:metronomy/store/rhythm_provider.dart';
 
 class StopButton extends StatelessWidget {
-
   final Function setStateCallback;
 
   const StopButton({super.key, required this.setStateCallback});
@@ -19,7 +16,7 @@ class StopButton extends StatelessWidget {
         setStateCallback();
       },
       tooltip: 'Stop',
-      child: Icon(Icons.stop),
+      child: const Icon(Icons.stop),
     );
   }
 }

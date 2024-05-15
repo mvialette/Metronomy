@@ -1,11 +1,9 @@
-import 'package:Metronomy/model/song.dart';
 import 'package:flutter/material.dart';
 
 class RhythmStore extends InheritedWidget {
-
   static RhythmStore of(BuildContext context) {
     final RhythmStore? result =
-    context.dependOnInheritedWidgetOfExactType<RhythmStore>();
+        context.dependOnInheritedWidgetOfExactType<RhythmStore>();
 
     if (result == null) {
       throw 'No RhythmStore found';

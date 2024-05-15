@@ -41,8 +41,6 @@ final darkColorScheme = ColorScheme.fromSeed(
   surfaceTint: Color(0xFFBA1A1A),//Color(0xFF705D00),
   outlineVariant: Color(0xFFBA1A1A),//Color(0xFFCEC6B4),
   scrim: Color(0xFFBA1A1A),//Color(0xFF000000),*/
-
-
 );
 
 final darkTextTheme = TextTheme(
@@ -89,7 +87,6 @@ final darkTextTheme = TextTheme(
 );
 
 final darkTheme = ThemeData.dark().copyWith(
-
   scaffoldBackgroundColor: darkColorScheme.background,
 
   colorScheme: darkColorScheme,
@@ -97,7 +94,8 @@ final darkTheme = ThemeData.dark().copyWith(
   textTheme: darkTextTheme,
 
   radioTheme: RadioThemeData(
-    fillColor: MaterialStateColor.resolveWith((states) => darkColorScheme.primary), //<-- SEE HERE
+    fillColor: MaterialStateColor.resolveWith(
+        (states) => darkColorScheme.primary), //<-- SEE HERE
   ),
 
   iconTheme: IconThemeData(color: darkColorScheme.primary),
@@ -107,9 +105,8 @@ final darkTheme = ThemeData.dark().copyWith(
       backgroundColor: darkColorScheme.primary,
       foregroundColor: darkColorScheme.onPrimary,
       textStyle: darkTextTheme.bodyMedium,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(32.0)),
-      minimumSize: Size(300, 50),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32.0)),
+      minimumSize: const Size(300, 50),
     ),
   ),
 
@@ -118,17 +115,13 @@ final darkTheme = ThemeData.dark().copyWith(
     foregroundColor: darkColorScheme.onPrimary,
   ),
 
-
-
   scrollbarTheme: ScrollbarThemeData(
-      thumbVisibility: MaterialStateProperty.all(true),
-      thickness: MaterialStateProperty.all(5),
-      thumbColor: MaterialStateProperty.all(darkColorScheme.primary),
-      radius: const Radius.circular(10),
-      minThumbLength: 50,
+    thumbVisibility: MaterialStateProperty.all(true),
+    thickness: MaterialStateProperty.all(5),
+    thumbColor: MaterialStateProperty.all(darkColorScheme.primary),
+    radius: const Radius.circular(10),
+    minThumbLength: 50,
   ),
 
   // Text theme section
-
-
 );

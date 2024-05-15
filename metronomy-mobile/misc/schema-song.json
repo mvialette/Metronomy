@@ -1,7 +1,7 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
     "$id": "https://example.com/employee.schema.json",
-    "title": "Structure Metronomy",
+    "title": "Structure metronomy",
     "description": "Structure des enregistrements metronomy",
     "type": "object",
     "properties": {

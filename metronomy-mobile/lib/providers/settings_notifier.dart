@@ -1,8 +1,7 @@
-import 'package:Metronomy/model/settings.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:metronomy/model/settings.dart';
 
 class SettingsNotifier extends StateNotifier<Settings> {
-
   SettingsNotifier() : super(Settings());
 
   void updateFirstSongDifferent(bool firstSongDifferent) {
@@ -25,10 +24,15 @@ class SettingsNotifier extends StateNotifier<Settings> {
     state = newState;
   }
 
-  void updateSettings(bool firstSongDifferent, bool debuggingMode, bool advancedMode) {
-    final newState = state.copy(firstSongDifferent: firstSongDifferent, debuggingMode: debuggingMode, advanceMode: advancedMode);
+  void updateSettings(
+      bool firstSongDifferent, bool debuggingMode, bool advancedMode) {
+    final newState = state.copy(
+        firstSongDifferent: firstSongDifferent,
+        debuggingMode: debuggingMode,
+        advanceMode: advancedMode);
     state = newState;
   }
 }
 
-final allSettingsProvider = StateNotifierProvider<SettingsNotifier, Settings>((ref) => SettingsNotifier());
+final allSettingsProvider = StateNotifierProvider<SettingsNotifier, Settings>(
+    (ref) => SettingsNotifier());

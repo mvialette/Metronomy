@@ -1,12 +1,12 @@
-import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:flutter/material.dart';
+import 'package:metronomy/store/rhythm_provider.dart';
+import 'package:metronomy/store/rhythm_store.dart';
 
 class Bullets extends StatelessWidget {
+  const Bullets({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return ListView.builder(
       shrinkWrap: true,
       itemCount: RhythmProvider.of(context).selectedSong.beatsByBar,
@@ -30,7 +30,11 @@ class Bullets extends StatelessWidget {
     var indexStartingAtOne = indexStartingAtZero + 1;
     var debugTickCountStartingAtZero = RhythmStore.of(context).debugTickCount;
     var currentTickStartingAtOne = debugTickCountStartingAtZero + 1;
-    var moduloResult = currentTickStartingAtOne % RhythmProvider.of(context).selectedSong.beatsByBar;
-    return moduloResult == 0 ? (indexStartingAtZero == RhythmProvider.of(context).selectedSong.beatsByBar - 1) : indexStartingAtOne == moduloResult;
+    var moduloResult = currentTickStartingAtOne %
+        RhythmProvider.of(context).selectedSong.beatsByBar;
+    return moduloResult == 0
+        ? (indexStartingAtZero ==
+            RhythmProvider.of(context).selectedSong.beatsByBar - 1)
+        : indexStartingAtOne == moduloResult;
   }
 }

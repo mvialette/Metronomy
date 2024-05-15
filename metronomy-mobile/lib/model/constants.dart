@@ -30,4 +30,4 @@ final songHigh = AssetSource('songs/song-high.mpeg');
 final songLow = AssetSource('songs/song-low.mpeg');
 
 //final kSelectedCollection = "songs_202312132100";
-final kFirebaseSettings = "settings";
+const kFirebaseSettings = "settings";

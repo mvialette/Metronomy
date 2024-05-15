@@ -31,16 +31,15 @@ class SongListScreen extends StatelessWidget {
   Future<File> getLocalFile(String collectionDatabaseName) async {
     final path = await _localPath;
 
-    late String collectionDatabaseNameInLocal;
+    String collectionDatabaseNameInLocal = "";
     Directory('$path').listSync().forEach((fileIntoApplicationDocumentsDirectory) {
-      String currentFileName = Directory('$path').listSync()[2].path.split('/').last;
+      String currentFileName = fileIntoApplicationDocumentsDirectory.path.split('/').last;
       if(currentFileName.startsWith("database-songs_20")){
         collectionDatabaseNameInLocal = currentFileName;
       }
-      //allAvailableSongsInLocal.add(Song.fromMap(songString));
     });
 
-    return File('$path/database-' + collectionDatabaseNameInLocal == null ? collectionDatabaseName + '.json' : collectionDatabaseNameInLocal);
+    return File('$path/' + (collectionDatabaseNameInLocal.isEmpty ? 'database-' + collectionDatabaseName + '.json' : collectionDatabaseNameInLocal));
   }
 
   Future<File> writeDatabase(String collectionDatabaseName, List<Song> songs) async {

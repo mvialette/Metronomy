@@ -1,9 +1,9 @@
-import 'package:Metronomy/design/theme_dark.dart';
-import 'package:Metronomy/design/theme_light.dart';
-import 'package:Metronomy/providers/dark_mode_provider.dart';
-import 'package:Metronomy/providers/locale_provider.dart';
-import 'package:Metronomy/screen/splash_screen.dart';
-import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:metronomy/design/theme_dark.dart';
+import 'package:metronomy/design/theme_light.dart';
+import 'package:metronomy/providers/dark_mode_provider.dart';
+import 'package:metronomy/providers/locale_provider.dart';
+import 'package:metronomy/screen/splash_screen.dart';
+import 'package:metronomy/store/rhythm_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -16,7 +16,6 @@ import 'firebase_options.dart';
 
 // le point d'entrée de l'application devient asynchone afin que audioplayers charge correctement le son
 Future main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp(
@@ -29,33 +28,29 @@ Future main() async {
   ]);
 
   runApp(
-    ProviderScope(
-        child: const RhythmProvider(
-            child: MetronomyApp()
-        ),
+    const ProviderScope(
+      child: RhythmProvider(child: MetronomyApp()),
     ),
   );
 }
 
 class MetronomyApp extends ConsumerWidget {
-
   const MetronomyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     var darkMode = ref.watch(darkModeProvider);
     var localeCurrent = ref.watch(localeProvider);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       localeResolutionCallback: (
-          locale,
-          supportedLocales,
-          ) {
+        locale,
+        supportedLocales,
+      ) {
         return locale;
       },
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
@@ -63,7 +58,7 @@ class MetronomyApp extends ConsumerWidget {
       ],
       supportedLocales: AppLocalizations.supportedLocales,
       locale: localeCurrent,
-      home: SplashScreen(),
+      home: const SplashScreen(),
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: darkMode ? ThemeMode.dark : ThemeMode.light,

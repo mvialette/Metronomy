@@ -1,8 +1,8 @@
-import 'package:Metronomy/model/song.dart';
-import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:metronomy/model/song.dart';
+import 'package:metronomy/providers/settings_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:Metronomy/model/constants.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
+import 'package:metronomy/model/constants.dart';
+import 'package:metronomy/store/rhythm_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -28,7 +28,6 @@ class RhythmProvider extends ConsumerStatefulWidget {
 }
 
 class RhythmProviderState extends ConsumerState<RhythmProvider> {
-
   int rhythm = kDefaultRhythm;
   bool enableTimer = kDefaultEnable;
 
@@ -63,7 +62,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
       Wakelock.toggle(enable: enableTimer);
 
-      if(startingCountdown == kDefaultStartingCountdown){
+      if (startingCountdown == kDefaultStartingCountdown) {
         resetStartingCountdown();
       }
     });
@@ -81,7 +80,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
     });
   }
 
-  void resetStartingCountdown(){
+  void resetStartingCountdown() {
     // we add 1 to have a rang above 0
     // ie: beatsByBar == 7 && _startingBarsNumber == 2, the result will be 14 to 1
     //startingCountdown = selectedSong.beatsByBar * _startingBarsNumber + 1;
@@ -92,41 +91,39 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   }
 
   void updateMakeCountdown() {
-
     setState(() {
-
-      if(startingCountdown > 0){
+      if (startingCountdown > 0) {
         startingCountdown--;
-      }else{
+      } else {
         debugTickCount++;
 
         // we increment _barsCurrentCounter when we are at tick n°1 of the a bar
-        if(((debugTickCount + 1) % selectedSong.beatsByBar) == 1){
+        if (((debugTickCount + 1) % selectedSong.beatsByBar) == 1) {
           _barsCurrentCounter++;
         }
 
-        if(_barsCurrentCounter >  _maximumBarsSection) {
-          if(_sectionCurrentIndex < (_sectionsLength -1)) {
+        if (_barsCurrentCounter > _maximumBarsSection) {
+          if (_sectionCurrentIndex < (_sectionsLength - 1)) {
             // Nous sommes à la fin de la mesure (et du temps maxi de la dernière mesure), on doit donc passer à la partie suivante
             _barsCurrentCounter = 1;
             _sectionCurrentIndex++;
-          }else{
+          } else {
             // this is the end of sections
             updateStopTimer();
           }
         }
 
-        updateMusicInformations(_songIndex, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
+        updateMusicInformations(
+            _songIndex,
+            selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection,
+            selectedSong.musiquePart.length);
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     return RhythmStore(
-      child: widget.child,
-      //rhythm: _rhythm,
       enable: enableTimer,
       debugTickCount: debugTickCount,
       songIndex: _songIndex,
@@ -134,19 +131,24 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       barsCurrentCounter: _barsCurrentCounter,
       maximumBarsSection: _maximumBarsSection,
       sectionsLength: _sectionsLength,
+      child: widget.child,
     );
   }
 
-  void updateMusicInformations(int songIndex, int maximumBarsSection, int sectionsLength) {
-      _songIndex = songIndex;
-      _maximumBarsSection = maximumBarsSection;
-      _sectionsLength = sectionsLength;
+  void updateMusicInformations(
+      int songIndex, int maximumBarsSection, int sectionsLength) {
+    _songIndex = songIndex;
+    _maximumBarsSection = maximumBarsSection;
+    _sectionsLength = sectionsLength;
   }
 
   void updateSong(Song song, int indexOfSong) {
     selectedSong = song;
     rhythm = song.tempo;
     resetStartingCountdown();
-    updateMusicInformations(indexOfSong, selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection, selectedSong.musiquePart.length);
+    updateMusicInformations(
+        indexOfSong,
+        selectedSong.musiquePart[_sectionCurrentIndex].maximumBarsSection,
+        selectedSong.musiquePart.length);
   }
 }

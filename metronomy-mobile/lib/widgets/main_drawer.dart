@@ -1,4 +1,4 @@
-import 'package:Metronomy/screen/login_screen.dart';
+import 'package:metronomy/screen/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class MainDrawer extends StatelessWidget {
     return Drawer(
       child: Container(
         color: Theme.of(context).colorScheme.onSurfaceVariant,
-        child: new ListView(
+        child: ListView(
           children: [
             DrawerHeader(
               padding: const EdgeInsets.all(10),
@@ -39,7 +39,7 @@ class MainDrawer extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  Image(
+                  const Image(
                     image:
                         AssetImage("assets/images/metronomy_icon_yellow.png"),
                     width: 40,
@@ -131,17 +131,16 @@ class MainDrawer extends StatelessWidget {
               title: Text(
                 AppLocalizations.of(context)!.logout,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontSize: 24,
-                ),
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 24,
+                    ),
               ),
               onTap: () async {
-
                 await FirebaseAuth.instance.signOut();
-
                 Navigator.pushReplacement(
+                  // ignore: use_build_context_synchronously
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                 );
               },
             ),

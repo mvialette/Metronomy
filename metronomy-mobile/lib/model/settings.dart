@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-
 // FIXME : RAJOUTER LE BLOCAGE DU MODE VEILLE DE L'ECRAN
 class Settings {
   final bool firstSongDifferent;
@@ -9,26 +6,23 @@ class Settings {
   final bool advanceMode;
   final bool darkMode;
 
-  Settings({
-    this.firstSongDifferent = true,
-    this.startingBarsNumber = 2,
-    this.debuggingMode = false,
-    this.advanceMode = false,
-    this.darkMode = false,
-  });
+  Settings(
+      {this.firstSongDifferent = true,
+      this.startingBarsNumber = 2,
+      this.debuggingMode = false,
+      this.advanceMode = false,
+      this.darkMode = false});
 
-  Settings copy({
-    bool firstSongDifferent = true,
-    int startingBarsNumber = 2,
-    bool debuggingMode = false,
-    bool advanceMode = false,
-    bool darkMode = true,
-  }) =>
+  Settings copy(
+          {bool firstSongDifferent = true,
+          int startingBarsNumber = 2,
+          bool debuggingMode = false,
+          bool advanceMode = false,
+          bool darkMode = true}) =>
       Settings(
-        firstSongDifferent: firstSongDifferent ?? this.firstSongDifferent,
-        startingBarsNumber: startingBarsNumber ?? this.startingBarsNumber,
-        debuggingMode: debuggingMode ?? this.debuggingMode,
-        advanceMode: advanceMode ?? this.advanceMode,
-        darkMode: darkMode ?? this.darkMode,
-      );
+          firstSongDifferent: firstSongDifferent,
+          startingBarsNumber: startingBarsNumber,
+          debuggingMode: debuggingMode,
+          advanceMode: advanceMode,
+          darkMode: darkMode);
 }

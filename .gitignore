@@ -21,7 +21,7 @@ migrate_working_dir/
 .idea/vcs.xml
 .idea/modules.xml
 .idea/misc.xml
-.idea/Metronomy.iml
+.idea/metronomy.iml
 .idea/libraries/Dart_Packages.xml
 .idea/libraries/Dart_SDK.xml
 .idea/libraries/Flutter_Plugins.xml

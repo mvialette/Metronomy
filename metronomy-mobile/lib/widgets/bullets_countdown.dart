@@ -1,9 +1,8 @@
-import 'package:Metronomy/store/rhythm_provider.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
 import 'package:flutter/material.dart';
+import 'package:metronomy/store/rhythm_provider.dart';
+import 'package:metronomy/store/rhythm_store.dart';
 
 class BulletsCountdown extends StatefulWidget {
-
   final int startingBarsNumber;
 
   const BulletsCountdown({super.key, required this.startingBarsNumber});
@@ -13,14 +12,14 @@ class BulletsCountdown extends StatefulWidget {
 }
 
 class _BulletsCountdownState extends State<BulletsCountdown> {
-
   late int initialItemsCountdown;
   late int initialStartingCountdown;
   late int currentIndexBullent;
 
   @override
   void initState() {
-    initialItemsCountdown = ((RhythmProvider.of(context).startingCountdown) / widget.startingBarsNumber).toInt();
+    initialItemsCountdown = (RhythmProvider.of(context).startingCountdown) ~/
+        widget.startingBarsNumber;
     initialStartingCountdown = RhythmProvider.of(context).startingCountdown;
 
     super.initState();
@@ -28,12 +27,15 @@ class _BulletsCountdownState extends State<BulletsCountdown> {
 
   @override
   Widget build(BuildContext context) {
-
-    if(RhythmStore.of(context).enable){
-      currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) - initialStartingCountdown) * -1;
-      if(currentIndexBullent > initialItemsCountdown){
-        currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) - initialItemsCountdown) * -1;
-      }else{
+    if (RhythmStore.of(context).enable) {
+      currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) -
+              initialStartingCountdown) *
+          -1;
+      if (currentIndexBullent > initialItemsCountdown) {
+        currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) -
+                initialItemsCountdown) *
+            -1;
+      } else {
         currentIndexBullent--;
       }
     }
@@ -43,7 +45,6 @@ class _BulletsCountdownState extends State<BulletsCountdown> {
       itemCount: initialItemsCountdown,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
-
         return Container(
           margin: const EdgeInsets.symmetric(horizontal: 2),
           child: Icon(
@@ -59,9 +60,9 @@ class _BulletsCountdownState extends State<BulletsCountdown> {
   }
 
   bool isCurrentTick(int indexStartingAtZero, BuildContext context) {
-    if(!RhythmStore.of(context).enable){
+    if (!RhythmStore.of(context).enable) {
       return false;
-    } else{
+    } else {
       return indexStartingAtZero == currentIndexBullent;
     }
   }

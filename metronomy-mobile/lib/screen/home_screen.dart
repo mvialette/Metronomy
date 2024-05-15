@@ -1,14 +1,13 @@
-import 'package:Metronomy/screen/login_screen.dart';
-import 'package:Metronomy/screen/splash_screen.dart';
-import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:metronomy/screen/login_screen.dart';
+import 'package:metronomy/screen/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:Metronomy/screen/music_player_screen.dart';
-import 'package:Metronomy/screen/settings_screen.dart';
-import 'package:Metronomy/screen/song_list_screen.dart';
-import 'package:Metronomy/screen/summary_song_screen.dart';
-import 'package:Metronomy/screen/user_profil.dart';
-import 'package:Metronomy/widgets/main_drawer.dart';
+import 'package:metronomy/screen/music_player_screen.dart';
+import 'package:metronomy/screen/settings_screen.dart';
+import 'package:metronomy/screen/song_list_screen.dart';
+import 'package:metronomy/screen/summary_song_screen.dart';
+import 'package:metronomy/screen/user_profil.dart';
+import 'package:metronomy/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -37,21 +36,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onSelectScreen: _setScreen,
         );
       } else if (identifier == 'login') {
-        activePage = LoginScreen();
+        activePage = const LoginScreen();
       } else if (identifier == 'splash') {
-        activePage = SplashScreen();
+        activePage = const SplashScreen();
       } else if (identifier == 'play-a-song') {
         activePage = MusicPlayerScreen(
           onSelectScreen: _setScreen,
         );
       } else if (identifier == 'settings') {
-        activePage = SettingsScreen();
+        activePage = const SettingsScreen();
       } else if (identifier == 'summary') {
         activePage = SummarySongScreen(
           onSelectScreen: _setScreen,
         );
       } else if (identifier == 'user-profil') {
-        activePage = UserProfilScreen();
+        activePage = const UserProfilScreen();
       }
     });
   }
@@ -73,10 +72,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/MotifsNoirs.png"),
+            image: const AssetImage("assets/images/MotifsNoirs.png"),
             colorFilter: ColorFilter.mode(
-                Theme.of(context).colorScheme.background.withOpacity(0.1), BlendMode.dstATop
-            ),
+                Theme.of(context).colorScheme.background.withOpacity(0.1),
+                BlendMode.dstATop),
             fit: BoxFit.cover,
           ),
         ),

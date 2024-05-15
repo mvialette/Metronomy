@@ -1,7 +1,6 @@
-import 'package:Metronomy/model/music_structure.dart';
+import 'package:metronomy/model/music_structure.dart';
 
 class Song {
-
   final String title;
   final int tempo;
   final int beatsByBar;
@@ -18,18 +17,17 @@ class Song {
     required this.musiquePart,
   });
 
-  String nextSectionName(int sectionCurrentIndex){
-    if((sectionCurrentIndex + 1) == this.musiquePart.length){
+  String nextSectionName(int sectionCurrentIndex) {
+    if ((sectionCurrentIndex + 1) == musiquePart.length) {
       return ""; // We display nothing
     }
-    return this.musiquePart[sectionCurrentIndex + 1].sectionName;
+    return musiquePart[sectionCurrentIndex + 1].sectionName;
   }
 
   factory Song.fromMap(Map<String, dynamic> map) {
-
-    List<MusicStructure> _sections = [];
+    List<MusicStructure> sections = [];
     map['sections'].forEach((element) {
-      _sections.add(MusicStructure.fromMap(element));
+      sections.add(MusicStructure.fromMap(element));
     });
 
     var signatureSplit = map['signature'].split('/');
@@ -40,15 +38,15 @@ class Song {
         beatsByBar: map['beatsByBars'],
         signature: map['signature'],
         beatsDuring: int.parse(signatureSplit[1]),
-        musiquePart: _sections ?? List.empty());
+        musiquePart: sections);
   }
 
   Map<String, dynamic> toJson() => {
-    'title': title,
-    'tempo': tempo,
-    'beatsByBars': beatsByBar,
-    'beatsDuring': beatsDuring,
-    'signature' : signature,
-    'sections': musiquePart,
-  };
+        'title': title,
+        'tempo': tempo,
+        'beatsByBars': beatsByBar,
+        'beatsDuring': beatsDuring,
+        'signature': signature,
+        'sections': musiquePart,
+      };
 }

@@ -1,8 +1,8 @@
-import 'package:Metronomy/model/song.dart';
-import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:metronomy/model/song.dart';
+import 'package:metronomy/providers/settings_notifier.dart';
 import 'package:flutter/material.dart';
-import 'package:Metronomy/model/constants.dart';
-import 'package:Metronomy/store/rhythm_store.dart';
+import 'package:metronomy/model/constants.dart';
+import 'package:metronomy/store/rhythm_store.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wakelock/wakelock.dart';
 

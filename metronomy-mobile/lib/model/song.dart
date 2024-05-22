@@ -1,4 +1,4 @@
-import 'package:Metronomy/model/music_structure.dart';
+import 'package:metronomy/model/music_structure.dart';
 
 class Song {
   final String title;

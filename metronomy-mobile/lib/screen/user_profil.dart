@@ -1,3 +1,4 @@
+
 import 'dart:async';
 
 import 'package:Metronomy/l10n/l10n.dart';
@@ -405,7 +406,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
 
     final displayName = user != null ? user.displayName : "toto";
     final userEmail = user != null ? user.email : "toto";
-    final userImage = user != null ? user.photoURL : null;
+    final userImage = user?.photoURL;
 
     return Column(
       children: <Widget>[
@@ -491,15 +492,14 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
               ),
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(8),
                 itemCount: L10n.all.length,
                 itemBuilder: (context, index) {
-                  return Container(
-                    height: 50,
-                    child: Center(
-                        child: Row(
-                      children: [
+                  return SizedBox(
+                      height: 50,
+                      child: Center(
+                          child: Row(children: [
                         Radio(
                           value: L10n.all[index].languageCode,
                           groupValue: languageCode,
@@ -509,9 +509,9 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         ),
                         Text(
                           L10n.getFlag(L10n.all[index].languageCode),
-                          style: TextStyle(fontSize: 30),
+                          style: const TextStyle(fontSize: 30),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Text(
@@ -525,35 +525,17 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                               .copyWith(
                                   color:
                                       Theme.of(context).colorScheme.secondary),
-                        ),
-                      ],
-                    )),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.themeDarkMode + " : ",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Switch(
-                    activeColor: Theme.of(context).colorScheme.primaryContainer,
-                    activeTrackColor: Theme.of(context).colorScheme.primary,
-                    value: darkMode,
-                    onChanged: (val) {
-                      ref.read(darkModeProvider.notifier).toggle();
-                    },
-                  ),
-                ],
+                        )
+                      ])));
+                }),
+            const SizedBox(height: 40),
+            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text(
+                "${AppLocalizations.of(context)!.themeDarkMode} : ",
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium!
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
               ),
               SizedBox(
                 height: 40,

@@ -1,5 +1,5 @@
-import 'package:metronomy/screen/login_screen.dart';
-import 'package:metronomy/screen/splash_screen.dart';
+import 'package:Metronomy/screen/login_screen.dart';
+import 'package:Metronomy/screen/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:metronomy/screen/music_player_screen.dart';

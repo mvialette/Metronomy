@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:metronomy/screen/home_screen.dart';
+import 'package:Metronomy/screen/home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    // if (!_isLoginMode) {
-    //   return;
-    // }
-
     _formKey.currentState!.save();
 
     try {
@@ -61,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .set({
           'username': _enteredUsername,
           'email': _enteredEmail,
+          'latency':0,
           'authentication-method': 'email-and-password'
         });
       }
@@ -122,6 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
         'email': userCredentials.user?.email,
         'authentication-method': 'google',
         'language': 'fr',
+        'latency':'0',
         'theme': 'dark'
       });
     } else {

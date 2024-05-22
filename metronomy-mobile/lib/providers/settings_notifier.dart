@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:metronomy/model/settings.dart';
+import 'package:Metronomy/model/settings.dart';
 
 class SettingsNotifier extends StateNotifier<Settings> {
   SettingsNotifier() : super(Settings());

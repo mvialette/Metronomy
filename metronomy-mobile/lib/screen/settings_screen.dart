@@ -1,5 +1,5 @@
-import 'package:metronomy/providers/dark_mode_provider.dart';
-import 'package:metronomy/providers/settings_notifier.dart';
+import 'package:Metronomy/providers/dark_mode_provider.dart';
+import 'package:Metronomy/providers/settings_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

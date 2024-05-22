@@ -1,6 +1,6 @@
-import 'package:metronomy/store/rhythm_provider.dart';
-import 'package:metronomy/ui/rhythm_slider.dart';
-import 'package:metronomy/widgets/lists_with_cards.dart';
+import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:Metronomy/ui/rhythm_slider.dart';
+import 'package:Metronomy/widgets/lists_with_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

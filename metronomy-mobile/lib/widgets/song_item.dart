@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metronomy/model/song.dart';
+import 'package:Metronomy/model/song.dart';
 
 class SongItem extends StatelessWidget {
   const SongItem({

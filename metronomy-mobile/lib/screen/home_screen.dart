@@ -1,13 +1,13 @@
-import 'package:metronomy/screen/login_screen.dart';
-import 'package:metronomy/screen/splash_screen.dart';
+import 'package:Metronomy/screen/login_screen.dart';
+import 'package:Metronomy/screen/splash_screen.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:metronomy/screen/music_player_screen.dart';
-import 'package:metronomy/screen/settings_screen.dart';
-import 'package:metronomy/screen/song_list_screen.dart';
-import 'package:metronomy/screen/summary_song_screen.dart';
-import 'package:metronomy/screen/user_profil.dart';
-import 'package:metronomy/widgets/main_drawer.dart';
+import 'package:Metronomy/screen/music_player_screen.dart';
+import 'package:Metronomy/screen/settings_screen.dart';
+import 'package:Metronomy/screen/song_list_screen.dart';
+import 'package:Metronomy/screen/summary_song_screen.dart';
+import 'package:Metronomy/screen/user_profil.dart';
+import 'package:Metronomy/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,7 +50,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onSelectScreen: _setScreen,
         );
       } else if (identifier == 'user-profil') {
-        activePage = const UserProfilScreen();
+        activePage = UserProfilScreen();
       }
     });
   }

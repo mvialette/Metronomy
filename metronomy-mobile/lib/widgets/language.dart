@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metronomy/l10n/l10n.dart';
+import 'package:Metronomy/l10n/l10n.dart';
 
 class Language extends StatelessWidget {
   const Language({super.key});

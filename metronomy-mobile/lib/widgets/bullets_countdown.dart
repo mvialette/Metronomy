@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:metronomy/store/rhythm_provider.dart';
-import 'package:metronomy/store/rhythm_store.dart';
+import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:Metronomy/store/rhythm_store.dart';
 
 class BulletsCountdown extends StatefulWidget {
   final int startingBarsNumber;

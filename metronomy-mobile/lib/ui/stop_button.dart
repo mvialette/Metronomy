@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:metronomy/store/rhythm_provider.dart';
+import 'package:Metronomy/store/rhythm_provider.dart';
 
 class StopButton extends StatelessWidget {
   final Function setStateCallback;

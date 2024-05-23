@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:metronomy/model/song.dart';
-import 'package:metronomy/providers/settings_notifier.dart';
-import 'package:metronomy/store/rhythm_provider.dart';
-import 'package:metronomy/store/rhythm_store.dart';
-import 'package:metronomy/ui/sound_toggle_button.dart';
-import 'package:metronomy/ui/stop_button.dart';
-import 'package:metronomy/widgets/bullets.dart';
-import 'package:metronomy/widgets/bullets_countdown.dart';
+import 'package:Metronomy/model/song.dart';
+import 'package:Metronomy/providers/settings_notifier.dart';
+import 'package:Metronomy/store/rhythm_provider.dart';
+import 'package:Metronomy/store/rhythm_store.dart';
+import 'package:Metronomy/ui/sound_toggle_button.dart';
+import 'package:Metronomy/ui/stop_button.dart';
+import 'package:Metronomy/widgets/bullets.dart';
+import 'package:Metronomy/widgets/bullets_countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -252,6 +252,7 @@ class _MusicPlayerScreenState extends ConsumerState<MusicPlayerScreen> {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
+                ],
             ),
             const SizedBox(height: 10),
             Text('Author',

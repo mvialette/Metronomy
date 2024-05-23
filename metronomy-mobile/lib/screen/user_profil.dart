@@ -572,6 +572,8 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
               ),
             ],
           ),
+          ],
+        ),
         ),
       ],
     );

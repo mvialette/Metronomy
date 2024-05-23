@@ -1,9 +1,9 @@
-import 'package:metronomy/design/theme_dark.dart';
-import 'package:metronomy/design/theme_light.dart';
-import 'package:metronomy/providers/dark_mode_provider.dart';
-import 'package:metronomy/providers/locale_provider.dart';
-import 'package:metronomy/screen/splash_screen.dart';
-import 'package:metronomy/store/rhythm_provider.dart';
+import 'package:Metronomy/design/theme_dark.dart';
+import 'package:Metronomy/design/theme_light.dart';
+import 'package:Metronomy/providers/dark_mode_provider.dart';
+import 'package:Metronomy/providers/locale_provider.dart';
+import 'package:Metronomy/screen/splash_screen.dart';
+import 'package:Metronomy/store/rhythm_provider.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

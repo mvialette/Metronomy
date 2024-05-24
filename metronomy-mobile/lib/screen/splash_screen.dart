@@ -17,7 +17,6 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
-        //MaterialPageRoute(builder: (context) => LoaderScreen()),
       );
     });
   }
@@ -31,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         Image.asset('assets/images/metronomy_icon_yellow.png',
             width: 100.0, height: 100.0),
         const SizedBox(height: 10.0),
-        Text('metronomy',
+        Text('Metronomy',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
                   color: Theme.of(context).colorScheme.primary,
                 ))

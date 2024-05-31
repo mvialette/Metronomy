@@ -36,6 +36,13 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
   int oldValuePrint = 0;
 
   Duration? tempoDuration;
+  late double bluetoothLatencyPercentage;
+
+  @override
+  void initState() {
+    bluetoothLatencyPercentage = ref.read(allSettingsProvider).bluetoothLatencyPercentage;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -52,19 +59,12 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
         SoundToggleButton.getRhythmInterval(RhythmProvider.of(context).rhythm);
 
     return ElevatedButton(
-      //enableFeedback: false,
-      // style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-      //     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      //     minimumSize: Size(100, 50),
-      // ),
       onPressed: () {
         setState(() {
           RhythmProvider.of(context)
               .updateEnableTimer(!RhythmStore.of(context).enable);
         });
       },
-      //tooltip: 'Play',
-      //backgroundColor: Theme.of(context).colorScheme.primary,
       child: Icon(
         RhythmStore.of(context).enable ? kPauseIcon : kPlayIcon,
       ),
@@ -89,7 +89,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
         if (RhythmStore.of(context).enable) {
           RhythmProvider.of(context).updateMakeCountdown();
 
-          if (RhythmProvider.of(context).startingCountdown > 0) {
+          if (RhythmProvider.of(context).currectStartingIndexCountdown <= RhythmProvider.of(context).startingCountdown) {
             playLowSound();
           } else if (RhythmStore.of(context).debugTickCount >= 0) {
             if (firstSongDifferent &&
@@ -125,7 +125,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
   void playLowSound() {
 
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       this.widget.audioPlayerLowPitchedSound.pause();
       this.widget.audioPlayerLowPitchedSound.seek(Duration.zero);
       this.widget.audioPlayerLowPitchedSound.play(songLow);
@@ -134,7 +134,7 @@ class _SoundToggleButtonState extends ConsumerState<SoundToggleButton> {
 
   void playHighSound() {
 
-    Future.delayed(const Duration(milliseconds: 200), () {
+    Future.delayed(const Duration(milliseconds: 100), () {
       this.widget.audioPlayerHighPitchedSound.pause();
       this.widget.audioPlayerHighPitchedSound.seek(Duration.zero);
       this.widget.audioPlayerHighPitchedSound.play(songHigh);

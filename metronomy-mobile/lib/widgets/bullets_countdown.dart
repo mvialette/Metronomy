@@ -12,37 +12,40 @@ class BulletsCountdown extends StatefulWidget {
 }
 
 class _BulletsCountdownState extends State<BulletsCountdown> {
-  late int initialItemsCountdown;
-  late int initialStartingCountdown;
+  late int maxItemsCountdown;
+  //late int initialStartingCountdown;
   late int currentIndexBullent;
+
+  //late int iindexFromOne = 1;
 
   @override
   void initState() {
-    initialItemsCountdown = (RhythmProvider.of(context).startingCountdown) ~/
-        widget.startingBarsNumber;
-    initialStartingCountdown = RhythmProvider.of(context).startingCountdown;
+    maxItemsCountdown = RhythmProvider.of(context).startingCountdown;
+    //initialItemsCountdown = (RhythmProvider.of(context).startingCountdown) ~/
+    //    widget.startingBarsNumber;
+    //initialStartingCountdown = RhythmProvider.of(context).startingCountdown;
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (RhythmStore.of(context).enable) {
-      currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) -
-              initialStartingCountdown) *
-          -1;
-      if (currentIndexBullent > initialItemsCountdown) {
-        currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) -
-                initialItemsCountdown) *
-            -1;
-      } else {
-        currentIndexBullent--;
-      }
-    }
+    // if (RhythmStore.of(context).enable) {
+    //   currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) -
+    //           initialStartingCountdown) *
+    //       -1;
+    //   if (currentIndexBullent > initialItemsCountdown) {
+    //     currentIndexBullent = ((RhythmProvider.of(context).startingCountdown) -
+    //             initialItemsCountdown) *
+    //         -1;
+    //   } else {
+    //     currentIndexBullent--;
+    //   }
+    // }
 
     return ListView.builder(
       shrinkWrap: true,
-      itemCount: initialItemsCountdown,
+      itemCount: maxItemsCountdown,
       scrollDirection: Axis.horizontal,
       itemBuilder: (BuildContext context, int index) {
         return Container(
@@ -63,7 +66,7 @@ class _BulletsCountdownState extends State<BulletsCountdown> {
     if (!RhythmStore.of(context).enable) {
       return false;
     } else {
-      return indexStartingAtZero == currentIndexBullent;
+      return (indexStartingAtZero + 1) == RhythmProvider.of(context).currectStartingIndexCountdown;
     }
   }
 }

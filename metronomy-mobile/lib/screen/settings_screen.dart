@@ -50,19 +50,25 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       .copyWith(color: Theme.of(context).colorScheme.secondary))
             ]),
             const SizedBox(height: 60),
-            Row(children: [
-              Text(AppLocalizations.of(context)!.firstSongDifferent),
-              Expanded(child: Container()),
-              Switch(
-                  value: firstSongDifferent,
-                  onChanged: (check) {
-                    setState(() {
-                      firstSongDifferent = check;
-                    });
-                    ref.read(allSettingsProvider.notifier).updateSettings(
-                        firstSongDifferent, debuggingMode, advancedMode);
-                  })
-            ]),
+            Row(
+              children: [
+                Text(AppLocalizations.of(context)!.firstSongDifferent,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.secondary
+                  ),
+                ),
+                Expanded(child: Container()),
+                Switch(
+                    value: firstSongDifferent,
+                    onChanged: (check) {
+                      setState(() {
+                        firstSongDifferent = check;
+                      });
+                      ref.read(allSettingsProvider.notifier).updateSettings(
+                          firstSongDifferent, debuggingMode, advancedMode);
+                    })
+              ],
+            ),
             const SizedBox(height: 30),
             Row(children: [
               Text(AppLocalizations.of(context)!.debugMode),

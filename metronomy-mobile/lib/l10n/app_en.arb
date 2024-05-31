@@ -187,7 +187,7 @@
   "@logout": {
     "description": "Logout"
   },
-  "latency": "Latency",
+  "latency": "Latency (ms)",
   "@latency": {
     "description": "Latency"
   }

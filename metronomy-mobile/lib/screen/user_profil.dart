@@ -44,8 +44,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
   late String languageCode;
   int durationReference = 0;
   int testBpm = 85;
-  int bluetoothDelay = 0;
-  //int bluetoothTestCounter = 0;
+  double bluetoothDelayPercentage = 1;
   int bluetoothTestLatencyOld = 0;
   int bluetoothTestLatencyNew = 0;
 
@@ -122,7 +121,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         onPressed: () {
                           setState(() {
                             periodicTimer!.cancel();
-                            bluetoothDelay = bluetoothDelay - 5;
+                            bluetoothDelayPercentage = bluetoothDelayPercentage - 5;
                             startTimer();
                           });
                         },
@@ -134,7 +133,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         onPressed: () {
                           setState(() {
                             periodicTimer!.cancel();
-                            bluetoothDelay = bluetoothDelay - 1;
+                            bluetoothDelayPercentage = bluetoothDelayPercentage - 1;
                             startTimer();
                           });
                         },
@@ -146,7 +145,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         onPressed: () {
                           setState(() {
                             periodicTimer!.cancel();
-                            bluetoothDelay = bluetoothDelay + 1;
+                            bluetoothDelayPercentage = bluetoothDelayPercentage + 1;
                             startTimer();
                           });
                         },
@@ -158,7 +157,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         onPressed: () {
                           setState(() {
                             periodicTimer!.cancel();
-                            bluetoothDelay = bluetoothDelay + 5;
+                            bluetoothDelayPercentage = bluetoothDelayPercentage + 5;
                             startTimer();
                           });
                         },
@@ -170,11 +169,11 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                   min: -1000,
                   max: 1000,
                   // utiliser RhythmStore pour RÉCUPÉRER la valeur du rythme
-                  value: bluetoothDelay.toDouble(),
+                  value: bluetoothDelayPercentage.toDouble(),
                   onChanged: (double value) {
                     setState(() {
                       periodicTimer!.cancel();
-                      bluetoothDelay = value.toInt();
+                      bluetoothDelayPercentage = value.toDouble();
                       startTimer();
                       //saveLatency();
                     });
@@ -207,7 +206,7 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                     Column(
                       children: [
                         Text(
-                          bluetoothDelay.toString(),
+                          bluetoothDelayPercentage.toString(),
                           style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                             color: Theme.of(context).colorScheme.secondary,
                           ),
@@ -223,14 +222,6 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                   ],
                 ),
                 SizedBox(height: 20,),
-                // Icon(
-                //   true
-                //       ? Icons.radio_button_on_rounded
-                //       : Icons.radio_button_off_rounded,
-                //   color: Theme.of(context).colorScheme.primary,
-                //   size: 30,
-                // ),
-                // SizedBox(height: 50,),
                 ElevatedButton(
                   onPressed: _play,
                   child: Column(
@@ -322,7 +313,8 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                     periodicTimer!.cancel();
                     setState(() {
                       int average = getBluetoothTestLatencyMesureAverage();
-                      bluetoothDelay = average;
+                      bluetoothDelayPercentage = average.toDouble();
+
                     });
                   },
                   child: Row(
@@ -361,7 +353,8 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                   int durationReferenceInt = (durationReference / 1000).toInt();
                   int bluetoothTestLatencyMesureAverage = getBluetoothTestLatencyMesureAverage();
 
-                  bluetoothDelay = bluetoothTestLatencyMesureAverage - durationReferenceInt;
+                  bluetoothDelayPercentage = durationReferenceInt / bluetoothTestLatencyMesureAverage;
+                  ref.read(allSettingsProvider.notifier).updateBluetoothLatencyPercentage(bluetoothDelayPercentage);
                 });
 
                 Navigator.of(context).pop();
@@ -528,52 +521,62 @@ class _UserProfilScreenState extends ConsumerState<UserProfilScreen> {
                         )
                       ])));
                 }),
-            const SizedBox(height: 40),
-            Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-              Text(
-                "${AppLocalizations.of(context)!.themeDarkMode} : ",
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium!
-                    .copyWith(color: Theme.of(context).colorScheme.secondary),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.latency + " (ms) : ",
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.secondary),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(
-                    bluetoothDelay.toString(),
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                  ),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.edit,
-                      color: Theme.of(context).colorScheme.primary,
+                const SizedBox(height: 40),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "${AppLocalizations.of(context)!.themeDarkMode} : ",
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium!
+                          .copyWith(color: Theme.of(context).colorScheme.secondary),
                     ),
-                    tooltip: 'Select this song en go to play mode',
-                    onPressed: _showDialog,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          ],
-        ),
+                    Expanded(child: Container()),
+                    Switch(
+                      // This bool value toggles the switch.
+                      value: false,
+                      activeColor: Theme.of(context).colorScheme.primary,
+                      onChanged: (bool value) {
+                        // This is called when the user toggles the switch.
+                        setState(() {
+                        //light = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.latency + " :",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.secondary
+                      ),
+                    ),
+                    Expanded(child: Container()),
+                    Text(
+                      (bluetoothDelayPercentage * 100).toStringAsPrecision(4) + " %",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.edit,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      tooltip: 'Select this song en go to play mode',
+                      onPressed: _showDialog,
+                    ),
+                  ],
+                ),
+              ],
+            ),
         ),
       ],
     );

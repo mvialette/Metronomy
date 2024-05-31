@@ -46,5 +46,5 @@
   "or": "ou",
   "pleaseEnterAValideEmailAddress": "Veuillez entrer un adresse email valide.",
   "logout": "Déconnexion",
-  "latency": "Latence"
+  "latency": "Latence (ms)"
 }

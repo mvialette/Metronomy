@@ -34,6 +34,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   int _startingBarsNumber = kDefaultStartingBarsNumber;
 
   int startingCountdown = kDefaultStartingCountdown;
+  int currectStartingIndexCountdown = 0;
   int debugTickCount = 0;
   int _songIndex = 0;
   int _sectionCurrentIndex = 0;
@@ -42,6 +43,8 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
   int _sectionsLength = 0;
 
   late Song selectedSong;
+
+  bool firstTick = true;
 
   @override
   void initState() {
@@ -75,6 +78,7 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
       debugTickCount = 0;
       _barsCurrentCounter = 1;
       _sectionCurrentIndex = 0;
+      currectStartingIndexCountdown = 0;
 
       Wakelock.toggle(enable: enableTimer);
     });
@@ -87,13 +91,18 @@ class RhythmProviderState extends ConsumerState<RhythmProvider> {
 
     // we add 1 to have a rang above 0
     // ie: beatsByBar == 7 && _startingBarsNumber == 2, the result will be 14 so the values fallow the range 13 to 0
-    startingCountdown = selectedSong.beatsByBar * _startingBarsNumber + 1;
+    startingCountdown = selectedSong.beatsByBar * _startingBarsNumber;
   }
 
   void updateMakeCountdown() {
     setState(() {
-      if (startingCountdown > 0) {
-        startingCountdown--;
+      if (currectStartingIndexCountdown <= startingCountdown) {
+        if(firstTick){
+          firstTick = !firstTick;
+        }else{
+          //startingCountdown--;
+          currectStartingIndexCountdown++;
+        }
       } else {
         debugTickCount++;
 

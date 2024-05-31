@@ -24,6 +24,11 @@ class SettingsNotifier extends StateNotifier<Settings> {
     state = newState;
   }
 
+  void updateBluetoothLatencyPercentage(double bluetoothLatencyPercentage) {
+    final newState = state.copy(bluetoothLatencyPercentage: bluetoothLatencyPercentage);
+    state = newState;
+  }
+
   void updateSettings(
       bool firstSongDifferent, bool debuggingMode, bool advancedMode) {
     final newState = state.copy(
